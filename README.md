@@ -1,20 +1,73 @@
-# **Workshop Booking**
+# UI/UX Enhancement - Workshop Booking System
 
-> This website is for coordinators to book a workshop(s), they can book a workshop based on instructors posts or can propose a workshop date based on their convenience.
+## 📌 Project Overview
 
+This project focuses on improving the user interface and user experience of the existing workshop booking system provided by FOSSEE. The original system had a minimal and basic UI. I redesigned the frontend using React to make it more modern, clean, and user-friendly.
 
-### Features
-* Statistics
-    1. Instructors Only
-        * Monthly Workshop Count
-        * Instructor/Coordinator Profile stats
-        * Upcoming Workshops
-        * View/Post comments on Coordinator's Profile
-    2. Open to All
-        * Workshops taken over Map of India
-        * Pie chart based on Total Workshops taken to Type of Workshops.
+---
 
-* Workshop Related Features
-    > Instructors can Accept, Reject or Delete workshops based on their preference, also they can postpone a workshop based on coordinators request.
+## 🎨 Work Completed So Far
 
-__NOTE__: Check docs/Getting_Started.md for more info.
+* Set up a React frontend for the application
+* Created a clean and simple homepage
+* Added a navigation bar for better structure
+* Designed workshop cards to display available workshops
+* Improved layout, spacing, and readability
+* Applied modern styling with colors, shadows, and rounded components
+* Added hover effects to enhance interactivity
+
+---
+
+## 🎨 Design Principles Used
+
+* **Simplicity:** Clean and minimal interface
+* **Consistency:** Uniform design for buttons and cards
+* **Visual Hierarchy:** Important elements like headings and buttons are highlighted
+* **Mobile-First Approach:** Layout designed primarily for small screens
+
+---
+
+## 📱 Responsiveness
+
+* Used vertical layout suitable for mobile devices
+* Applied spacing and alignment for better readability
+* Ensured buttons are large and easy to interact with
+
+---
+
+## ⚖️ Trade-offs (Design vs Performance)
+
+* Avoided heavy UI libraries to keep the application lightweight
+* Used simple inline styling instead of complex frameworks
+
+---
+
+## ⚙️ Challenges Faced
+
+* Understanding the structure of the provided backend project
+* Designing a modern UI from a very basic layout
+* Ensuring the interface looks clean without using external libraries
+
+---
+
+## 🚀 How to Run the Project
+
+```bash
+cd frontend
+npm install
+npm start
+```
+
+---
+
+## 📸 Screenshots
+
+(To be added: before and after UI screenshots)
+
+---
+
+## 👨‍💻 Tech Stack
+
+* React.js
+* JavaScript
+* CSS (inline styling)
