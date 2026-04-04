@@ -1,70 +1,73 @@
-# Getting Started with Create React App
+# UI/UX Enhancement - Workshop Booking System
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 📌 Project Overview
 
-## Available Scripts
+This project focuses on improving the user interface and user experience of the existing workshop booking system provided by FOSSEE. The original system had a minimal and basic UI. I redesigned the frontend using React to make it more modern, clean, and user-friendly.
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## 🎨 Work Completed So Far
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+* Set up a React frontend for the application
+* Created a clean and simple homepage
+* Added a navigation bar for better structure
+* Designed workshop cards to display available workshops
+* Improved layout, spacing, and readability
+* Applied modern styling with colors, shadows, and rounded components
+* Added hover effects to enhance interactivity
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm test`
+## 🎨 Design Principles Used
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+* **Simplicity:** Clean and minimal interface
+* **Consistency:** Uniform design for buttons and cards
+* **Visual Hierarchy:** Important elements like headings and buttons are highlighted
+* **Mobile-First Approach:** Layout designed primarily for small screens
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 📱 Responsiveness
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+* Used vertical layout suitable for mobile devices
+* Applied spacing and alignment for better readability
+* Ensured buttons are large and easy to interact with
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+---
 
-### `npm run eject`
+## ⚖️ Trade-offs (Design vs Performance)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+* Avoided heavy UI libraries to keep the application lightweight
+* Used simple inline styling instead of complex frameworks
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+---
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## ⚙️ Challenges Faced
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+* Understanding the structure of the provided backend project
+* Designing a modern UI from a very basic layout
+* Ensuring the interface looks clean without using external libraries
 
-## Learn More
+---
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## 🚀 How to Run the Project
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```bash
+cd frontend
+npm install
+npm start
+```
 
-### Code Splitting
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## 📸 Screenshots
 
-### Analyzing the Bundle Size
+(To be added: before and after UI screenshots)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+---
 
-### Making a Progressive Web App
+## 👨‍💻 Tech Stack
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+* React.js
+* JavaScript
+* CSS (inline styling)
