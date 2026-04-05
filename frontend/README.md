@@ -67,9 +67,16 @@ npm start
 
 ## 📸 Screenshots
 
-(To be added: before and after UI screenshots)
+## 📸 Screenshots
 
----
+### 🏠 Home Page
+![Home](./screenshots/home.png)
+
+### 📝 Booking Form
+![Form](./screenshots/form.png)
+
+### ✅ Success Message
+![Success](./screenshots/success.png)
 
 ## 👨‍💻 Tech Stack
 
