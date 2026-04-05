@@ -19,7 +19,15 @@ function App() {
       alert("Please fill all fields");
       return;
     }
+
     setSubmitted(true);
+    setName("");
+    setEmail("");
+  };
+
+  const handleCancel = () => {
+    setShowForm(false);
+    setSubmitted(false);
     setName("");
     setEmail("");
   };
@@ -45,7 +53,11 @@ function App() {
         {/* Cards */}
         <div style={{ display: "flex", flexDirection: "column", gap: "20px", marginTop: "20px" }}>
           
-          <div style={cardStyle}>
+          <div 
+            style={cardStyle}
+            onMouseEnter={(e) => e.currentTarget.style.transform = "scale(1.02)"}
+            onMouseLeave={(e) => e.currentTarget.style.transform = "scale(1)"}
+          >
             <h3>AI Workshop</h3>
             <p>Date: 10 April</p>
             <button style={buttonStyle} onClick={() => handleRegister("AI Workshop")}>
@@ -53,7 +65,11 @@ function App() {
             </button>
           </div>
 
-          <div style={cardStyle}>
+          <div 
+            style={cardStyle}
+            onMouseEnter={(e) => e.currentTarget.style.transform = "scale(1.02)"}
+            onMouseLeave={(e) => e.currentTarget.style.transform = "scale(1)"}
+          >
             <h3>Web Development</h3>
             <p>Date: 15 April</p>
             <button style={buttonStyle} onClick={() => handleRegister("Web Development")}>
@@ -61,7 +77,11 @@ function App() {
             </button>
           </div>
 
-          <div style={cardStyle}>
+          <div 
+            style={cardStyle}
+            onMouseEnter={(e) => e.currentTarget.style.transform = "scale(1.02)"}
+            onMouseLeave={(e) => e.currentTarget.style.transform = "scale(1)"}
+          >
             <h3>Python Basics</h3>
             <p>Date: 20 April</p>
             <button style={buttonStyle} onClick={() => handleRegister("Python Basics")}>
@@ -96,6 +116,11 @@ function App() {
               Submit
             </button>
 
+            {/* CANCEL BUTTON */}
+            <button style={cancelStyle} onClick={handleCancel}>
+              Cancel
+            </button>
+
             {/* SUCCESS MESSAGE */}
             {submitted && (
               <div style={successStyle}>
@@ -116,7 +141,8 @@ const cardStyle = {
   padding: "20px",
   borderRadius: "12px",
   boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
-  transition: "0.3s"
+  transition: "0.3s",
+  cursor: "pointer"
 };
 
 const buttonStyle = {
@@ -150,6 +176,17 @@ const submitStyle = {
   width: "100%",
   padding: "10px",
   backgroundColor: "#22c55e",
+  color: "white",
+  border: "none",
+  borderRadius: "6px",
+  cursor: "pointer"
+};
+
+const cancelStyle = {
+  width: "100%",
+  padding: "10px",
+  marginTop: "10px",
+  backgroundColor: "#ef4444",
   color: "white",
   border: "none",
   borderRadius: "6px",
