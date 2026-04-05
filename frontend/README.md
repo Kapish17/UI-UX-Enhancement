@@ -2,7 +2,7 @@
 
 ## 📌 Project Overview
 
-This project focuses on improving the user interface and user experience of the existing workshop booking system provided by FOSSEE. The original system had a minimal and basic UI. I redesigned the frontend using React to make it more modern, clean, and user-friendly.
+This project focuses on improving the user interface and user experience of the existing workshop booking system provided by FOSSEE. The original system had a minimal and basic UI. The frontend was redesigned using React to create a modern, clean, and user-friendly experience, especially optimized for mobile users.
 
 ---
 
@@ -15,6 +15,10 @@ This project focuses on improving the user interface and user experience of the 
 * Improved layout, spacing, and readability
 * Applied modern styling with colors, shadows, and rounded components
 * Added hover effects to enhance interactivity
+* Added an interactive booking form
+* Implemented form validation (prevents empty submission)
+* Added success message after booking
+* Improved user flow from browsing → booking → confirmation
 
 ---
 
@@ -22,23 +26,24 @@ This project focuses on improving the user interface and user experience of the 
 
 * **Simplicity:** Clean and minimal interface
 * **Consistency:** Uniform design for buttons and cards
-* **Visual Hierarchy:** Important elements like headings and buttons are highlighted
-* **Mobile-First Approach:** Layout designed primarily for small screens
+* **Visual Hierarchy:** Important elements like headings and buttons are emphasized
+* **Mobile-First Approach:** Designed primarily for small screens
 
 ---
 
 ## 📱 Responsiveness
 
-* Used vertical layout suitable for mobile devices
-* Applied spacing and alignment for better readability
-* Ensured buttons are large and easy to interact with
+* Used a vertical layout suitable for mobile devices
+* Ensured proper spacing and alignment for readability
+* Designed buttons and inputs to be easily clickable on small screens
 
 ---
 
 ## ⚖️ Trade-offs (Design vs Performance)
 
-* Avoided heavy UI libraries to keep the application lightweight
-* Used simple inline styling instead of complex frameworks
+* Avoided heavy UI libraries to maintain fast load times
+* Used lightweight inline styling instead of large frameworks
+* Focused on functionality and speed over complex animations
 
 ---
 
@@ -46,7 +51,7 @@ This project focuses on improving the user interface and user experience of the 
 
 * Understanding the structure of the provided backend project
 * Designing a modern UI from a very basic layout
-* Ensuring the interface looks clean without using external libraries
+* Managing state effectively for form interaction and user feedback
 
 ---
 
