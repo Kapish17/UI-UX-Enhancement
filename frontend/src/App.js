@@ -7,6 +7,15 @@ function App() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [search, setSearch] = useState("");
+
+  // ✅ NEW: Workshop Data
+  const workshops = [
+    { name: "AI Workshop", date: "10 April", seats: 5 },
+    { name: "Web Development", date: "15 April", seats: 2 },
+    { name: "Python Basics", date: "20 April", seats: 0 }
+  ];
 
   const handleRegister = (workshop) => {
     setShowForm(true);
@@ -20,9 +29,14 @@ function App() {
       return;
     }
 
-    setSubmitted(true);
-    setName("");
-    setEmail("");
+    setLoading(true);
+
+    setTimeout(() => {
+      setLoading(false);
+      setSubmitted(true);
+      setName("");
+      setEmail("");
+    }, 1000);
   };
 
   const handleCancel = () => {
@@ -50,44 +64,43 @@ function App() {
       <div style={{ padding: "20px", maxWidth: "400px", margin: "auto" }}>
         <h2 style={{ textAlign: "center" }}>Available Workshops</h2>
 
+        {/* ✅ Search Bar */}
+        <input
+          type="text"
+          placeholder="Search workshops..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          style={inputStyle}
+        />
+
         {/* Cards */}
         <div style={{ display: "flex", flexDirection: "column", gap: "20px", marginTop: "20px" }}>
           
-          <div 
-            style={cardStyle}
-            onMouseEnter={(e) => e.currentTarget.style.transform = "scale(1.02)"}
-            onMouseLeave={(e) => e.currentTarget.style.transform = "scale(1)"}
-          >
-            <h3>AI Workshop</h3>
-            <p>Date: 10 April</p>
-            <button style={buttonStyle} onClick={() => handleRegister("AI Workshop")}>
-              Register
-            </button>
-          </div>
+          {workshops
+            .filter(w => w.name.toLowerCase().includes(search.toLowerCase()))
+            .map((workshop, index) => (
+              <div 
+                key={index}
+                style={cardStyle}
+                onMouseEnter={(e) => e.currentTarget.style.transform = "scale(1.02)"}
+                onMouseLeave={(e) => e.currentTarget.style.transform = "scale(1)"}
+              >
+                <h3>{workshop.name}</h3>
+                <p>Date: {workshop.date}</p>
+                <p>Seats left: {workshop.seats}</p>
 
-          <div 
-            style={cardStyle}
-            onMouseEnter={(e) => e.currentTarget.style.transform = "scale(1.02)"}
-            onMouseLeave={(e) => e.currentTarget.style.transform = "scale(1)"}
-          >
-            <h3>Web Development</h3>
-            <p>Date: 15 April</p>
-            <button style={buttonStyle} onClick={() => handleRegister("Web Development")}>
-              Register
-            </button>
-          </div>
-
-          <div 
-            style={cardStyle}
-            onMouseEnter={(e) => e.currentTarget.style.transform = "scale(1.02)"}
-            onMouseLeave={(e) => e.currentTarget.style.transform = "scale(1)"}
-          >
-            <h3>Python Basics</h3>
-            <p>Date: 20 April</p>
-            <button style={buttonStyle} onClick={() => handleRegister("Python Basics")}>
-              Register
-            </button>
-          </div>
+                <button 
+                  style={{
+                    ...buttonStyle,
+                    backgroundColor: workshop.seats === 0 ? "gray" : "#3b82f6"
+                  }}
+                  disabled={workshop.seats === 0}
+                  onClick={() => handleRegister(workshop.name)}
+                >
+                  {workshop.seats === 0 ? "Full" : "Register"}
+                </button>
+              </div>
+            ))}
 
         </div>
 
@@ -113,7 +126,7 @@ function App() {
             />
 
             <button style={submitStyle} onClick={handleSubmit}>
-              Submit
+              {loading ? "Submitting..." : "Submit"}
             </button>
 
             {/* CANCEL BUTTON */}
