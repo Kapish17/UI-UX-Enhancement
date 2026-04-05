@@ -10,7 +10,6 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
 
-  // ✅ NEW: Workshop Data
   const workshops = [
     { name: "AI Workshop", date: "10 April", seats: 5 },
     { name: "Web Development", date: "15 April", seats: 2 },
@@ -47,14 +46,19 @@ function App() {
   };
 
   return (
-    <div style={{ fontFamily: "Arial", backgroundColor: "#f5f7fa", minHeight: "100vh" }}>
+    <div style={{
+      fontFamily: "Arial",
+      background: "linear-gradient(to right, #e0f2fe, #f0f9ff)",
+      minHeight: "100vh"
+    }}>
       
       {/* Navbar */}
       <div style={{
-        backgroundColor: "#1e293b",
+        background: "linear-gradient(to right, #1e293b, #0f172a)",
         color: "white",
-        padding: "15px",
-        fontSize: "20px",
+        padding: "16px",
+        fontSize: "22px",
+        fontWeight: "bold",
         textAlign: "center"
       }}>
         Workshop Booking
@@ -62,12 +66,14 @@ function App() {
 
       {/* Main Section */}
       <div style={{ padding: "20px", maxWidth: "400px", margin: "auto" }}>
-        <h2 style={{ textAlign: "center" }}>Available Workshops</h2>
+        <h2 style={{ textAlign: "center", color: "#1e293b" }}>
+          Available Workshops
+        </h2>
 
-        {/* ✅ Search Bar */}
+        {/* Search */}
         <input
           type="text"
-          placeholder="Search workshops..."
+          placeholder="🔍 Search workshops..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           style={inputStyle}
@@ -82,17 +88,21 @@ function App() {
               <div 
                 key={index}
                 style={cardStyle}
-                onMouseEnter={(e) => e.currentTarget.style.transform = "scale(1.02)"}
+                onMouseEnter={(e) => e.currentTarget.style.transform = "scale(1.03)"}
                 onMouseLeave={(e) => e.currentTarget.style.transform = "scale(1)"}
               >
                 <h3>{workshop.name}</h3>
                 <p>Date: {workshop.date}</p>
-                <p>Seats left: {workshop.seats}</p>
+                <p style={{ fontWeight: "bold" }}>
+                  Seats left: {workshop.seats}
+                </p>
 
                 <button 
                   style={{
                     ...buttonStyle,
-                    backgroundColor: workshop.seats === 0 ? "gray" : "#3b82f6"
+                    background: workshop.seats === 0
+                      ? "#9ca3af"
+                      : "linear-gradient(to right, #3b82f6, #2563eb)"
                   }}
                   disabled={workshop.seats === 0}
                   onClick={() => handleRegister(workshop.name)}
@@ -129,12 +139,10 @@ function App() {
               {loading ? "Submitting..." : "Submit"}
             </button>
 
-            {/* CANCEL BUTTON */}
             <button style={cancelStyle} onClick={handleCancel}>
               Cancel
             </button>
 
-            {/* SUCCESS MESSAGE */}
             {submitted && (
               <div style={successStyle}>
                 ✅ Booking Successful!
@@ -152,20 +160,21 @@ function App() {
 const cardStyle = {
   backgroundColor: "white",
   padding: "20px",
-  borderRadius: "12px",
-  boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
+  borderRadius: "16px",
+  boxShadow: "0 6px 20px rgba(0,0,0,0.1)",
   transition: "0.3s",
-  cursor: "pointer"
+  cursor: "pointer",
+  borderLeft: "5px solid #3b82f6"
 };
 
 const buttonStyle = {
   marginTop: "10px",
-  padding: "10px",
+  padding: "12px",
   width: "100%",
-  backgroundColor: "#3b82f6",
   color: "white",
   border: "none",
-  borderRadius: "6px",
+  borderRadius: "8px",
+  fontWeight: "bold",
   cursor: "pointer"
 };
 
@@ -173,36 +182,38 @@ const formStyle = {
   marginTop: "30px",
   backgroundColor: "white",
   padding: "20px",
-  borderRadius: "12px",
-  boxShadow: "0 4px 10px rgba(0,0,0,0.1)"
+  borderRadius: "16px",
+  boxShadow: "0 6px 20px rgba(0,0,0,0.1)"
 };
 
 const inputStyle = {
   width: "100%",
-  padding: "10px",
+  padding: "12px",
   margin: "10px 0",
-  borderRadius: "6px",
+  borderRadius: "8px",
   border: "1px solid #ccc"
 };
 
 const submitStyle = {
   width: "100%",
-  padding: "10px",
-  backgroundColor: "#22c55e",
+  padding: "12px",
+  background: "linear-gradient(to right, #22c55e, #16a34a)",
   color: "white",
   border: "none",
-  borderRadius: "6px",
+  borderRadius: "8px",
+  fontWeight: "bold",
   cursor: "pointer"
 };
 
 const cancelStyle = {
   width: "100%",
-  padding: "10px",
+  padding: "12px",
   marginTop: "10px",
-  backgroundColor: "#ef4444",
+  background: "linear-gradient(to right, #ef4444, #dc2626)",
   color: "white",
   border: "none",
-  borderRadius: "6px",
+  borderRadius: "8px",
+  fontWeight: "bold",
   cursor: "pointer"
 };
 
