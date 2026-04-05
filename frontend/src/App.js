@@ -1,4 +1,29 @@
+import { useState } from "react";
+
 function App() {
+
+  const [showForm, setShowForm] = useState(false);
+  const [selectedWorkshop, setSelectedWorkshop] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleRegister = (workshop) => {
+    setShowForm(true);
+    setSelectedWorkshop(workshop);
+    setSubmitted(false);
+  };
+
+  const handleSubmit = () => {
+    if (!name || !email) {
+      alert("Please fill all fields");
+      return;
+    }
+    setSubmitted(true);
+    setName("");
+    setEmail("");
+  };
+
   return (
     <div style={{ fontFamily: "Arial", backgroundColor: "#f5f7fa", minHeight: "100vh" }}>
       
@@ -20,76 +45,124 @@ function App() {
         {/* Cards */}
         <div style={{ display: "flex", flexDirection: "column", gap: "20px", marginTop: "20px" }}>
           
-          {/* Card */}
-          <div style={{
-            backgroundColor: "white",
-            padding: "20px",
-            borderRadius: "12px",
-            boxShadow: "0 4px 10px rgba(0,0,0,0.1)"
-          }}>
+          <div style={cardStyle}>
             <h3>AI Workshop</h3>
             <p>Date: 10 April</p>
-            <button style={{
-              marginTop: "10px",
-              padding: "10px",
-              width: "100%",
-              backgroundColor: "#3b82f6",
-              color: "white",
-              border: "none",
-              borderRadius: "6px"
-            }}>
+            <button style={buttonStyle} onClick={() => handleRegister("AI Workshop")}>
               Register
             </button>
           </div>
 
-          {/* Card */}
-          <div style={{
-            backgroundColor: "white",
-            padding: "20px",
-            borderRadius: "12px",
-            boxShadow: "0 4px 10px rgba(0,0,0,0.1)"
-          }}>
+          <div style={cardStyle}>
             <h3>Web Development</h3>
             <p>Date: 15 April</p>
-            <button style={{
-              marginTop: "10px",
-              padding: "10px",
-              width: "100%",
-              backgroundColor: "#3b82f6",
-              color: "white",
-              border: "none",
-              borderRadius: "6px"
-            }}>
+            <button style={buttonStyle} onClick={() => handleRegister("Web Development")}>
               Register
             </button>
           </div>
 
-          {/* Card */}
-          <div style={{
-            backgroundColor: "white",
-            padding: "20px",
-            borderRadius: "12px",
-            boxShadow: "0 4px 10px rgba(0,0,0,0.1)"
-          }}>
+          <div style={cardStyle}>
             <h3>Python Basics</h3>
             <p>Date: 20 April</p>
-            <button style={{
-              marginTop: "10px",
-              padding: "10px",
-              width: "100%",
-              backgroundColor: "#3b82f6",
-              color: "white",
-              border: "none",
-              borderRadius: "6px"
-            }}>
+            <button style={buttonStyle} onClick={() => handleRegister("Python Basics")}>
               Register
             </button>
           </div>
 
         </div>
+
+        {/* FORM */}
+        {showForm && (
+          <div style={formStyle}>
+            <h3>Book: {selectedWorkshop}</h3>
+
+            <input 
+              type="text"
+              placeholder="Enter your name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              style={inputStyle}
+            />
+
+            <input 
+              type="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              style={inputStyle}
+            />
+
+            <button style={submitStyle} onClick={handleSubmit}>
+              Submit
+            </button>
+
+            {/* SUCCESS MESSAGE */}
+            {submitted && (
+              <div style={successStyle}>
+                ✅ Booking Successful!
+              </div>
+            )}
+          </div>
+        )}
+
       </div>
     </div>
   );
 }
+
+// 🎨 Styles
+const cardStyle = {
+  backgroundColor: "white",
+  padding: "20px",
+  borderRadius: "12px",
+  boxShadow: "0 4px 10px rgba(0,0,0,0.1)",
+  transition: "0.3s"
+};
+
+const buttonStyle = {
+  marginTop: "10px",
+  padding: "10px",
+  width: "100%",
+  backgroundColor: "#3b82f6",
+  color: "white",
+  border: "none",
+  borderRadius: "6px",
+  cursor: "pointer"
+};
+
+const formStyle = {
+  marginTop: "30px",
+  backgroundColor: "white",
+  padding: "20px",
+  borderRadius: "12px",
+  boxShadow: "0 4px 10px rgba(0,0,0,0.1)"
+};
+
+const inputStyle = {
+  width: "100%",
+  padding: "10px",
+  margin: "10px 0",
+  borderRadius: "6px",
+  border: "1px solid #ccc"
+};
+
+const submitStyle = {
+  width: "100%",
+  padding: "10px",
+  backgroundColor: "#22c55e",
+  color: "white",
+  border: "none",
+  borderRadius: "6px",
+  cursor: "pointer"
+};
+
+const successStyle = {
+  marginTop: "15px",
+  padding: "12px",
+  backgroundColor: "#d1fae5",
+  borderRadius: "8px",
+  textAlign: "center",
+  fontWeight: "bold"
+};
 
 export default App;
