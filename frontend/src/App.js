@@ -1,229 +1,299 @@
-import { useState } from "react";
+import { useState, useCallback, useMemo } from "react";
+import "./App.css";
 
-function App() {
+// ============ Reusable Components ============
 
-  const [showForm, setShowForm] = useState(false);
-  const [selectedWorkshop, setSelectedWorkshop] = useState("");
+const Header = () => (
+  <header className="app-header">
+    <div className="app-header-content">
+      <h1 className="app-title">Workshop Booking</h1>
+      <p className="app-subtitle">Discover and register for expert-led workshops</p>
+    </div>
+  </header>
+);
+
+const WorkshopCard = ({ workshop, onRegister, index }) => {
+  const isAvailable = workshop.seats > 0;
+  const availabilityText = isAvailable
+    ? `${workshop.seats} seat${workshop.seats !== 1 ? 's' : ''} available`
+    : 'No seats available';
+
+  return (
+    <article className="workshop-card">
+      <div className="workshop-header">
+        <h2 className="workshop-name">{workshop.name}</h2>
+        <span className="workshop-badge" aria-label={`${workshop.seats} seats`}>
+          {isAvailable ? `${workshop.seats} Seats` : "Full"}
+        </span>
+      </div>
+
+      <div className="workshop-details">
+        <div className="detail-item">
+          <span className="detail-label">📅 Date</span>
+          <span className="detail-value">{workshop.date}</span>
+        </div>
+        <div className="detail-item">
+          <span className="detail-label">👥 Availability</span>
+          <span className="detail-value">{availabilityText}</span>
+        </div>
+      </div>
+
+      <div className="seats-info">
+        <div className="seats-label">Seats Available</div>
+        <div className="seats-count">{isAvailable ? workshop.seats : "0"}</div>
+      </div>
+
+      <button
+        className={`button button-primary ${!isAvailable ? 'disabled' : ''}`}
+        onClick={() => onRegister(workshop.name)}
+        disabled={!isAvailable}
+        aria-label={`Register for ${workshop.name}`}
+      >
+        {isAvailable ? "Register Now" : "Fully Booked"}
+      </button>
+    </article>
+  );
+};
+
+const SearchBar = ({ value, onChange }) => (
+  <div className="search-container">
+    <input
+      type="search"
+      className="search-input"
+      placeholder="Search workshops by name..."
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+      aria-label="Search workshops"
+    />
+  </div>
+);
+
+const RegistrationForm = ({ workshop, onSubmit, onCancel, loading }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [errors, setErrors] = useState({});
+
+  const validateForm = () => {
+    const newErrors = {};
+
+    if (!name.trim()) {
+      newErrors.name = "Name is required";
+    } else if (name.trim().length < 2) {
+      newErrors.name = "Name must be at least 2 characters";
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email.trim()) {
+      newErrors.email = "Email is required";
+    } else if (!emailRegex.test(email)) {
+      newErrors.email = "Please enter a valid email address";
+    }
+
+    return newErrors;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const newErrors = validateForm();
+
+    if (Object.keys(newErrors).length === 0) {
+      onSubmit({ name: name.trim(), email: email.trim() });
+      setName("");
+      setEmail("");
+      setErrors({});
+    } else {
+      setErrors(newErrors);
+    }
+  };
+
+  return (
+    <form className="form-container" onSubmit={handleSubmit} noValidate>
+      <h2 className="form-title">Register for Workshop</h2>
+      <p style={{ color: "var(--neutral-600)", marginBottom: "var(--spacing-lg)" }}>
+        {workshop}
+      </p>
+
+      <div className="form-group">
+        <label htmlFor="name" className="form-label required">Full Name</label>
+        <input
+          id="name"
+          type="text"
+          className="form-input"
+          placeholder="Enter your full name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          disabled={loading}
+          required
+          minLength={2}
+        />
+        {errors.name && <p className="error-message">{errors.name}</p>}
+      </div>
+
+      <div className="form-group">
+        <label htmlFor="email" className="form-label required">Email Address</label>
+        <input
+          id="email"
+          type="email"
+          className="form-input"
+          placeholder="Enter your email address"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          disabled={loading}
+          required
+        />
+        {errors.email && <p className="error-message">{errors.email}</p>}
+      </div>
+
+      <div className="form-actions">
+        <button
+          type="submit"
+          className={`button button-success ${loading ? 'loading' : ''}`}
+          disabled={loading}
+          aria-busy={loading}
+        >
+          {loading ? "Registering..." : "Confirm Registration"}
+        </button>
+        <button
+          type="button"
+          className="button button-danger"
+          onClick={onCancel}
+          disabled={loading}
+        >
+          Cancel
+        </button>
+      </div>
+    </form>
+  );
+};
+
+const SuccessMessage = ({ workshop }) => (
+  <div className="success-message" role="status" aria-live="polite">
+    <div style={{ fontSize: "1.5rem", marginBottom: "var(--spacing-sm)" }}>✅</div>
+    <div>Successfully registered for <strong>{workshop}</strong>!</div>
+    <div style={{ fontSize: "0.85rem", marginTop: "var(--spacing-sm)", opacity: 0.9 }}>
+      Check your email for confirmation details
+    </div>
+  </div>
+);
+
+const Footer = () => (
+  <footer className="app-footer">
+    <div className="footer-content">
+      <p>&copy; 2024 Workshop Booking Platform. All rights reserved.</p>
+      <p style={{ fontSize: "0.85rem", opacity: 0.8, marginTop: "var(--spacing-sm)" }}>
+        For inquiries, contact: workshops@example.com
+      </p>
+    </div>
+  </footer>
+);
+
+// ============ Main App Component ============
+
+function App() {
+  const [showForm, setShowForm] = useState(false);
+  const [selectedWorkshop, setSelectedWorkshop] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
 
-  const workshops = [
-    { name: "AI Workshop", date: "10 April", seats: 5 },
-    { name: "Web Development", date: "15 April", seats: 2 },
-    { name: "Python Basics", date: "20 April", seats: 0 }
-  ];
+  const workshops = useMemo(() => [
+    { name: "Introduction to AI & Machine Learning", date: "10 April, 2024", seats: 5 },
+    { name: "Web Development with React", date: "15 April, 2024", seats: 2 },
+    { name: "Python Fundamentals", date: "20 April, 2024", seats: 0 },
+    { name: "Mobile App Development", date: "25 April, 2024", seats: 8 },
+    { name: "Data Science Basics", date: "30 April, 2024", seats: 3 }
+  ], []);
 
-  const handleRegister = (workshop) => {
+  const filteredWorkshops = useMemo(() =>
+    workshops.filter(w => w.name.toLowerCase().includes(search.toLowerCase())),
+    [workshops, search]
+  );
+
+  const handleRegister = useCallback((workshopName) => {
     setShowForm(true);
-    setSelectedWorkshop(workshop);
+    setSelectedWorkshop(workshopName);
     setSubmitted(false);
-  };
+  }, []);
 
-  const handleSubmit = () => {
-    if (!name || !email) {
-      alert("Please fill all fields");
-      return;
-    }
-
+  const handleSubmit = useCallback(({ name, email }) => {
     setLoading(true);
 
     setTimeout(() => {
       setLoading(false);
       setSubmitted(true);
-      setName("");
-      setEmail("");
+      setShowForm(false);
     }, 1000);
-  };
+  }, []);
 
-  const handleCancel = () => {
+  const handleCancel = useCallback(() => {
     setShowForm(false);
     setSubmitted(false);
-    setName("");
-    setEmail("");
-  };
+    setSelectedWorkshop("");
+  }, []);
 
   return (
-    <div style={{
-      fontFamily: "Arial",
-      background: "linear-gradient(to right, #e0f2fe, #f0f9ff)",
-      minHeight: "100vh"
-    }}>
-      
-      {/* Navbar */}
-      <div style={{
-        background: "linear-gradient(to right, #1e293b, #0f172a)",
-        color: "white",
-        padding: "16px",
-        fontSize: "22px",
-        fontWeight: "bold",
-        textAlign: "center"
-      }}>
-        Workshop Booking
-      </div>
+    <div className="app">
+      <Header />
 
-      {/* Main Section */}
-      <div style={{ padding: "20px", maxWidth: "400px", margin: "auto" }}>
-        <h2 style={{ textAlign: "center", color: "#1e293b" }}>
-          Available Workshops
-        </h2>
+      <main className="app-content">
+        <div className="main-container">
+          {submitted && <SuccessMessage workshop={selectedWorkshop} />}
 
-        {/* Search */}
-        <input
-          type="text"
-          placeholder="🔍 Search workshops..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          style={inputStyle}
-        />
+          <section className="section-header">
+            <h2 className="section-title">Available Workshops</h2>
+            <p className="section-subtitle">
+              {filteredWorkshops.length} workshop{filteredWorkshops.length !== 1 ? 's' : ''} available
+            </p>
+          </section>
 
-        {/* Cards */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "20px", marginTop: "20px" }}>
-          
-          {workshops
-            .filter(w => w.name.toLowerCase().includes(search.toLowerCase()))
-            .map((workshop, index) => (
-              <div 
-                key={index}
-                style={cardStyle}
-                onMouseEnter={(e) => e.currentTarget.style.transform = "scale(1.03)"}
-                onMouseLeave={(e) => e.currentTarget.style.transform = "scale(1)"}
-              >
-                <h3>{workshop.name}</h3>
-                <p>Date: {workshop.date}</p>
-                <p style={{ fontWeight: "bold" }}>
-                  Seats left: {workshop.seats}
+          <SearchBar value={search} onChange={setSearch} />
+
+          <div className="workshops-grid">
+            {filteredWorkshops.length > 0 ? (
+              filteredWorkshops.map((workshop, index) => (
+                <WorkshopCard
+                  key={`${workshop.name}-${index}`}
+                  workshop={workshop}
+                  onRegister={handleRegister}
+                  index={index}
+                />
+              ))
+            ) : (
+              <div style={{
+                padding: "var(--spacing-2xl)",
+                textAlign: "center",
+                color: "var(--neutral-500)",
+                background: "white",
+                borderRadius: "var(--border-radius-lg)"
+              }}>
+                <p style={{ fontSize: "1.1rem", marginBottom: "var(--spacing-md)" }}>
+                  No workshops found
                 </p>
-
-                <button 
-                  style={{
-                    ...buttonStyle,
-                    background: workshop.seats === 0
-                      ? "#9ca3af"
-                      : "linear-gradient(to right, #3b82f6, #2563eb)"
-                  }}
-                  disabled={workshop.seats === 0}
-                  onClick={() => handleRegister(workshop.name)}
-                >
-                  {workshop.seats === 0 ? "Full" : "Register"}
-                </button>
-              </div>
-            ))}
-
-        </div>
-
-        {/* FORM */}
-        {showForm && (
-          <div style={formStyle}>
-            <h3>Book: {selectedWorkshop}</h3>
-
-            <input 
-              type="text"
-              placeholder="Enter your name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              style={inputStyle}
-            />
-
-            <input 
-              type="email"
-              placeholder="Enter your email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              style={inputStyle}
-            />
-
-            <button style={submitStyle} onClick={handleSubmit}>
-              {loading ? "Submitting..." : "Submit"}
-            </button>
-
-            <button style={cancelStyle} onClick={handleCancel}>
-              Cancel
-            </button>
-
-            {submitted && (
-              <div style={successStyle}>
-                ✅ Booking Successful!
+                <p style={{ fontSize: "0.95rem" }}>
+                  Try adjusting your search or check back later for new workshops
+                </p>
               </div>
             )}
           </div>
-        )}
+        </div>
+      </main>
 
-      </div>
+      {showForm && (
+        <div className="modal-backdrop" onClick={handleCancel} role="dialog" aria-modal="true">
+          <div onClick={(e) => e.stopPropagation()}>
+            <RegistrationForm
+              workshop={selectedWorkshop}
+              onSubmit={handleSubmit}
+              onCancel={handleCancel}
+              loading={loading}
+            />
+          </div>
+        </div>
+      )}
+
+      <Footer />
     </div>
   );
 }
-
-// 🎨 Styles
-const cardStyle = {
-  backgroundColor: "white",
-  padding: "20px",
-  borderRadius: "16px",
-  boxShadow: "0 6px 20px rgba(0,0,0,0.1)",
-  transition: "0.3s",
-  cursor: "pointer",
-  borderLeft: "5px solid #3b82f6"
-};
-
-const buttonStyle = {
-  marginTop: "10px",
-  padding: "12px",
-  width: "100%",
-  color: "white",
-  border: "none",
-  borderRadius: "8px",
-  fontWeight: "bold",
-  cursor: "pointer"
-};
-
-const formStyle = {
-  marginTop: "30px",
-  backgroundColor: "white",
-  padding: "20px",
-  borderRadius: "16px",
-  boxShadow: "0 6px 20px rgba(0,0,0,0.1)"
-};
-
-const inputStyle = {
-  width: "100%",
-  padding: "12px",
-  margin: "10px 0",
-  borderRadius: "8px",
-  border: "1px solid #ccc"
-};
-
-const submitStyle = {
-  width: "100%",
-  padding: "12px",
-  background: "linear-gradient(to right, #22c55e, #16a34a)",
-  color: "white",
-  border: "none",
-  borderRadius: "8px",
-  fontWeight: "bold",
-  cursor: "pointer"
-};
-
-const cancelStyle = {
-  width: "100%",
-  padding: "12px",
-  marginTop: "10px",
-  background: "linear-gradient(to right, #ef4444, #dc2626)",
-  color: "white",
-  border: "none",
-  borderRadius: "8px",
-  fontWeight: "bold",
-  cursor: "pointer"
-};
-
-const successStyle = {
-  marginTop: "15px",
-  padding: "12px",
-  backgroundColor: "#d1fae5",
-  borderRadius: "8px",
-  textAlign: "center",
-  fontWeight: "bold"
-};
 
 export default App;
