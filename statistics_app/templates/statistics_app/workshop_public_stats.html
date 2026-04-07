@@ -6,9 +6,43 @@
 
 <div class="container-fluid">
 
+<!-- ===== DASHBOARD SUMMARY ===== -->
+
+<div class="row mb-4">
+
+<div class="col-md-3">
+<div class="card text-center shadow">
+<div class="card-body">
+<h4>{{ objects.paginator.count }}</h4>
+<p>Total Workshops</p>
+</div>
+</div>
+</div>
+
+<div class="col-md-3">
+<div class="card text-center shadow">
+<div class="card-body">
+<h4>{{ ws_states|length }}</h4>
+<p>States Covered</p>
+</div>
+</div>
+</div>
+
+<div class="col-md-3">
+<div class="card text-center shadow">
+<div class="card-body">
+<h4>{{ ws_type|length }}</h4>
+<p>Workshop Types</p>
+</div>
+</div>
+</div>
+
+</div>
+
+
 <div class="row">
 
-<!-- FILTER PANEL -->
+<!-- ===== FILTER PANEL ===== -->
 
 <div class="col-md-3">
 
@@ -17,9 +51,7 @@
 <div class="card shadow">
 
 <div class="card-header bg-primary text-white">
-
 <h4 class="mb-0">Filters</h4>
-
 </div>
 
 <div class="card-body">
@@ -50,12 +82,10 @@
 </div>
 
 {% if request.user.is_authenticated %}
-
 <div class="form-group">
 <label>{{form.show_workshops.help_text}}</label>
 {{form.show_workshops}}
 </div>
-
 {% endif %}
 
 <hr>
@@ -85,7 +115,7 @@ Clear
 </div>
 
 
-<!-- MAIN CONTENT -->
+<!-- ===== MAIN CONTENT ===== -->
 
 <div class="col-md-9">
 
@@ -122,21 +152,27 @@ Clear
 
 <div class="card-body">
 
+<!-- ===== SEARCH BAR ===== -->
+
+<input class="form-control mb-3" id="tableSearch"
+type="text" placeholder="Search workshops...">
+
+
 <div class="table-responsive">
+
+{% if objects %}
 
 <table class="table table-hover table-striped">
 
 <thead class="thead-dark">
 
 <tr>
-
 <th>Sr No.</th>
 <th>Coordinator</th>
 <th>Institute</th>
 <th>Instructor</th>
 <th>Workshop</th>
 <th>Date</th>
-
 </tr>
 
 </thead>
@@ -148,15 +184,10 @@ Clear
 <tr>
 
 <td>{{ forloop.counter0|add:objects.start_index }}</td>
-
 <td>{{ workshop.coordinator.get_full_name | capfirst }}</td>
-
 <td>{{ workshop.coordinator.profile.institute | capfirst }}</td>
-
 <td>{{ workshop.instructor.get_full_name | capfirst }}</td>
-
 <td>{{ workshop.workshop_type.name }}</td>
-
 <td>{{ workshop.date | date }}</td>
 
 </tr>
@@ -166,6 +197,14 @@ Clear
 </tbody>
 
 </table>
+
+{% else %}
+
+<div class="alert alert-info text-center">
+No workshops found for selected filters.
+</div>
+
+{% endif %}
 
 </div>
 
@@ -182,12 +221,10 @@ Clear
 </div>
 
 
-<!-- GRAPH MODAL -->
+<!-- ===== GRAPH MODAL ===== -->
 
 <div id="dialog" title="Workshops Statistics">
-
 <canvas id="myChart"></canvas>
-
 </div>
 
 
@@ -200,6 +237,9 @@ var type_data = {{ws_type_count|safe}};
 
 var chart;
 
+
+/* Chart buttons */
+
 $("#state_graph").on("click", function(){
 show_graph(state_labels,state_data,"State wise workshops");
 });
@@ -208,6 +248,8 @@ $("#type_graph").on("click", function(){
 show_graph(type_labels,type_data,"Workshop type statistics");
 });
 
+
+/* Chart function */
 
 function show_graph(labels,data,title){
 
@@ -224,7 +266,13 @@ labels:labels,
 datasets:[{
 data:data,
 label:title,
-backgroundColor:'#3a86ff'
+backgroundColor:[
+'#3a86ff',
+'#00b4d8',
+'#ffbe0b',
+'#fb5607',
+'#8338ec'
+]
 }]
 },
 
@@ -240,6 +288,21 @@ height:500
 });
 
 }
+
+
+/* Table search */
+
+$("#tableSearch").on("keyup", function() {
+
+var value = $(this).val().toLowerCase();
+
+$("table tbody tr").filter(function() {
+
+$(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+
+});
+
+});
 
 </script>
 

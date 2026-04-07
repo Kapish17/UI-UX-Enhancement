@@ -1,7 +1,7 @@
 /* ---------------- GLOBAL ---------------- */
 
 body{
-    background:#f4f7fb;
+    background:linear-gradient(135deg,#eef2f7,#f8fbff);
     font-family:'Poppins', sans-serif;
     color:#333;
 }
@@ -11,12 +11,17 @@ body{
 
 .navbar{
     z-index:1000;
-    background:linear-gradient(90deg,#1d3557,#457b9d) !important;
+    background:linear-gradient(90deg,#1d3557,#457b9d)!important;
     box-shadow:0 4px 15px rgba(0,0,0,0.25);
 }
 
 .navbar .nav-link{
     font-weight:500;
+    transition:0.2s;
+}
+
+.navbar .nav-link:hover{
+    color:#ffd166!important;
 }
 
 
@@ -32,18 +37,32 @@ body{
 
 .card{
     border:none;
-    border-radius:12px;
+    border-radius:14px;
     box-shadow:0 10px 25px rgba(0,0,0,0.08);
-    transition:0.3s;
+    transition:0.25s;
 }
 
 .card:hover{
-    transform:translateY(-2px);
+    transform:translateY(-3px);
+    box-shadow:0 15px 35px rgba(0,0,0,0.12);
 }
 
 .card-header{
     font-weight:600;
     font-size:16px;
+}
+
+
+/* ---------------- DASHBOARD METRIC CARDS ---------------- */
+
+.card.text-center h4{
+    font-size:28px;
+    font-weight:600;
+    color:#1d3557;
+}
+
+.card.text-center p{
+    color:#777;
 }
 
 
@@ -55,10 +74,12 @@ body{
     border-radius:8px;
     padding:10px 18px;
     font-weight:500;
+    transition:0.2s;
 }
 
 .btn-primary:hover{
     opacity:0.9;
+    transform:scale(1.03);
 }
 
 .btn-info{
@@ -69,6 +90,15 @@ body{
 
 .btn-success{
     border-radius:8px;
+}
+
+
+/* ---------------- SEARCH BAR ---------------- */
+
+#tableSearch{
+    border-radius:8px;
+    border:1px solid #ddd;
+    padding:10px;
 }
 
 
@@ -83,7 +113,7 @@ input,select,textarea{
 input:focus,select:focus{
     outline:none;
     border-color:#3a86ff !important;
-    box-shadow:0 0 5px rgba(58,134,255,0.3);
+    box-shadow:0 0 6px rgba(58,134,255,0.3);
 }
 
 
@@ -96,12 +126,16 @@ input:focus,select:focus{
 }
 
 .table thead{
-    background:#1d3557;
+    background:linear-gradient(90deg,#1d3557,#457b9d);
     color:white;
 }
 
+.table tbody tr{
+    transition:0.2s;
+}
+
 .table tbody tr:hover{
-    background:#f1f5f9;
+    background:#eef6ff;
 }
 
 

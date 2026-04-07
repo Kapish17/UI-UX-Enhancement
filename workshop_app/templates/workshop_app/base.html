@@ -15,7 +15,7 @@ HomePage
 </title>
 
 <!-- Google Font -->
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <!-- CSS -->
 <link rel="stylesheet" href="{% static 'workshop_app/css/bootstrap.min.css' %}">
@@ -46,25 +46,24 @@ HomePage
 
 <!-- ================= NAVBAR ================= -->
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow">
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+
+<div class="container-fluid">
 
 {% if user.is_authenticated %}
-<a class="navbar-brand text-white" href="{% url 'workshop_app:index' %}">
-FOSSEE Workshops
+<a class="navbar-brand" href="{% url 'workshop_app:index' %}">
+<i class="fa fa-graduation-cap"></i> FOSSEE Workshops
 </a>
 {% else %}
-<a class="navbar-brand text-white" href="{{request.scheme}}://{{request.get_host}}">
-FOSSEE Workshops
+<a class="navbar-brand" href="{{request.scheme}}://{{request.get_host}}">
+<i class="fa fa-graduation-cap"></i> FOSSEE Workshops
 </a>
 {% endif %}
 
 <button class="navbar-toggler"
 type="button"
 data-toggle="collapse"
-data-target="#navbarSupportedContent"
-aria-controls="navbarSupportedContent"
-aria-expanded="false"
-aria-label="Toggle navigation">
+data-target="#navbarSupportedContent">
 
 <span class="navbar-toggler-icon"></span>
 
@@ -72,17 +71,19 @@ aria-label="Toggle navigation">
 
 <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
+<!-- LEFT MENU -->
+
 <ul class="navbar-nav">
 
 <li class="nav-item">
-<a class="nav-link text-white" href="/">
-Home
+<a class="nav-link" href="/">
+<i class="fa fa-home"></i> Home
 </a>
 </li>
 
 <li class="nav-item">
-<a class="nav-link text-white" href="{% url 'statistics_app:public' %}">
-Workshop Statistics
+<a class="nav-link" href="{% url 'statistics_app:public' %}">
+<i class="fa fa-bar-chart"></i> Statistics
 </a>
 </li>
 
@@ -95,45 +96,52 @@ Workshop Statistics
 
 {% if request.user|has_group:"instructor" %}
 <li class="nav-item">
-<a class="nav-link text-white" href="{% url 'statistics_app:team' %}">
-Team Statistics
+<a class="nav-link" href="{% url 'statistics_app:team' %}">
+<i class="fa fa-line-chart"></i> Team Stats
 </a>
 </li>
 {% endif %}
 
 <li class="nav-item">
-<a class="nav-link text-white"
+<a class="nav-link"
 href="{% url 'workshop_app:workshop_status_instructor' %}">
-Workshop Status
+<i class="fa fa-calendar"></i> Workshop Status
 </a>
 </li>
 
 {% if not request.user|has_group:"instructor" %}
 <li class="nav-item">
-<a class="nav-link text-white"
+<a class="nav-link"
 href="{% url 'workshop_app:propose_workshop' %}">
-Propose Workshop
+<i class="fa fa-plus-circle"></i> Propose Workshop
 </a>
 </li>
 {% endif %}
 
 <li class="nav-item">
-<a class="nav-link text-white"
+<a class="nav-link"
 href="{% url 'workshop_app:workshop_type_list' %}">
-Workshop Types
+<i class="fa fa-book"></i> Workshop Types
 </a>
 </li>
 
 </ul>
 
 
-<!-- Profile Dropdown -->
+<!-- RIGHT MENU -->
 
 <ul class="navbar-nav ml-auto">
 
+<li class="nav-item mr-3">
+
+<input class="form-control form-control-sm"
+placeholder="Search...">
+
+</li>
+
 <li class="nav-item dropdown">
 
-<a class="nav-link dropdown-toggle text-white"
+<a class="nav-link dropdown-toggle"
 href="#"
 data-toggle="dropdown">
 
@@ -152,17 +160,19 @@ account_circle
 
 <a class="dropdown-item"
 href="{% url 'workshop_app:view_own_profile' %}">
-Profile
+<i class="fa fa-user"></i> Profile
 </a>
 
 <a class="dropdown-item"
 href="{% url 'password_change' %}">
-Change Password
+<i class="fa fa-lock"></i> Change Password
 </a>
+
+<div class="dropdown-divider"></div>
 
 <a class="dropdown-item"
 href="{% url 'workshop_app:logout' %}">
-Logout
+<i class="fa fa-sign-out"></i> Logout
 </a>
 
 </div>
@@ -175,12 +185,14 @@ Logout
 
 </div>
 
+</div>
+
 </nav>
 
 
 <!-- ================= PAGE CONTENT ================= -->
 
-<div class="base-content" style="margin-top:80px;">
+<div class="base-content">
 
 <div class="container">
 
@@ -220,11 +232,17 @@ toastr[
 
 <!-- ================= FOOTER ================= -->
 
-<footer class="footer bg-dark text-white mt-5">
+<footer class="footer text-white">
 
 <div class="container text-center py-3">
 
-Developed by FOSSEE group, IIT Bombay
+<p>
+<strong>Workshop Management System</strong>
+</p>
+
+<p>
+Developed by FOSSEE Group | IIT Bombay
+</p>
 
 </div>
 
