@@ -12,19 +12,37 @@ const Header = () => (
   </header>
 );
 
-const WorkshopCard = ({ workshop, onRegister, index }) => {
+const WorkshopCard = ({ workshop, onRegister, index, isInWishlist, onWishlistToggle, onShowDetails }) => {
   const isAvailable = workshop.seats > 0;
   const availabilityText = isAvailable
     ? `${workshop.seats} seat${workshop.seats !== 1 ? 's' : ''} available`
     : 'No seats available';
 
+  const handleCardClick = (e) => {
+    if (e.target.closest(".wishlist-button")) return;
+    onShowDetails(workshop);
+  };
+
   return (
-    <article className="workshop-card">
+    <article className="workshop-card" onClick={handleCardClick}>
       <div className="workshop-header">
-        <h2 className="workshop-name">{workshop.name}</h2>
-        <span className="workshop-badge" aria-label={`${workshop.seats} seats`}>
-          {isAvailable ? `${workshop.seats} Seats` : "Full"}
-        </span>
+        <div>
+          <span className="workshop-category-badge">{workshop.category}</span>
+          <h2 className="workshop-name">{workshop.name}</h2>
+        </div>
+        <div className="workshop-card-actions">
+          <button
+            className="wishlist-button"
+            onClick={() => onWishlistToggle(workshop.name)}
+            aria-label={isInWishlist ? "Remove from wishlist" : "Add to wishlist"}
+            title={isInWishlist ? "Remove from wishlist" : "Add to wishlist"}
+          >
+            {isInWishlist ? "❤️" : "🤍"}
+          </button>
+          <span className="workshop-badge" aria-label={`${workshop.seats} seats`}>
+            {isAvailable ? `${workshop.seats} Seats` : "Full"}
+          </span>
+        </div>
       </div>
 
       <div className="workshop-details">
@@ -54,6 +72,43 @@ const WorkshopCard = ({ workshop, onRegister, index }) => {
     </article>
   );
 };
+
+const FilterControls = ({ categories, selectedCategory, onCategoryChange }) => (
+  <div className="filter-container">
+    <label htmlFor="category-filter" className="filter-label">📂 Filter by Category:</label>
+    <div className="filter-buttons">
+      {categories.map((cat) => (
+        <button
+          key={cat}
+          className={`filter-button ${selectedCategory === cat ? 'active' : ''}`}
+          onClick={() => onCategoryChange(cat)}
+          aria-pressed={selectedCategory === cat}
+        >
+          {cat}
+        </button>
+      ))}
+    </div>
+  </div>
+);
+
+const SortControls = ({ sortBy, onSortChange }) => (
+  <div className="sort-container">
+    <label htmlFor="sort-select" className="sort-label">↕️ Sort by:</label>
+    <select
+      id="sort-select"
+      className="sort-select"
+      value={sortBy}
+      onChange={(e) => onSortChange(e.target.value)}
+      aria-label="Sort workshops"
+    >
+      <option value="date">Date (Earliest First)</option>
+      <option value="date-latest">Date (Latest First)</option>
+      <option value="seats">Seats Available (Most First)</option>
+      <option value="seats-least">Seats Available (Least First)</option>
+      <option value="name">Name (A-Z)</option>
+    </select>
+  </div>
+);
 
 const SearchBar = ({ value, onChange }) => (
   <div className="search-container">
@@ -176,6 +231,112 @@ const SuccessMessage = ({ workshop }) => (
   </div>
 );
 
+const WorkshopDetails = ({ workshop, onClose, isInWishlist, onWishlistToggle, onRegister }) => (
+  <div className="details-modal">
+    <div className="details-content">
+      <button className="details-close" onClick={onClose} aria-label="Close">✕</button>
+
+      <div className="details-header">
+        <div>
+          <span className="details-category">{workshop.category}</span>
+          <h2 className="details-title">{workshop.name}</h2>
+        </div>
+        <button
+          className="details-wishlist"
+          onClick={() => onWishlistToggle(workshop.name)}
+          aria-label={isInWishlist ? "Remove from wishlist" : "Add to wishlist"}
+        >
+          {isInWishlist ? "❤️" : "🤍"}
+        </button>
+      </div>
+
+      <div className="details-info">
+        <div className="info-item">
+          <span className="info-label">📅 Date</span>
+          <span className="info-value">{workshop.date}</span>
+        </div>
+        <div className="info-item">
+          <span className="info-label">💺 Available Seats</span>
+          <span className="info-value">{workshop.seats > 0 ? `${workshop.seats} seats` : "No seats available"}</span>
+        </div>
+      </div>
+
+      <div className="details-description">
+        <h3 className="details-subtitle">About This Workshop</h3>
+        <p>
+          Join our {workshop.category} workshop on {workshop.date}. This expert-led session will provide hands-on experience
+          and in-depth knowledge to help you master the skills needed in today's technology landscape.
+        </p>
+        <p style={{ marginTop: "var(--spacing-md)" }}>
+          <strong>What you'll learn:</strong>
+        </p>
+        <ul style={{ paddingLeft: "var(--spacing-lg)" }}>
+          <li>Industry best practices and standards</li>
+          <li>Practical implementation techniques</li>
+          <li>Real-world problem-solving strategies</li>
+          <li>Networking opportunities with experts</li>
+        </ul>
+      </div>
+
+      <div className="details-actions">
+        <button
+          className="button button-primary"
+          onClick={() => {
+            onRegister(workshop.name);
+            onClose();
+          }}
+          disabled={workshop.seats === 0}
+        >
+          {workshop.seats > 0 ? "Register Now" : "Fully Booked"}
+        </button>
+        <button
+          className="button button-danger"
+          onClick={onClose}
+          style={{ background: "var(--neutral-200)", color: "var(--neutral-800)" }}
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+);
+
+const StatisticsDashboard = ({ totalWorkshops, availableWorkshops, totalSeats, categoriesCount }) => (
+  <div className="statistics-dashboard">
+    <div className="stat-card">
+      <div className="stat-icon">📚</div>
+      <div className="stat-info">
+        <div className="stat-value">{totalWorkshops}</div>
+        <div className="stat-label">Total Workshops</div>
+      </div>
+    </div>
+
+    <div className="stat-card">
+      <div className="stat-icon">✅</div>
+      <div className="stat-info">
+        <div className="stat-value">{availableWorkshops}</div>
+        <div className="stat-label">Available Now</div>
+      </div>
+    </div>
+
+    <div className="stat-card">
+      <div className="stat-icon">💺</div>
+      <div className="stat-info">
+        <div className="stat-value">{totalSeats}</div>
+        <div className="stat-label">Total Seats</div>
+      </div>
+    </div>
+
+    <div className="stat-card">
+      <div className="stat-icon">🏷️</div>
+      <div className="stat-info">
+        <div className="stat-value">{categoriesCount}</div>
+        <div className="stat-label">Categories</div>
+      </div>
+    </div>
+  </div>
+);
+
 const Footer = () => (
   <footer className="app-footer">
     <div className="footer-content">
@@ -195,19 +356,66 @@ function App() {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [sortBy, setSortBy] = useState("date");
+  const [wishlist, setWishlist] = useState(() => {
+    const saved = localStorage.getItem("workshopWishlist");
+    return saved ? JSON.parse(saved) : [];
+  });
+  const [showDetails, setShowDetails] = useState(false);
+  const [selectedWorkshopDetails, setSelectedWorkshopDetails] = useState(null);
 
   const workshops = useMemo(() => [
-    { name: "Introduction to AI & Machine Learning", date: "10 April, 2024", seats: 5 },
-    { name: "Web Development with React", date: "15 April, 2024", seats: 2 },
-    { name: "Python Fundamentals", date: "20 April, 2024", seats: 0 },
-    { name: "Mobile App Development", date: "25 April, 2024", seats: 8 },
-    { name: "Data Science Basics", date: "30 April, 2024", seats: 3 }
+    { name: "Introduction to AI & Machine Learning", date: "10 April, 2024", seats: 5, category: "AI" },
+    { name: "Web Development with React", date: "15 April, 2024", seats: 2, category: "Web Development" },
+    { name: "Python Fundamentals", date: "20 April, 2024", seats: 0, category: "Python" },
+    { name: "Mobile App Development", date: "25 April, 2024", seats: 8, category: "Mobile" },
+    { name: "Data Science Basics", date: "30 April, 2024", seats: 3, category: "Data Science" },
+    { name: "Advanced Python Programming", date: "5 May, 2024", seats: 6, category: "Python" },
+    { name: "Full Stack Development", date: "12 May, 2024", seats: 4, category: "Web Development" },
+    { name: "Machine Learning Advanced", date: "18 May, 2024", seats: 1, category: "AI" }
   ], []);
 
-  const filteredWorkshops = useMemo(() =>
-    workshops.filter(w => w.name.toLowerCase().includes(search.toLowerCase())),
-    [workshops, search]
-  );
+  const categories = useMemo(() => {
+    const cats = new Set(workshops.map(w => w.category));
+    return ["All", ...Array.from(cats).sort()];
+  }, [workshops]);
+
+  const filteredAndSortedWorkshops = useMemo(() => {
+    let result = workshops.filter(w =>
+      w.name.toLowerCase().includes(search.toLowerCase()) &&
+      (selectedCategory === "All" || w.category === selectedCategory)
+    );
+
+    // Apply sorting
+    result.sort((a, b) => {
+      switch(sortBy) {
+        case "date":
+          return new Date(a.date) - new Date(b.date);
+        case "date-latest":
+          return new Date(b.date) - new Date(a.date);
+        case "seats":
+          return b.seats - a.seats;
+        case "seats-least":
+          return a.seats - b.seats;
+        case "name":
+          return a.name.localeCompare(b.name);
+        default:
+          return 0;
+      }
+    });
+
+    return result;
+  }, [workshops, search, selectedCategory, sortBy]);
+
+  const stats = useMemo(() => {
+    const totalWorkshops = workshops.length;
+    const availableWorkshops = workshops.filter(w => w.seats > 0).length;
+    const totalSeats = workshops.reduce((sum, w) => sum + w.seats, 0);
+    const categoriesCount = new Set(workshops.map(w => w.category)).size;
+
+    return { totalWorkshops, availableWorkshops, totalSeats, categoriesCount };
+  }, [workshops]);
 
   const handleRegister = useCallback((workshopName) => {
     setShowForm(true);
@@ -231,31 +439,68 @@ function App() {
     setSelectedWorkshop("");
   }, []);
 
+  const toggleWishlist = useCallback((workshopName) => {
+    setWishlist((prev) => {
+      const isInWishlist = prev.includes(workshopName);
+      const updated = isInWishlist
+        ? prev.filter(name => name !== workshopName)
+        : [...prev, workshopName];
+      localStorage.setItem("workshopWishlist", JSON.stringify(updated));
+      return updated;
+    });
+  }, []);
+
+  const showWorkshopDetails = useCallback((workshop) => {
+    setSelectedWorkshopDetails(workshop);
+    setShowDetails(true);
+  }, []);
+
   return (
     <div className="app">
       <Header />
 
       <main className="app-content">
         <div className="main-container">
+          <StatisticsDashboard
+            totalWorkshops={stats.totalWorkshops}
+            availableWorkshops={stats.availableWorkshops}
+            totalSeats={stats.totalSeats}
+            categoriesCount={stats.categoriesCount}
+          />
+
           {submitted && <SuccessMessage workshop={selectedWorkshop} />}
 
           <section className="section-header">
             <h2 className="section-title">Available Workshops</h2>
             <p className="section-subtitle">
-              {filteredWorkshops.length} workshop{filteredWorkshops.length !== 1 ? 's' : ''} available
+              {filteredAndSortedWorkshops.length} workshop{filteredAndSortedWorkshops.length !== 1 ? 's' : ''} available
             </p>
           </section>
 
           <SearchBar value={search} onChange={setSearch} />
 
+          <FilterControls
+            categories={categories}
+            selectedCategory={selectedCategory}
+            onCategoryChange={setSelectedCategory}
+          />
+
+          <SortControls
+            sortBy={sortBy}
+            onSortChange={setSortBy}
+          />
+
           <div className="workshops-grid">
-            {filteredWorkshops.length > 0 ? (
-              filteredWorkshops.map((workshop, index) => (
+            {filteredAndSortedWorkshops.length > 0 ? (
+              filteredAndSortedWorkshops.map((workshop, index) => (
                 <WorkshopCard
                   key={`${workshop.name}-${index}`}
                   workshop={workshop}
                   onRegister={handleRegister}
                   index={index}
+                  isInWishlist={wishlist.includes(workshop.name)}
+                  onWishlistToggle={toggleWishlist}
+                  onShowDetails={showWorkshopDetails}
                 />
               ))
             ) : (
@@ -277,6 +522,20 @@ function App() {
           </div>
         </div>
       </main>
+
+      {showDetails && selectedWorkshopDetails && (
+        <div className="modal-backdrop" onClick={() => setShowDetails(false)} role="dialog" aria-modal="true">
+          <div onClick={(e) => e.stopPropagation()}>
+            <WorkshopDetails
+              workshop={selectedWorkshopDetails}
+              onClose={() => setShowDetails(false)}
+              isInWishlist={wishlist.includes(selectedWorkshopDetails.name)}
+              onWishlistToggle={toggleWishlist}
+              onRegister={handleRegister}
+            />
+          </div>
+        </div>
+      )}
 
       {showForm && (
         <div className="modal-backdrop" onClick={handleCancel} role="dialog" aria-modal="true">
