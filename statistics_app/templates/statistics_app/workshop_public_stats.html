@@ -6,11 +6,12 @@
 
 <div class="container-fluid">
 
+
 <!-- ===== DASHBOARD SUMMARY ===== -->
 
 <div class="row mb-4">
 
-<div class="col-md-3">
+<div class="col-md-4">
 <div class="card text-center shadow">
 <div class="card-body">
 <h4>{{ objects.paginator.count }}</h4>
@@ -19,7 +20,7 @@
 </div>
 </div>
 
-<div class="col-md-3">
+<div class="col-md-4">
 <div class="card text-center shadow">
 <div class="card-body">
 <h4>{{ ws_states|length }}</h4>
@@ -28,7 +29,7 @@
 </div>
 </div>
 
-<div class="col-md-3">
+<div class="col-md-4">
 <div class="card text-center shadow">
 <div class="card-body">
 <h4>{{ ws_type|length }}</h4>
@@ -38,6 +39,7 @@
 </div>
 
 </div>
+
 
 
 <div class="row">
@@ -115,6 +117,7 @@ Clear
 </div>
 
 
+
 <!-- ===== MAIN CONTENT ===== -->
 
 <div class="col-md-9">
@@ -150,12 +153,15 @@ Clear
 </div>
 
 
+
 <div class="card-body">
 
 <!-- ===== SEARCH BAR ===== -->
 
-<input class="form-control mb-3" id="tableSearch"
-type="text" placeholder="Search workshops...">
+<input class="form-control mb-3"
+id="tableSearch"
+type="text"
+placeholder="Search workshops...">
 
 
 <div class="table-responsive">
@@ -221,11 +227,13 @@ No workshops found for selected filters.
 </div>
 
 
+
 <!-- ===== GRAPH MODAL ===== -->
 
 <div id="dialog" title="Workshops Statistics">
 <canvas id="myChart"></canvas>
 </div>
+
 
 
 <script>
@@ -292,11 +300,11 @@ height:500
 
 /* Table search */
 
-$("#tableSearch").on("keyup", function() {
+$("#tableSearch").on("keyup", function(){
 
 var value = $(this).val().toLowerCase();
 
-$("table tbody tr").filter(function() {
+$("table tbody tr").filter(function(){
 
 $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
 
@@ -305,5 +313,6 @@ $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
 });
 
 </script>
+
 
 {% endblock %}
