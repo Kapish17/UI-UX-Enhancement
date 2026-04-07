@@ -1,50 +1,137 @@
+/* ---------------- GLOBAL ---------------- */
+
 body{
-    background:#f5f6fa;
-    font-family:'Poppins',sans-serif;
+    background:#f4f7fb;
+    font-family:'Poppins', sans-serif;
+    color:#333;
 }
 
-/* Navbar */
+
+/* ---------------- NAVBAR ---------------- */
 
 .navbar{
     z-index:1000;
-    box-shadow:0 2px 8px rgba(0,0,0,0.15);
+    background:linear-gradient(90deg,#1d3557,#457b9d) !important;
+    box-shadow:0 4px 15px rgba(0,0,0,0.25);
 }
 
-/* Main content */
+.navbar .nav-link{
+    font-weight:500;
+}
+
+
+/* ---------------- PAGE CONTENT ---------------- */
 
 .base-content{
-    padding-top:80px;
+    padding-top:90px;
     padding-bottom:80px;
 }
 
-/* Cards */
+
+/* ---------------- CARDS ---------------- */
 
 .card{
     border:none;
-    border-radius:10px;
-    box-shadow:0 4px 15px rgba(0,0,0,0.1);
+    border-radius:12px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.08);
+    transition:0.3s;
 }
 
-/* Forms */
-
-input,select,textarea{
-    border-radius:6px !important;
+.card:hover{
+    transform:translateY(-2px);
 }
 
-/* Buttons */
+.card-header{
+    font-weight:600;
+    font-size:16px;
+}
+
+
+/* ---------------- BUTTONS ---------------- */
 
 .btn-primary{
-    border-radius:6px;
-    padding:8px 16px;
+    background:linear-gradient(90deg,#3a86ff,#00b4d8);
+    border:none;
+    border-radius:8px;
+    padding:10px 18px;
+    font-weight:500;
 }
 
-/* Footer */
+.btn-primary:hover{
+    opacity:0.9;
+}
+
+.btn-info{
+    background:linear-gradient(90deg,#00b4d8,#3a86ff);
+    border:none;
+    border-radius:8px;
+}
+
+.btn-success{
+    border-radius:8px;
+}
+
+
+/* ---------------- FORMS ---------------- */
+
+input,select,textarea{
+    border-radius:8px !important;
+    border:1px solid #dcdcdc !important;
+    padding:8px;
+}
+
+input:focus,select:focus{
+    outline:none;
+    border-color:#3a86ff !important;
+    box-shadow:0 0 5px rgba(58,134,255,0.3);
+}
+
+
+/* ---------------- TABLE ---------------- */
+
+.table{
+    background:white;
+    border-radius:10px;
+    overflow:hidden;
+}
+
+.table thead{
+    background:#1d3557;
+    color:white;
+}
+
+.table tbody tr:hover{
+    background:#f1f5f9;
+}
+
+
+/* ---------------- FILTER PANEL ---------------- */
+
+.filters{
+    background:white;
+    border-radius:12px;
+    padding:20px;
+    box-shadow:0 4px 15px rgba(0,0,0,0.08);
+}
+
+
+/* ---------------- PAGINATION ---------------- */
+
+.pagination .page-link{
+    border-radius:6px;
+    margin:2px;
+}
+
+
+/* ---------------- FOOTER ---------------- */
 
 .footer{
     position:fixed;
     bottom:0;
     width:100%;
-    background:#343a40;
+    background:#1d3557;
     color:white;
     text-align:center;
+    padding:10px;
+    font-size:14px;
 }
