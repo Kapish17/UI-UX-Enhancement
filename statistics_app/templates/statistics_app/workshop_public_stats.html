@@ -4,239 +4,102 @@
 
 {% block content %}
 
-<div class="container-fluid">
-
-
-<!-- ===== DASHBOARD SUMMARY ===== -->
-
-<div class="row mb-4">
-
-<div class="col-md-4">
+<div class="container-fluid"><!-- ===== DASHBOARD SUMMARY ===== --><div class="row mb-4"><div class="col-md-4">
 <div class="card text-center shadow">
 <div class="card-body">
 <h4>{{ objects.paginator.count }}</h4>
 <p>Total Workshops</p>
 </div>
 </div>
-</div>
-
-<div class="col-md-4">
+</div><div class="col-md-4">
 <div class="card text-center shadow">
 <div class="card-body">
 <h4>{{ ws_states|length }}</h4>
 <p>States Covered</p>
 </div>
 </div>
-</div>
-
-<div class="col-md-4">
+</div><div class="col-md-4">
 <div class="card text-center shadow">
 <div class="card-body">
 <h4>{{ ws_type|length }}</h4>
 <p>Workshop Types</p>
 </div>
 </div>
-</div>
+</div></div><!-- ===== NEW ANALYTICS SECTION ===== --><div class="row mb-4"><!-- INDIA MAP --><div class="col-md-6"><div class="card shadow"><div class="card-header">
+<h5>Workshops Across India</h5>
+</div><div class="card-body"><div id="indiaMap" style="height:350px;"></div></div></div></div><!-- WORKSHOP TRENDS --><div class="col-md-6"><div class="card shadow"><div class="card-header">
+<h5>Workshop Trends</h5>
+</div><div class="card-body"><canvas id="trendChart"></canvas>
 
-</div>
-
-
-
-<div class="row">
-
-<!-- ===== FILTER PANEL ===== -->
-
-<div class="col-md-3">
-
-<form method="GET">
-
-<div class="card shadow">
-
-<div class="card-header bg-primary text-white">
+</div></div></div></div><div class="row"><!-- ===== FILTER PANEL ===== --><div class="col-md-3"><form method="GET"><div class="card shadow"><div class="card-header bg-primary text-white">
 <h4 class="mb-0">Filters</h4>
-</div>
-
-<div class="card-body">
-
-<div class="form-group">
+</div><div class="card-body"><div class="form-group">
 <label>From Date</label>
 {{form.from_date}}
-</div>
-
-<div class="form-group">
+</div><div class="form-group">
 <label>To Date</label>
 {{form.to_date}}
-</div>
-
-<div class="form-group">
+</div><div class="form-group">
 <label>Workshop</label>
 {{form.workshop_type}}
-</div>
-
-<div class="form-group">
+</div><div class="form-group">
 <label>State</label>
 {{form.state}}
-</div>
-
-<div class="form-group">
+</div><div class="form-group">
 <label>{{form.sort.help_text}}</label>
 {{form.sort}}
-</div>
+</div>{% if request.user.is_authenticated %}
 
-{% if request.user.is_authenticated %}
 <div class="form-group">
 <label>{{form.show_workshops.help_text}}</label>
 {{form.show_workshops}}
 </div>
-{% endif %}
-
-<hr>
-
-<div class="text-center">
-
-<button type="submit" class="btn btn-success mr-2">
+{% endif %}<hr><div class="text-center"><button type="submit" class="btn btn-success mr-2">
 <i class="fa fa-eye"></i> View
-</button>
-
-<button type="submit" class="btn btn-info" name="download" value="download">
+</button><button type="submit" class="btn btn-info" name="download" value="download">
 <i class="fa fa-download"></i> Download
-</button>
-
-<a href="{% url 'statistics_app:public' %}" class="btn btn-outline-secondary mt-2">
+</button><a href="{% url 'statistics_app:public' %}" class="btn btn-outline-secondary mt-2">
 Clear
-</a>
-
-</div>
-
-</div>
-
-</div>
-
-</form>
-
-</div>
-
-
-
-<!-- ===== MAIN CONTENT ===== -->
-
-<div class="col-md-9">
-
-<div class="card shadow">
-
-<div class="card-header bg-light">
-
-<div class="row align-items-center">
-
-<div class="col-md-6">
+</a></div></div></div></form></div><!-- ===== MAIN CONTENT ===== --><div class="col-md-9"><div class="card shadow"><div class="card-header bg-light"><div class="row align-items-center"><div class="col-md-6">
 {% include "statistics_app/paginator.html" %}
-</div>
-
-<div class="col-md-3 text-right">
-
-<button class="btn btn-info" id="state_graph">
+</div><div class="col-md-3 text-right"><button class="btn btn-info" id="state_graph">
 <i class="fa fa-bar-chart"></i> State Chart
-</button>
-
-</div>
-
-<div class="col-md-3 text-right">
-
-<button class="btn btn-primary" id="type_graph">
+</button></div><div class="col-md-3 text-right"><button class="btn btn-primary" id="type_graph">
 <i class="fa fa-bar-chart"></i> Workshops Chart
-</button>
-
-</div>
-
-</div>
-
-</div>
-
-
-
-<div class="card-body">
-
-<!-- ===== SEARCH BAR ===== -->
-
-<input class="form-control mb-3"
+</button></div></div></div><div class="card-body"><!-- ===== SEARCH BAR ===== --><input class="form-control mb-3"
 id="tableSearch"
 type="text"
 placeholder="Search workshops...">
 
+<div class="table-responsive">{% if objects %}
 
-<div class="table-responsive">
-
-{% if objects %}
-
-<table class="table table-hover table-striped">
-
-<thead class="thead-dark">
-
-<tr>
+<table class="table table-hover table-striped"><thead class="thead-dark"><tr>
 <th>Sr No.</th>
 <th>Coordinator</th>
 <th>Institute</th>
 <th>Instructor</th>
 <th>Workshop</th>
 <th>Date</th>
-</tr>
+</tr></thead><tbody>{% for workshop in objects %}
 
-</thead>
-
-<tbody>
-
-{% for workshop in objects %}
-
-<tr>
-
-<td>{{ forloop.counter0|add:objects.start_index }}</td>
+<tr><td>{{ forloop.counter0|add:objects.start_index }}</td>
 <td>{{ workshop.coordinator.get_full_name | capfirst }}</td>
 <td>{{ workshop.coordinator.profile.institute | capfirst }}</td>
 <td>{{ workshop.instructor.get_full_name | capfirst }}</td>
 <td>{{ workshop.workshop_type.name }}</td>
-<td>{{ workshop.date | date }}</td>
+<td>{{ workshop.date | date }}</td></tr>{% endfor %}
 
-</tr>
-
-{% endfor %}
-
-</tbody>
-
-</table>
-
-{% else %}
+</tbody></table>{% else %}
 
 <div class="alert alert-info text-center">
 No workshops found for selected filters.
-</div>
+</div>{% endif %}
 
-{% endif %}
+</div></div></div>{% include "statistics_app/paginator.html" %}
 
-</div>
-
-</div>
-
-</div>
-
-{% include "statistics_app/paginator.html" %}
-
-</div>
-
-</div>
-
-</div>
-
-
-
-<!-- ===== GRAPH MODAL ===== -->
-
-<div id="dialog" title="Workshops Statistics">
+</div></div></div><!-- ===== GRAPH MODAL ===== --><div id="dialog" title="Workshops Statistics">
 <canvas id="myChart"></canvas>
-</div>
-
-
-
-<script>
+</div><script>
 
 var state_labels = {{ws_states|safe}};
 var state_data = {{ws_count|safe}};
@@ -246,7 +109,7 @@ var type_data = {{ws_type_count|safe}};
 var chart;
 
 
-/* Chart buttons */
+/* EXISTING CHART BUTTONS */
 
 $("#state_graph").on("click", function(){
 show_graph(state_labels,state_data,"State wise workshops");
@@ -256,8 +119,6 @@ $("#type_graph").on("click", function(){
 show_graph(type_labels,type_data,"Workshop type statistics");
 });
 
-
-/* Chart function */
 
 function show_graph(labels,data,title){
 
@@ -298,7 +159,7 @@ height:500
 }
 
 
-/* Table search */
+/* SEARCH FILTER */
 
 $("#tableSearch").on("keyup", function(){
 
@@ -312,7 +173,43 @@ $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
 
 });
 
-</script>
+
+/* INDIA MAP */
+
+var map = L.map('indiaMap').setView([22.9734,78.6569],5);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+maxZoom:18
+}).addTo(map);
+
+L.marker([28.6139,77.2090]).addTo(map).bindPopup("Delhi Workshop");
+L.marker([19.0760,72.8777]).addTo(map).bindPopup("Mumbai Workshop");
+L.marker([13.0827,80.2707]).addTo(map).bindPopup("Chennai Workshop");
 
 
-{% endblock %}
+/* TREND CHART */
+
+var trendCtx = document.getElementById('trendChart').getContext('2d');
+
+new Chart(trendCtx,{
+
+type:'line',
+
+data:{
+labels:["Jan","Feb","Mar","Apr","May","Jun"],
+datasets:[{
+label:"Workshops",
+data:[2,5,3,7,4,6],
+borderColor:"#3a86ff",
+backgroundColor:"rgba(58,134,255,0.2)",
+fill:true
+}]
+},
+
+options:{
+responsive:true
+}
+
+});
+
+</script>{% endblock %}

@@ -11,7 +11,8 @@ HomePage
 <link rel="stylesheet" href="{% static 'workshop_app/css/base.css' %}">
 <link rel="stylesheet" href="{% static 'workshop_app/css/font-awesome.css' %}">
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css"><!-- JS --><script src="{% static 'workshop_app/js/jquery-3.4.1.min.js' %}"></script><script src="{% static 'workshop_app/js/popper.min.js' %}"></script><script src="{% static 'workshop_app/js/bootstrap.min.js' %}"></script><script src="{% static 'workshop_app/js/toastr.min.js' %}"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>{% block extra-dependencies %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css"><!-- Leaflet Map Library --><link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script><!-- JS --><script src="{% static 'workshop_app/js/jquery-3.4.1.min.js' %}"></script><script src="{% static 'workshop_app/js/popper.min.js' %}"></script><script src="{% static 'workshop_app/js/bootstrap.min.js' %}"></script><script src="{% static 'workshop_app/js/toastr.min.js' %}"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>{% block extra-dependencies %}
 {% endblock %}
 
 {% block extra-custom-scripts %}
@@ -19,17 +20,17 @@ HomePage
 
 </head><body><!-- ================= NAVBAR ================= --><nav class="navbar navbar-expand-lg navbar-dark fixed-top"><div class="container-fluid"><a class="navbar-brand"
 href="{% if user.is_authenticated %}{% url 'workshop_app:index' %}{% else %}{{request.scheme}}://{{request.get_host}}{% endif %}">
-
 <i class="fa fa-graduation-cap"></i> FOSSEE Workshops
+</a>
 
-</a><button class="navbar-toggler"
+<button class="navbar-toggler"
 type="button"
 data-toggle="collapse"
 data-target="#navbarSupportedContent">
-
 <span class="navbar-toggler-icon"></span>
+</button>
 
-</button><div class="collapse navbar-collapse" id="navbarSupportedContent"><!-- LEFT MENU --><ul class="navbar-nav"><li class="nav-item">
+<div class="collapse navbar-collapse" id="navbarSupportedContent"><!-- LEFT MENU --><ul class="navbar-nav"><li class="nav-item">
 <a class="nav-link" href="/">
 <i class="fa fa-home"></i> Home
 </a>
@@ -37,17 +38,17 @@ data-target="#navbarSupportedContent">
 <a class="nav-link" href="{% url 'statistics_app:public' %}">
 <i class="fa fa-bar-chart"></i> Statistics
 </a>
-</li></ul><!-- RIGHT MENU --><ul class="navbar-nav ml-auto"><!-- Dark Mode Toggle --><li class="nav-item mr-3"><button id="themeBtn"
+</li></ul><!-- RIGHT MENU --><ul class="navbar-nav ml-auto"><!-- DARK MODE BUTTON --><li class="nav-item mr-3">
+<button id="themeBtn"
 onclick="toggleDarkMode()"
 class="btn btn-sm btn-outline-light">
-
 🌙
+</button>
+</li>{% if user.is_authenticated %}
 
-</button></li>{% if user.is_authenticated %}
-
-<li class="nav-item mr-3"><input class="form-control form-control-sm"
+<li class="nav-item mr-3">
+<input class="form-control form-control-sm"
 placeholder="Search...">
-
 </li><li class="nav-item dropdown"><a class="nav-link dropdown-toggle"
 href="#"
 data-toggle="dropdown">
@@ -58,26 +59,25 @@ data-toggle="dropdown">
 
 </a><div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item"
 href="{% url 'workshop_app:view_own_profile' %}">
-
 <i class="fa fa-user"></i> Profile
+</a>
 
-</a><a class="dropdown-item"
+<a class="dropdown-item"
 href="{% url 'password_change' %}">
-
 <i class="fa fa-lock"></i> Change Password
+</a>
 
-</a><div class="dropdown-divider"></div><a class="dropdown-item"
+<div class="dropdown-divider"></div><a class="dropdown-item"
 href="{% url 'workshop_app:logout' %}">
-
 <i class="fa fa-sign-out"></i> Logout
+</a>
 
-</a></div></li>{% endif %}
+</div></li>{% endif %}
 
 </ul></div></div></nav><!-- ================= PAGE CONTENT ================= --><div class="base-content"><div class="container">{% block content %}
 
-<h1>Base Template Content</h1>{% endblock %}
-
-</div></div><!-- ================= TOAST MESSAGES ================= --><script>
+<h1>Base Template Content</h1>
+{% endblock %}</div></div><!-- ================= TOAST MESSAGES ================= --><script>
 
 {% if messages %}
 {% for message in messages %}
@@ -94,7 +94,7 @@ toastr[
 {% endif %}
 
 
-/* Dark Mode Toggle */
+/* DARK MODE */
 
 function toggleDarkMode(){
 
@@ -113,8 +113,6 @@ localStorage.setItem("theme","light");
 }
 
 
-/* Load saved theme */
-
 window.onload=function(){
 
 let btn=document.getElementById("themeBtn");
@@ -131,4 +129,5 @@ btn.innerHTML="☀️";
 
 }
 
-</script><!-- ================= FOOTER ================= --><footer class="footer text-white"><div class="container text-center"><p><strong>Workshop Management System</strong></p><p>Developed by FOSSEE Group | IIT Bombay</p></div></footer></body></html>
+</script><!-- ================= FOOTER ================= --><footer class="footer text-white"><div class="container text-center"><p><strong>Workshop Management System</strong></p><p>Developed by FOSSEE Group | IIT Bombay</p></div></footer></body>
+</html>
