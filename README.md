@@ -31,6 +31,39 @@ Available to all users:
 - Workshops visualized on Map of India
 - Charts and visual analytics of workshop types
 - Public statistics dashboard
+- Interactive data filtering and search
+
+---
+
+🗺 Map Visualization
+
+The platform includes geographical visualization of workshops across India.
+
+Features include:
+
+- Workshops plotted on an interactive India map
+- Visual understanding of state-wise workshop distribution
+- Improved analytics experience for users
+
+Map Visualization
+
+"India Map Visualization" (screenshots/map-visualization.png)
+
+---
+
+📱 Responsive Mobile View
+
+The UI is fully responsive and optimized for mobile devices and tablets.
+
+Features include:
+
+- Responsive dashboard layout
+- Mobile-friendly navigation
+- Adaptive statistics cards and tables
+
+Mobile Dashboard View
+
+"Mobile View" (screenshots/mobile-view.png)
 
 ---
 
@@ -47,16 +80,19 @@ Instructors can manage workshop requests by:
 
 🎨 UI/UX Enhancements
 
-This project includes modern UI improvements to improve usability and appearance.
+This project includes modern UI improvements to enhance usability and appearance.
 
 Enhancements include:
 
 - Modern login interface
 - Improved registration form layout
 - Redesigned statistics dashboard
+- Interactive charts and analytics
+- Map-based visualization of workshops
 - Better filter panel UI
 - Responsive and styled data tables
 - Gradient navigation bar and buttons
+- Dark mode support
 - Improved form inputs and interaction
 
 ---
@@ -81,6 +117,18 @@ Workshop Statistics Dashboard
 
 ---
 
+India Map Visualization
+
+"Map Visualization" (screenshots/map-visualization.png)
+
+---
+
+Mobile View
+
+"Mobile View" (screenshots/mobile-view.png)
+
+---
+
 🧰 Technologies Used
 
 Technology| Purpose
@@ -91,6 +139,7 @@ CSS| Styling
 Bootstrap| Responsive UI
 JavaScript| Interactivity
 Chart.js| Data visualization
+Leaflet.js| Map visualization
 
 ---
 
@@ -100,31 +149,21 @@ Chart.js| Data visualization
 
 git clone https://github.com/Kapish17/UI-UX-Enhancement.git
 
----
-
 2️⃣ Navigate to the project directory
 
 cd UI-UX-Enhancement
-
----
 
 3️⃣ Install dependencies
 
 pip install -r requirements.txt
 
----
-
 4️⃣ Apply database migrations
 
 python manage.py migrate
 
----
-
 5️⃣ Run the development server
 
 python manage.py runserver
-
----
 
 6️⃣ Open the application
 
@@ -145,7 +184,9 @@ UI-UX-Enhancement
 ├── screenshots
 │   ├── login.png
 │   ├── register.png
-│   └── statistics.png
+│   ├── statistics.png
+│   ├── mobile-view.png
+│   └── map-visualization.png
 │
 ├── docs
 ├── manage.py
