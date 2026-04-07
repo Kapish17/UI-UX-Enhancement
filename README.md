@@ -1,40 +1,19 @@
-Good — your README is already decent, but we can make it much more professional for GitHub and the FOSSEE task without changing the meaning.
-
-I improved:
-
-formatting
-
-clarity
-
-sections
-
-UI-UX enhancement mention
-
-GitHub readability
-
-
-You can replace your README content with this.
-
-
----
-
-Updated README.md
-
 # Workshop Booking System
 
-A web platform where **coordinators can book workshops** conducted by instructors.  
-Coordinators can either:
+A web platform where **coordinators can book workshops** conducted by instructors.
+
+Coordinators can:
 
 - Register for **existing instructor workshops**
-- **Propose a workshop date** based on availability
+- **Propose workshop dates** based on availability
 
-The system helps manage workshops efficiently while providing useful statistics and insights.
+The platform helps instructors manage workshops while providing useful **statistics and analytics**.
 
 ---
 
 # Features
 
-## 1. Workshop Statistics
+## Workshop Statistics
 
 ### Instructor Access
 Available only for instructors:
@@ -53,30 +32,48 @@ Available to everyone:
 
 ---
 
-## 2. Workshop Management
+# Workshop Management
 
 Instructors can manage workshop requests by:
 
 - Accepting workshop requests
 - Rejecting workshop requests
 - Deleting workshops
-- Postponing workshops (based on coordinator request)
+- Postponing workshops based on coordinator requests
 
 ---
 
-# UI/UX Improvements
+# UI/UX Enhancements
 
-This project also includes **UI/UX enhancements** to improve usability and appearance.
+This project includes **UI improvements** to enhance user experience:
 
-Enhancements include:
+- Modernized login page
+- Improved registration form layout
+- Statistics dashboard redesign
+- Filter panel improvements
+- Responsive tables
+- Gradient navbar and buttons
+- Better form field styling
 
-- Modernized login and registration pages
-- Improved statistics dashboard layout
-- Styled filters panel
-- Better table readability
-- Responsive card-based layouts
-- Gradient navigation bar and buttons
-- Improved form inputs and interactions
+---
+
+# Screenshots
+
+## Login Page
+
+![Login Page](screenshots/login.png)
+
+---
+
+## Registration Page
+
+![Registration Page](screenshots/register.png)
+
+---
+
+## Workshop Statistics Dashboard
+
+![Statistics Dashboard](screenshots/statistics.png)
 
 ---
 
@@ -92,53 +89,9 @@ Enhancements include:
 
 ---
 
-# Project Structure
-
-workshop_portal statistics_app workshop_app templates static docs
-
----
-
 # Installation
 
-Clone the repository:
+Clone the repository
 
+```bash
 git clone https://github.com/Kapish17/UI-UX-Enhancement.git
-
-Navigate into the project:
-
-cd UI-UX-Enhancement
-
-Install dependencies:
-
-pip install -r requirements.txt
-
-Run migrations:
-
-python manage.py migrate
-
-Start the server:
-
-python manage.py runserver
-
-Open in browser:
-
-http://127.0.0.1:8000/
-
----
-
-# Documentation
-
-More information is available in:
-
-docs/Getting_Started.md
-
----
-
-# Developed By
-
-FOSSEE Group  
-IIT Bombay
-
-
----
-
