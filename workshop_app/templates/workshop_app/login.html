@@ -1,53 +1,100 @@
 {% extends 'workshop_app/base.html' %}
 
 {% block title %}
-    Login
+Login
 {% endblock %}
 
 {% block content %}
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-6 col-md-offset-6">
-                <div class="card">
-                    <div class="card-body">
-                        <form class="px-3 py-3" method="post">
-                        {% csrf_token %}
-                        {% if form.errors %}
-                            {% for field in form %}
-                                {% for error in field.errors %}
-                                    <div class="alert alert-dismissible alert-danger">
-                                        <button type="button" class="close" data-dismiss="alert">
-                                            <i class="fa fa-close"></i>
-                                        </button>
-                                        <strong>{{ error|escape }}</strong>
-                                    </div>
-                                {% endfor %}
-                            {% endfor %}
-                            {% for error in form.non_field_errors %}
-                                <div class="alert alert-dismissible alert-danger">
-                                    <button type="button" class="close" data-dismiss="alert">
-                                        <i class="fa fa-close"></i>
-                                    </button>
-                                    <strong>{{ error|escape }}</strong>
-                                </div>
-                            {% endfor %}
-                        {% endif %}
-                        <div class="form-group">
-                          <label for="id_username">Username</label>
-                          {{ form.username }}
-                        </div>
-                        <div class="form-group">
-                          <label for="id_password">Password</label>
-                          {{ form.password }}
-                        </div>
-                        <button type="submit" class="btn btn-primary">Sign in</button>
-                        </form>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="{% url 'workshop_app:register' %}">New around here? Sign up</a>
-                        <a class="dropdown-item" href="{% url 'password_reset' %}">Forgot password?</a>
-                    </div>
-                </div>  
-            </div>
-        </div>
-    </div>
+
+<style>
+
+.login-card{
+    max-width:420px;
+    margin:auto;
+    margin-top:80px;
+    padding:30px;
+    border-radius:10px;
+    box-shadow:0 4px 15px rgba(0,0,0,0.1);
+    background:white;
+}
+
+.login-title{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.login-btn{
+    width:100%;
+}
+
+</style>
+
+
+<div class="container">
+
+<div class="login-card">
+
+<h4 class="login-title">Sign in to FOSSEE Workshops</h4>
+
+<form method="post">
+
+{% csrf_token %}
+
+
+{% if form.errors %}
+
+<div class="alert alert-danger text-center">
+Invalid username/password
+</div>
+
+{% endif %}
+
+
+<div class="form-group">
+
+<label for="id_username">Username</label>
+
+{{ form.username }}
+
+</div>
+
+
+<div class="form-group">
+
+<label for="id_password">Password</label>
+
+{{ form.password }}
+
+</div>
+
+
+<button type="submit" class="btn btn-primary login-btn">
+Sign in
+</button>
+
+</form>
+
+
+<hr>
+
+
+<div class="text-center">
+
+<a href="{% url 'workshop_app:register' %}">
+New around here? Sign up
+</a>
+
+<br>
+
+<a href="{% url 'password_reset' %}">
+Forgot password?
+</a>
+
+</div>
+
+
+</div>
+
+</div>
+
 {% endblock %}
