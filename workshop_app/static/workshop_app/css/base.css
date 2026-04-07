@@ -1,171 +1,270 @@
 /* ---------------- GLOBAL ---------------- */
 
 body{
-    background:linear-gradient(135deg,#eef2f7,#f8fbff);
-    font-family:'Poppins', sans-serif;
-    color:#333;
+background:linear-gradient(135deg,#eef2f7,#f8fbff);
+font-family:'Poppins', sans-serif;
+color:#333;
+transition:0.3s;
 }
 
+/* ---------------- SCROLLBAR ---------------- */
+
+::-webkit-scrollbar{
+width:8px;
+}
+
+::-webkit-scrollbar-thumb{
+background:#457b9d;
+border-radius:10px;
+}
+
+::-webkit-scrollbar-thumb:hover{
+background:#1d3557;
+}
 
 /* ---------------- NAVBAR ---------------- */
 
 .navbar{
-    z-index:1000;
-    background:linear-gradient(90deg,#1d3557,#457b9d)!important;
-    box-shadow:0 4px 15px rgba(0,0,0,0.25);
+z-index:1000;
+background:linear-gradient(90deg,#1d3557,#457b9d)!important;
+box-shadow:0 4px 15px rgba(0,0,0,0.25);
+transition:0.3s;
 }
 
 .navbar .nav-link{
-    font-weight:500;
-    transition:0.2s;
+font-weight:500;
+transition:0.2s;
 }
 
 .navbar .nav-link:hover{
-    color:#ffd166!important;
+color:#ffd166!important;
+transform:translateY(-1px);
 }
 
+.navbar-brand{
+font-weight:600;
+letter-spacing:0.5px;
+}
 
 /* ---------------- PAGE CONTENT ---------------- */
 
 .base-content{
-    padding-top:90px;
-    padding-bottom:80px;
+padding-top:90px;
+padding-bottom:80px;
+min-height:80vh;
 }
-
 
 /* ---------------- CARDS ---------------- */
 
 .card{
-    border:none;
-    border-radius:14px;
-    box-shadow:0 10px 25px rgba(0,0,0,0.08);
-    transition:0.25s;
+border:none;
+border-radius:14px;
+box-shadow:0 10px 25px rgba(0,0,0,0.08);
+transition:0.25s;
+background:white;
 }
 
 .card:hover{
-    transform:translateY(-3px);
-    box-shadow:0 15px 35px rgba(0,0,0,0.12);
+transform:translateY(-4px);
+box-shadow:0 18px 40px rgba(0,0,0,0.15);
 }
 
 .card-header{
-    font-weight:600;
-    font-size:16px;
+font-weight:600;
+font-size:16px;
+background:transparent;
+border-bottom:1px solid #eee;
 }
-
 
 /* ---------------- DASHBOARD METRIC CARDS ---------------- */
 
 .card.text-center h4{
-    font-size:28px;
-    font-weight:600;
-    color:#1d3557;
+font-size:28px;
+font-weight:600;
+color:#1d3557;
 }
 
 .card.text-center p{
-    color:#777;
+color:#777;
+font-size:14px;
 }
-
 
 /* ---------------- BUTTONS ---------------- */
 
 .btn-primary{
-    background:linear-gradient(90deg,#3a86ff,#00b4d8);
-    border:none;
-    border-radius:8px;
-    padding:10px 18px;
-    font-weight:500;
-    transition:0.2s;
+background:linear-gradient(90deg,#3a86ff,#00b4d8);
+border:none;
+border-radius:8px;
+padding:10px 18px;
+font-weight:500;
+transition:0.25s;
 }
 
 .btn-primary:hover{
-    opacity:0.9;
-    transform:scale(1.03);
+opacity:0.95;
+transform:translateY(-2px);
+box-shadow:0 8px 20px rgba(0,0,0,0.2);
 }
 
 .btn-info{
-    background:linear-gradient(90deg,#00b4d8,#3a86ff);
-    border:none;
-    border-radius:8px;
+background:linear-gradient(90deg,#00b4d8,#3a86ff);
+border:none;
+border-radius:8px;
+transition:0.2s;
 }
 
 .btn-success{
-    border-radius:8px;
+border-radius:8px;
 }
 
+.btn-outline-secondary{
+border-radius:8px;
+}
 
 /* ---------------- SEARCH BAR ---------------- */
 
 #tableSearch{
-    border-radius:8px;
-    border:1px solid #ddd;
-    padding:10px;
+border-radius:8px;
+border:1px solid #ddd;
+padding:10px;
+transition:0.2s;
 }
 
+#tableSearch:focus{
+border-color:#3a86ff;
+box-shadow:0 0 5px rgba(58,134,255,0.3);
+}
 
 /* ---------------- FORMS ---------------- */
 
 input,select,textarea{
-    border-radius:8px !important;
-    border:1px solid #dcdcdc !important;
-    padding:8px;
+border-radius:8px !important;
+border:1px solid #dcdcdc !important;
+padding:8px;
+transition:0.2s;
 }
 
 input:focus,select:focus{
-    outline:none;
-    border-color:#3a86ff !important;
-    box-shadow:0 0 6px rgba(58,134,255,0.3);
+outline:none;
+border-color:#3a86ff !important;
+box-shadow:0 0 6px rgba(58,134,255,0.3);
 }
-
 
 /* ---------------- TABLE ---------------- */
 
 .table{
-    background:white;
-    border-radius:10px;
-    overflow:hidden;
+background:white;
+border-radius:10px;
+overflow:hidden;
 }
 
 .table thead{
-    background:linear-gradient(90deg,#1d3557,#457b9d);
-    color:white;
+background:linear-gradient(90deg,#1d3557,#457b9d);
+color:white;
 }
 
 .table tbody tr{
-    transition:0.2s;
+transition:0.2s;
 }
 
 .table tbody tr:hover{
-    background:#eef6ff;
+background:#eef6ff;
+transform:scale(1.002);
 }
-
 
 /* ---------------- FILTER PANEL ---------------- */
 
 .filters{
-    background:white;
-    border-radius:12px;
-    padding:20px;
-    box-shadow:0 4px 15px rgba(0,0,0,0.08);
+background:white;
+border-radius:12px;
+padding:20px;
+box-shadow:0 4px 15px rgba(0,0,0,0.08);
 }
-
 
 /* ---------------- PAGINATION ---------------- */
 
 .pagination .page-link{
-    border-radius:6px;
-    margin:2px;
+border-radius:6px;
+margin:2px;
+color:#1d3557;
 }
 
+.pagination .page-link:hover{
+background:#457b9d;
+color:white;
+}
 
 /* ---------------- FOOTER ---------------- */
 
 .footer{
-    position:fixed;
-    bottom:0;
-    width:100%;
-    background:#1d3557;
-    color:white;
-    text-align:center;
-    padding:10px;
-    font-size:14px;
+position:fixed;
+bottom:0;
+width:100%;
+background:#1d3557;
+color:white;
+text-align:center;
+padding:10px;
+font-size:14px;
+box-shadow:0 -3px 10px rgba(0,0,0,0.2);
+}
+
+/* ================= MODERN DARK MODE ================= */
+
+.dark-mode{
+background:#0f172a;
+color:#e2e8f0;
+}
+
+/* Navbar */
+
+.dark-mode .navbar{
+background:linear-gradient(90deg,#020617,#0f172a)!important;
+}
+
+/* Cards */
+
+.dark-mode .card{
+background:#1e293b;
+color:#e2e8f0;
+border:1px solid #334155;
+}
+
+/* Tables */
+
+.dark-mode .table{
+background:#1e293b;
+color:#e2e8f0;
+}
+
+.dark-mode .table thead{
+background:#020617;
+}
+
+/* Forms */
+
+.dark-mode input,
+.dark-mode select,
+.dark-mode textarea{
+background:#1e293b;
+color:#e2e8f0;
+border:1px solid #334155 !important;
+}
+
+/* Filter panel */
+
+.dark-mode .filters{
+background:#1e293b;
+}
+
+/* Footer */
+
+.dark-mode .footer{
+background:#020617;
+}
+
+/* Selection */
+
+::selection{
+background:#3a86ff;
+color:white;
 }
