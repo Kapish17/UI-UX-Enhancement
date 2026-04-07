@@ -8,93 +8,100 @@ Login
 
 <style>
 
+.login-container{
+    min-height:70vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
 .login-card{
-    max-width:420px;
-    margin:auto;
-    margin-top:80px;
-    padding:30px;
-    border-radius:10px;
-    box-shadow:0 4px 15px rgba(0,0,0,0.1);
+    width:420px;
+    padding:35px;
+    border-radius:12px;
     background:white;
+    box-shadow:0 12px 30px rgba(0,0,0,0.15);
 }
 
 .login-title{
     text-align:center;
-    margin-bottom:20px;
+    font-weight:600;
+    margin-bottom:25px;
 }
 
-.login-btn{
-    width:100%;
+/* input group */
+
+.input-group{
+    position:relative;
 }
 
-</style>
+.input-group input{
+    padding-left:40px;
+}
 
+/* left icon */
 
-<div class="container">
+.input-icon{
+    position:absolute;
+    left:12px;
+    top:50%;
+    transform:translateY(-50%);
+    color:#777;
+}
 
-<div class="login-card">
+/* password toggle */
 
-<h4 class="login-title">Sign in to FOSSEE Workshops</h4>
+.password-toggle{
+    position:absolute;
+    right:12px;
+    top:50%;
+    transform:translateY(-50%);
+    cursor:pointer;
+    color:#777;
+}
 
-<form method="post">
-
-{% csrf_token %}
-
+</style><div class="login-container"><div class="login-card"><h4 class="login-title">
+Sign in to FOSSEE Workshops
+</h4><form method="post">{% csrf_token %}
 
 {% if form.errors %}
 
-<div class="alert alert-danger text-center">
-Invalid username/password
+<div class="alert alert-danger">
+Invalid username or password
 </div>
+{% endif %}<!-- Username --><div class="form-group"><label>Username</label>
 
-{% endif %}
-
-
-<div class="form-group">
-
-<label for="id_username">Username</label>
+<div class="input-group"><i class="fa fa-user input-icon"></i>
 
 {{ form.username }}
 
-</div>
+</div></div><!-- Password --><div class="form-group"><label>Password</label>
 
-
-<div class="form-group">
-
-<label for="id_password">Password</label>
+<div class="input-group"><i class="fa fa-lock input-icon"></i>
 
 {{ form.password }}
 
-</div>
-
-
-<button type="submit" class="btn btn-primary login-btn">
+<span class="password-toggle" onclick="togglePassword()">
+<i class="fa fa-eye"></i>
+</span></div></div><button type="submit" class="btn btn-primary btn-block mt-3">
 Sign in
-</button>
-
-</form>
-
-
-<hr>
-
-
-<div class="text-center">
-
-<a href="{% url 'workshop_app:register' %}">
+</button></form><hr><div class="text-center"><a href="{% url 'workshop_app:register' %}">
 New around here? Sign up
-</a>
-
-<br>
-
-<a href="{% url 'password_reset' %}">
+</a><br><a href="{% url 'password_reset' %}">
 Forgot password?
-</a>
+</a></div></div></div><script>
 
-</div>
+function togglePassword(){
 
+var input = document.getElementById("id_password");
 
-</div>
+if(input.type === "password"){
+input.type="text";
+}
+else{
+input.type="password";
+}
 
-</div>
+}
 
-{% endblock %}
+</script>{% endblock %}
