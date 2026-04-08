@@ -170,7 +170,8 @@ def user_register(request):
                 request,
                 call_on='Registration',
                 user_position=profile.position,
-                key=key
+                key=key,
+                other_email=user.email
             )
 
             # Show activation page

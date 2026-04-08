@@ -93,347 +93,189 @@ def send_smtp_email(request=None, subject=None, message=None,
 	server.close()
 
 
-def send_email(	request, call_on,
-			user_position=None, workshop_date=None,
-			new_workshop_date=None,
-			workshop_title=None, user_name=None,
-			other_email=None, phone_number=None,
-			institute=None, key=None
-			):
-	'''
-	Email sending function while registration and
-	booking confirmation.
-	'''
-	try:
-		with open(path.join(settings.LOG_FOLDER, 'emailconfig.yaml'), 'r') as configfile:
-			config_dict = yaml.load(configfile)
-		logging.config.dictConfig(config_dict)
-	except:
-		print('File Not Found and Configuration Error')
+def send_email(request, call_on,
+               user_position=None, workshop_date=None,
+               new_workshop_date=None,
+               workshop_title=None, user_name=None,
+               other_email=None, phone_number=None,
+               institute=None, key=None):
+    '''
+    Email sending function while registration and
+    booking confirmation.
+    '''
 
-	if call_on == "Registration":
-		message = dedent("""\
-					Thank you for registering as a coordinator with us.
+    try:
+        with open(path.join(settings.LOG_FOLDER, 'emailconfig.yaml'), 'r') as configfile:
+            config_dict = yaml.safe_load(configfile)
+        logging.config.dictConfig(config_dict)
+    except:
+        print('File Not Found and Configuration Error')
 
-					Please click on the below link to
-					activate your account
-					{0}/workshop/activate_user/{1}
+    # -------- REGISTRATION -------- #
 
-					After activation you can proceed to book your dates for
-					the workshop(s).
+    if call_on == "Registration":
 
-					In case of queries regarding workshop booking(s),
-					revert to this email.""".format(PRODUCTION_URL, key))
+        message = dedent("""\
+Thank you for registering as a coordinator with us.
 
-		logging.info("New Registration from: %s", request.user.email)
-		try:
-			send_mail(
-				"Coordinator Registration at FOSSEE, IIT Bombay", message, SENDER_EMAIL,
-				[request.user.email], fail_silently=True
-				)
+Please click on the below link to activate your account:
 
-		except Exception:
-			send_smtp_email(request=request,
-				subject="Coordinator Registration - FOSSEE, IIT Bombay",
-				message=message, other_email=request.user.email,
-				)
+{0}/workshop/activate_user/{1}
 
-	elif call_on == "Booking":
-		if user_position == "instructor":
-			message = dedent("""\
-					Coordinator name:{0}
-					Coordinator email: {1}
-					Contact number:{2}
-					Institute:{3}
-					Workshop date:{4}
-					Workshop title:{5}
+After activation you can proceed to book your dates for the workshop(s).
 
-					You may accept or reject this booking
-					{6}/workshop/dashboard""".format(
-					user_name, request.user.email,
-					request.user.profile.phone_number,
-					request.user.profile.institute,
-					workshop_date, workshop_title,
-					PRODUCTION_URL
-					))
+In case of queries regarding workshop booking(s), revert to this email.
+""".format(PRODUCTION_URL, key))
 
-			logging.info("Booking Done by{0} for {1} ".format(request.user.email,
-								other_email))
-			try:
-				send_mail(
-					"New FOSSEE Workshop booking on {0}".format(workshop_date),
-					message, SENDER_EMAIL, [other_email],
-					fail_silently=True
-					)
-			except Exception:
-				send_smtp_email(request=request,
-					subject="New FOSSEE Workshop booking on {0}"
-					.format(workshop_date),
-					message=message, other_email=other_email,
-					)
-		else:
-			message = dedent("""\
-					Thank You for New FOSSEE Workshop booking.
+        logging.info("New Registration from: %s", other_email)
 
-					Workshop date:{0}
-					Workshop title:{1}
+        try:
+            send_mail(
+                "Coordinator Registration at FOSSEE, IIT Bombay",
+                message,
+                SENDER_EMAIL,
+                [other_email],
+                fail_silently=True
+            )
 
-					Your request has been received and is awaiting instructor
-					approval/disapproval. You will be notified about the status
-					via email and on {2}/workshop/status
+        except Exception:
+            send_smtp_email(
+                request=request,
+                subject="Coordinator Registration - FOSSEE, IIT Bombay",
+                message=message,
+                other_email=other_email
+            )
 
-					Please Note: Unless you get a confirmation email for this workshop with
-					the list of instructions, your workshop shall be in the waiting list.
+    # -------- BOOKING -------- #
 
-					In case of queries regarding workshop booking(s), revert
-					to this email.""".format(
-					workshop_date, workshop_title, PRODUCTION_URL
-					))
+    elif call_on == "Booking":
 
-			try:
-				send_mail(
-					"Pending Request for New FOSSEE Workshop booking on {0}"
-					.format(workshop_date), message, SENDER_EMAIL,
-					[request.user.email], fail_silently=True
-					)
-			except Exception:
-				send_smtp_email(request=request,
-					subject="Pending Request for New FOSSEE Workshop booking \
-					on {0}".format(workshop_date),
-					message=message, other_email=request.user.email,
-					)
+        if user_position == "instructor":
 
-	elif call_on == "Booking Confirmed":
-		if user_position == "instructor":
-			message = dedent("""\
-			Coordinator name:{0}
-			Coordinator email: {1}
-			Contact number:{2}
-			Institute:{3}
-			Workshop date:{4}
-			Workshop title:{5}
+            message = dedent("""\
+Coordinator name:{0}
+Coordinator email: {1}
+Contact number:{2}
+Institute:{3}
+Workshop date:{4}
+Workshop title:{5}
 
-			You have accepted this booking.  Detailed instructions have
-			been sent to the coordinator. 
-			
-			This is a auto-generated mail.
-			""".format(user_name, other_email,
-				phone_number, institute, workshop_date, workshop_title))
+You may accept or reject this booking
+{6}/workshop/dashboard
+""".format(
+                user_name,
+                request.user.email,
+                request.user.profile.phone_number,
+                request.user.profile.institute,
+                workshop_date,
+                workshop_title,
+                PRODUCTION_URL
+            ))
 
-			logging.info("Booking Confirmed by {0} for {1} ".format(request.user.email,
-								other_email))
+            logging.info("Booking Done by %s for %s", request.user.email, other_email)
 
-			subject = "FOSSEE Workshop booking confirmation  on {0}".\
-				format(workshop_date)
-			msg = EmailMultiAlternatives(subject, message, SENDER_EMAIL, [request.user.email])
-			attachment_paths = path.join(settings.MEDIA_ROOT, workshop_title.replace(" ","_"))
-			if os.path.exists(attachment_paths):
-				files = listdir(attachment_paths)
-			else:
-				files = []
-			for f in files:
-				attachment = open(path.join(attachment_paths, f), 'rb')
-				part = MIMEBase('application', 'octet-stream')
-				part.set_payload((attachment).read())
-				encoders.encode_base64(part)
-				part.add_header('Content-Disposition', "attachment; filename= %s " % f)
-				msg.attach(part)
-				sleep(1)
-			msg.send()
+            try:
+                send_mail(
+                    "New FOSSEE Workshop booking on {0}".format(workshop_date),
+                    message,
+                    SENDER_EMAIL,
+                    [other_email],
+                    fail_silently=True
+                )
 
-		else:
-			message = dedent("""\
-				Instructor name:{0}
-				Instructor email: {1}
-				Contact number:{2}
-				Workshop date:{3}
-				Workshop title:{4}
+            except Exception:
+                send_smtp_email(
+                    request=request,
+                    subject="New FOSSEE Workshop booking on {0}".format(workshop_date),
+                    message=message,
+                    other_email=other_email
+                )
 
-				Your workshop booking has been accepted. Detailed
-				instructions are attached below.
+        else:
 
-				In case of queries regarding the workshop
-				instructions/schedule revert to this email.""".format(
-				request.user.username, request.user.email,
-				phone_number, workshop_date, workshop_title
-				))
+            message = dedent("""\
+Thank You for New FOSSEE Workshop booking.
 
-			subject = "FOSSEE Workshop booking confirmation  on {0}".\
-				format(workshop_date)
-			msg = EmailMultiAlternatives(subject, message, SENDER_EMAIL, [other_email])
-			attachment_paths = path.join(settings.MEDIA_ROOT, workshop_title.replace(" ","_"))
-			if os.path.exists(attachment_paths):
-				files = listdir(attachment_paths)
-			else:
-				files = []
-			for f in files:
-				attachment = open(path.join(attachment_paths, f), 'rb')
-				part = MIMEBase('application', 'octet-stream')
-				part.set_payload((attachment).read())
-				encoders.encode_base64(part)
-				part.add_header('Content-Disposition', "attachment; filename= %s " % f)
-				msg.attach(part)
-			msg.send()
+Workshop date:{0}
+Workshop title:{1}
 
+Your request has been received and is awaiting instructor approval/disapproval.
+""".format(workshop_date, workshop_title))
 
-	elif call_on == "Booking Request Rejected":
-		if user_position == "instructor":
-			message = dedent("""\
-					Coordinator name: {0}
-					Coordinator email: {1}
-					Contact number: {2}
-					Institute: {3}
-					Workshop date: {4}
-					Workshop title: {5}
+            try:
+                send_mail(
+                    "Pending Request for New FOSSEE Workshop booking on {0}".format(workshop_date),
+                    message,
+                    SENDER_EMAIL,
+                    [request.user.email],
+                    fail_silently=True
+                )
+            except Exception:
+                send_smtp_email(
+                    request=request,
+                    subject="Pending Request for New FOSSEE Workshop booking on {0}".format(workshop_date),
+                    message=message,
+                    other_email=request.user.email
+                )
 
-					You have rejected this booking.  The coordinator has
-					been notified.
-					
-					This is a auto-generated mail.
-					""".format(user_name, other_email,
-					phone_number, institute,
-					workshop_date, workshop_title))
+    # -------- BOOKING CONFIRMED -------- #
 
-			logging.info("Booking Rejected by {0} for {1} ".format(request.user.email,
-								other_email))
+    elif call_on == "Booking Confirmed":
 
-			try:
-				send_mail("FOSSEE Workshop booking rejected for {0}"
-					.format(workshop_date), message, SENDER_EMAIL,
-					[request.user.email], fail_silently=True)
-			except Exception:
-				send_smtp_email(request=request,
-					subject="FOSSEE Workshop booking rejected for {0}".
-					format(workshop_date), message=message,
-					other_email=request.user.email
-					)
-		else:
-			message = dedent("""\
-					Workshop date:{0}
-					Workshop title:{1}
+        message = dedent("""\
+Workshop confirmed.
 
-					We regret to inform you that your workshop booking
-					has been rejected due to unavailability of the
-					instructor. You may try booking other available
-					slots {2}/book/ or you can also Propose a workshop
-					based on your available date.
-					
-					This is a auto-generated mail.
-					"""
-					.format(workshop_date, workshop_title, PRODUCTION_URL))
+Workshop date:{0}
+Workshop title:{1}
 
-			try:
-				send_mail("FOSSEE Workshop booking rejected for {0}".
-					format(workshop_date), message, SENDER_EMAIL,
-					[other_email], fail_silently=True)
-			except Exception:
-				send_smtp_email(request=request,
-					subject="FOSSEE Workshop booking rejected for {0}".
-					format(workshop_date), message=message,
-					other_email=other_email
-					)
+This is an auto-generated mail.
+""".format(workshop_date, workshop_title))
 
-	elif call_on =='Workshop Deleted':
-		message = dedent("""\
-				You have deleted a Workshop.
+        send_mail(
+            "FOSSEE Workshop booking confirmation",
+            message,
+            SENDER_EMAIL,
+            [other_email],
+            fail_silently=True
+        )
 
-				Workshop date:{0}
-				Workshop title:{1}
-				
-				This is a auto-generated mail.
-				"""
-				.format(workshop_date, workshop_title))
+    # -------- WORKSHOP DELETED -------- #
 
-		logging.info("Workshop Deleted by {0} for {1} ".format(request.user.email,
-								workshop_date))
-		try:
-			send_mail("FOSSEE workshop deleted for {0}".format(workshop_date),
-				message, SENDER_EMAIL, [request.user.email],
-				fail_silently=True)
-		except Exception:
-			send_smtp_email(request=request,
-				subject="FOSSEE Workshop deleted for {0}".
-				format(workshop_date), message=message,
-				other_email=request.user.email
-				)
+    elif call_on == "Workshop Deleted":
 
-	elif call_on == 'Proposed Workshop':
-		if user_position == "instructor":
-			message = dedent("""\
-					A coordinator has proposed a workshop. The details are 
-					given below:
+        message = dedent("""\
+You have deleted a Workshop.
 
-					Coordinator name: {0}
-					Coordinator email: {1}
-					Contact number: {2}
-					Institute: {3}
-					Workshop date: {4}
-					Workshop title: {5}
+Workshop date:{0}
+Workshop title:{1}
 
-					Please Accept only if you are willing to take the workshop.
-					{6}/my_workshops/ 
+This is an auto-generated mail.
+""".format(workshop_date, workshop_title))
 
-					This is a auto-generated mail.
-					"""
-					.format(user_name, request.user.email,
-					phone_number, institute,
-					workshop_date, workshop_title,
-					PRODUCTION_URL))
+        send_mail(
+            "FOSSEE workshop deleted for {0}".format(workshop_date),
+            message,
+            SENDER_EMAIL,
+            [request.user.email],
+            fail_silently=True
+        )
 
-			logging.info("Workshop Proposed by {0} for {1} ".format(request.user.email,
-								workshop_date))
+    # -------- CHANGE DATE -------- #
 
-			send_mail("Proposed Workshop on {0}".
-					format(workshop_date), message, SENDER_EMAIL,
-					[other_email], fail_silently=False)
+    elif call_on == "Change Date":
 
-	elif call_on == 'Change Date':
-		if user_position == "instructor":
-			message = dedent("""\
-					Dear Instructor,
+        message = dedent("""\
+Dear User,
 
-					Your workshop date has been changed from {0} to {1}.
-					
-					This is a auto-generated mail.
-					"""
-					.format(
-					workshop_date, new_workshop_date))
+Workshop date has been changed from {0} to {1}
 
-			logging.info("Workshop Date Changed Done by {0} from {1} to {2}"
-						.format(request.user.email,
-						new_workshop_date, workshop_date))
-			try:
-				send_mail(
-					"FOSSEE Python Workshop Date Changed",
-					message, SENDER_EMAIL, [request.user.email],
-					fail_silently=True
-					)
-			except Exception:
-				send_smtp_email(request=request,
-					subject="FOSSEE Python Workshop Date Changed",
-					message=message, other_email=other_email,
-					)
-		else:
-			message = dedent("""\
-					Dear Coordinator,
+This is an auto-generated mail.
+""".format(workshop_date, new_workshop_date))
 
-					Your workshop has been rescheduled from {0} to {1}.
-					
-					This is a auto-generated mail.
-					"""
-					.format(
-					workshop_date, new_workshop_date
-					))
-
-			try:
-				send_mail(
-					"FOSSEE Python Workshop Date Changed",
-					message, SENDER_EMAIL,
-					[other_email], fail_silently=True
-					)
-			except Exception:
-				send_smtp_email(request=request,
-					subject="FOSSEE Python Workshop Date Changed",
-					message=message, other_email=request.user.email,
-					)
-
+        send_mail(
+            "FOSSEE Python Workshop Date Changed",
+            message,
+            SENDER_EMAIL,
+            [other_email],
+            fail_silently=True
+        )
