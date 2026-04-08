@@ -4,171 +4,286 @@
 
 {% block content %}
 
-<div class="container-fluid"><!-- ===== DASHBOARD SUMMARY ===== --><div class="row mb-4"><div class="col-md-4">
+<div class="container-fluid">
+
+<!-- ===== DASHBOARD SUMMARY ===== -->
+
+<div class="row mb-4">
+
+<div class="col-md-4">
 <div class="card text-center shadow">
 <div class="card-body">
 <h4>{{ objects.paginator.count }}</h4>
 <p>Total Workshops</p>
 </div>
 </div>
-</div><div class="col-md-4">
+</div>
+
+<div class="col-md-4">
 <div class="card text-center shadow">
 <div class="card-body">
 <h4>{{ ws_states|length }}</h4>
 <p>States Covered</p>
 </div>
 </div>
-</div><div class="col-md-4">
+</div>
+
+<div class="col-md-4">
 <div class="card text-center shadow">
 <div class="card-body">
 <h4>{{ ws_type|length }}</h4>
 <p>Workshop Types</p>
 </div>
 </div>
-</div></div><!-- ===== NEW ANALYTICS SECTION ===== --><div class="row mb-4"><!-- INDIA MAP --><div class="col-md-6"><div class="card shadow"><div class="card-header">
-<h5>Workshops Across India</h5>
-</div><div class="card-body"><div id="indiaMap" style="height:350px;"></div></div></div></div><!-- WORKSHOP TRENDS --><div class="col-md-6"><div class="card shadow"><div class="card-header">
-<h5>Workshop Trends</h5>
-</div><div class="card-body"><canvas id="trendChart"></canvas>
+</div>
 
-</div></div></div></div><div class="row"><!-- ===== FILTER PANEL ===== --><div class="col-md-3"><form method="GET"><div class="card shadow"><div class="card-header bg-primary text-white">
+</div>
+
+
+<!-- ===== ANALYTICS SECTION ===== -->
+
+<div class="row mb-4">
+
+<!-- INDIA MAP -->
+
+<div class="col-md-6">
+<div class="card shadow">
+<div class="card-header">
+<h5>Workshops Across India</h5>
+</div>
+<div class="card-body">
+<div id="indiaMap" style="height:350px;"></div>
+</div>
+</div>
+</div>
+
+
+<!-- WORKSHOP TREND -->
+
+<div class="col-md-6">
+<div class="card shadow">
+<div class="card-header">
+<h5>Workshop Trends</h5>
+</div>
+<div class="card-body">
+<canvas id="trendChart"></canvas>
+</div>
+</div>
+</div>
+
+</div>
+
+
+<!-- ===== NEW CHART SECTION ===== -->
+
+<div class="row mb-4">
+
+<div class="col-md-6">
+<div class="card shadow">
+<div class="card-header">
+<h5>State Wise Workshops</h5>
+</div>
+<div class="card-body">
+<canvas id="stateChart"></canvas>
+</div>
+</div>
+</div>
+
+<div class="col-md-6">
+<div class="card shadow">
+<div class="card-header">
+<h5>Workshop Type Statistics</h5>
+</div>
+<div class="card-body">
+<canvas id="typeChart"></canvas>
+</div>
+</div>
+</div>
+
+</div>
+
+
+<div class="row">
+
+<!-- ===== FILTER PANEL ===== -->
+
+<div class="col-md-3">
+
+<form method="GET">
+
+<div class="card shadow">
+
+<div class="card-header bg-primary text-white">
 <h4 class="mb-0">Filters</h4>
-</div><div class="card-body"><div class="form-group">
+</div>
+
+<div class="card-body">
+
+<div class="form-group">
 <label>From Date</label>
 {{form.from_date}}
-</div><div class="form-group">
+</div>
+
+<div class="form-group">
 <label>To Date</label>
 {{form.to_date}}
-</div><div class="form-group">
+</div>
+
+<div class="form-group">
 <label>Workshop</label>
 {{form.workshop_type}}
-</div><div class="form-group">
+</div>
+
+<div class="form-group">
 <label>State</label>
 {{form.state}}
-</div><div class="form-group">
+</div>
+
+<div class="form-group">
 <label>{{form.sort.help_text}}</label>
 {{form.sort}}
-</div>{% if request.user.is_authenticated %}
+</div>
+
+{% if request.user.is_authenticated %}
 
 <div class="form-group">
 <label>{{form.show_workshops.help_text}}</label>
 {{form.show_workshops}}
 </div>
-{% endif %}<hr><div class="text-center"><button type="submit" class="btn btn-success mr-2">
+
+{% endif %}
+
+<hr>
+
+<div class="text-center">
+
+<button type="submit" class="btn btn-success mr-2">
 <i class="fa fa-eye"></i> View
-</button><button type="submit" class="btn btn-info" name="download" value="download">
+</button>
+
+<button type="submit" class="btn btn-info" name="download" value="download">
 <i class="fa fa-download"></i> Download
-</button><a href="{% url 'statistics_app:public' %}" class="btn btn-outline-secondary mt-2">
+</button>
+
+<a href="{% url 'statistics_app:public' %}" class="btn btn-outline-secondary mt-2">
 Clear
-</a></div></div></div></form></div><!-- ===== MAIN CONTENT ===== --><div class="col-md-9"><div class="card shadow"><div class="card-header bg-light"><div class="row align-items-center"><div class="col-md-6">
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</form>
+
+</div>
+
+
+<!-- ===== MAIN TABLE ===== -->
+
+<div class="col-md-9">
+
+<div class="card shadow">
+
+<div class="card-header bg-light">
+
+<div class="row align-items-center">
+
+<div class="col-md-12">
 {% include "statistics_app/paginator.html" %}
-</div><div class="col-md-3 text-right"><button class="btn btn-info" id="state_graph">
-<i class="fa fa-bar-chart"></i> State Chart
-</button></div><div class="col-md-3 text-right"><button class="btn btn-primary" id="type_graph">
-<i class="fa fa-bar-chart"></i> Workshops Chart
-</button></div></div></div><div class="card-body"><!-- ===== SEARCH BAR ===== --><input class="form-control mb-3"
+</div>
+
+</div>
+
+</div>
+
+
+<div class="card-body">
+
+<input class="form-control mb-3"
 id="tableSearch"
 type="text"
 placeholder="Search workshops...">
 
-<div class="table-responsive">{% if objects %}
+<div class="table-responsive">
 
-<table class="table table-hover table-striped"><thead class="thead-dark"><tr>
+{% if objects %}
+
+<table class="table table-hover table-striped">
+
+<thead class="thead-dark">
+
+<tr>
 <th>Sr No.</th>
 <th>Coordinator</th>
 <th>Institute</th>
 <th>Instructor</th>
 <th>Workshop</th>
 <th>Date</th>
-</tr></thead><tbody>{% for workshop in objects %}
+</tr>
 
-<tr><td>{{ forloop.counter0|add:objects.start_index }}</td>
+</thead>
+
+<tbody>
+
+{% for workshop in objects %}
+
+<tr>
+<td>{{ forloop.counter0|add:objects.start_index }}</td>
 <td>{{ workshop.coordinator.get_full_name | capfirst }}</td>
 <td>{{ workshop.coordinator.profile.institute | capfirst }}</td>
 <td>{{ workshop.instructor.get_full_name | capfirst }}</td>
 <td>{{ workshop.workshop_type.name }}</td>
-<td>{{ workshop.date | date }}</td></tr>{% endfor %}
+<td>{{ workshop.date | date }}</td>
+</tr>
 
-</tbody></table>{% else %}
+{% endfor %}
+
+</tbody>
+
+</table>
+
+{% else %}
 
 <div class="alert alert-info text-center">
 No workshops found for selected filters.
-</div>{% endif %}
+</div>
 
-</div></div></div>{% include "statistics_app/paginator.html" %}
+{% endif %}
 
-</div></div></div><!-- ===== GRAPH MODAL ===== --><div id="dialog" title="Workshops Statistics">
-<canvas id="myChart"></canvas>
-</div><script>
+</div>
+
+</div>
+
+</div>
+
+{% include "statistics_app/paginator.html" %}
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<script>
 
 var state_labels = {{ws_states|safe}};
 var state_data = {{ws_count|safe}};
 var type_labels = {{ws_type|safe}};
 var type_data = {{ws_type_count|safe}};
 
-var chart;
 
-
-/* EXISTING CHART BUTTONS */
-
-$("#state_graph").on("click", function(){
-show_graph(state_labels,state_data,"State wise workshops");
-});
-
-$("#type_graph").on("click", function(){
-show_graph(type_labels,type_data,"Workshop type statistics");
-});
-
-
-function show_graph(labels,data,title){
-
-var ctx = document.getElementById('myChart').getContext('2d');
-
-if(chart) chart.destroy();
-
-chart = new Chart(ctx,{
-
-type:'bar',
-
-data:{
-labels:labels,
-datasets:[{
-data:data,
-label:title,
-backgroundColor:[
-'#3a86ff',
-'#00b4d8',
-'#ffbe0b',
-'#fb5607',
-'#8338ec'
-]
-}]
-},
-
-options:{
-responsive:true
-}
-
-});
-
-$("#dialog").dialog({
-width:900,
-height:500
-});
-
-}
-
-
-/* SEARCH FILTER */
+/* TABLE SEARCH */
 
 $("#tableSearch").on("keyup", function(){
 
 var value = $(this).val().toLowerCase();
 
 $("table tbody tr").filter(function(){
-
 $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-
 });
 
 });
@@ -187,11 +302,50 @@ L.marker([19.0760,72.8777]).addTo(map).bindPopup("Mumbai Workshop");
 L.marker([13.0827,80.2707]).addTo(map).bindPopup("Chennai Workshop");
 
 
+/* STATE CHART */
+
+new Chart(document.getElementById("stateChart"),{
+
+type:'bar',
+
+data:{
+labels:state_labels,
+datasets:[{
+label:"State Wise Workshops",
+data:state_data,
+backgroundColor:"#3a86ff"
+}]
+}
+
+});
+
+
+/* TYPE CHART */
+
+new Chart(document.getElementById("typeChart"),{
+
+type:'pie',
+
+data:{
+labels:type_labels,
+datasets:[{
+data:type_data,
+backgroundColor:[
+'#3a86ff',
+'#00b4d8',
+'#ffbe0b',
+'#fb5607',
+'#8338ec'
+]
+}]
+}
+
+});
+
+
 /* TREND CHART */
 
-var trendCtx = document.getElementById('trendChart').getContext('2d');
-
-new Chart(trendCtx,{
+new Chart(document.getElementById("trendChart"),{
 
 type:'line',
 
@@ -204,12 +358,10 @@ borderColor:"#3a86ff",
 backgroundColor:"rgba(58,134,255,0.2)",
 fill:true
 }]
-},
-
-options:{
-responsive:true
 }
 
 });
 
-</script>{% endblock %}
+</script>
+
+{% endblock %}

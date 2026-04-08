@@ -1,18 +1,84 @@
 {% extends 'workshop_app/base.html' %}
 
-	{% block title %}
-		Logged out
-	{% endblock %}
+{% block title %}
+Logged Out
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+.logout-container{
+min-height:70vh;
+display:flex;
+align-items:center;
+justify-content:center;
+}
+
+.logout-card{
+width:450px;
+padding:40px;
+border-radius:14px;
+background:white;
+text-align:center;
+box-shadow:0 15px 35px rgba(0,0,0,0.15);
+transition:0.3s;
+}
+
+.logout-card:hover{
+transform:translateY(-3px);
+box-shadow:0 20px 45px rgba(0,0,0,0.2);
+}
+
+.logout-icon{
+font-size:48px;
+color:#3a86ff;
+margin-bottom:15px;
+}
+
+.logout-title{
+font-weight:600;
+margin-bottom:10px;
+}
+
+.logout-text{
+color:#666;
+margin-bottom:25px;
+}
+
+</style>
 
 
-	{% block content %}
-		<div class="container" align="center">
-			<br>
-			<h3>You have logged out successfully.</h3>
-			<h4>If you want to login again please
-				<a href="/">click here</a>
-			</h4>
-			<br>
-		</div>
+<div class="logout-container">
 
-	{% endblock %}
+<div class="logout-card">
+
+<div class="logout-icon">
+<i class="fa fa-sign-out"></i>
+</div>
+
+<h4 class="logout-title">
+You have logged out successfully
+</h4>
+
+<p class="logout-text">
+Thank you for using the FOSSEE Workshop Management System.
+</p>
+
+<a href="{% url 'workshop_app:login' %}" class="btn btn-primary">
+<i class="fa fa-sign-in"></i> Login Again
+</a>
+
+</div>
+
+</div>
+
+<script>
+
+setTimeout(function(){
+window.location.href="{% url 'workshop_app:login' %}";
+},5000);
+
+</script>
+
+{% endblock %}
