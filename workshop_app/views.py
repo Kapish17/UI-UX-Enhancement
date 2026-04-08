@@ -146,12 +146,12 @@ def user_register(request):
             username = form.cleaned_data.get('username')
             email = form.cleaned_data.get('email')
 
-            # ✅ Username validation
+            # Username validation
             if User.objects.filter(username=username).exists():
                 messages.error(request, "Username already exists. Please choose another.")
                 return render(request, "workshop_app/register.html", {"form": form})
 
-            # ✅ Email validation
+            # Email validation
             if User.objects.filter(email=email).exists():
                 messages.error(request, "Email already registered.")
                 return render(request, "workshop_app/register.html", {"form": form})
@@ -159,23 +159,24 @@ def user_register(request):
             # Save user
             username, password, key = form.save()
 
-            new_user = authenticate(username=username, password=password)
+            # Get newly created user
+            user = User.objects.get(username=username)
 
-            login(request, new_user)
+            # Get profile
+            profile = Profile.objects.get(user=user)
 
-            user_position = request.user.profile.position
-
+            # Send activation email
             send_email(
                 request,
                 call_on='Registration',
-                user_position=user_position,
+                user_position=profile.position,
                 key=key
             )
 
+            # Show activation page
             return render(request, 'workshop_app/activation.html')
 
         else:
-
             messages.error(request, "Registration failed. Please check the form.")
 
             if request.user.is_authenticated:
