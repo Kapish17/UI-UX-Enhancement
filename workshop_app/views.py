@@ -136,32 +136,67 @@ def activate_user(request, key=None):
 
 def user_register(request):
     """User Registration form"""
+
     if request.method == 'POST':
+
         form = UserRegistrationForm(request.POST)
+
         if form.is_valid():
+
+            username = form.cleaned_data.get('username')
+            email = form.cleaned_data.get('email')
+
+            # ✅ Username validation
+            if User.objects.filter(username=username).exists():
+                messages.error(request, "Username already exists. Please choose another.")
+                return render(request, "workshop_app/register.html", {"form": form})
+
+            # ✅ Email validation
+            if User.objects.filter(email=email).exists():
+                messages.error(request, "Email already registered.")
+                return render(request, "workshop_app/register.html", {"form": form})
+
+            # Save user
             username, password, key = form.save()
+
             new_user = authenticate(username=username, password=password)
+
             login(request, new_user)
+
             user_position = request.user.profile.position
+
             send_email(
-                request, call_on='Registration',
+                request,
+                call_on='Registration',
                 user_position=user_position,
                 key=key
             )
+
             return render(request, 'workshop_app/activation.html')
+
         else:
+
+            messages.error(request, "Registration failed. Please check the form.")
+
             if request.user.is_authenticated:
                 return redirect('workshop:view_profile')
+
             return render(
-                request, "workshop_app/register.html",
+                request,
+                "workshop_app/register.html",
                 {"form": form}
             )
+
     else:
+
         if request.user.is_authenticated and is_email_checked(request.user):
             return redirect(get_landing_page(request.user))
+
         elif request.user.is_authenticated:
             return render(request, 'workshop_app/activation.html')
+
         form = UserRegistrationForm()
+
     return render(request, "workshop_app/register.html", {"form": form})
 
 
