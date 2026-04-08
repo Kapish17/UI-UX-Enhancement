@@ -50,8 +50,8 @@ def is_instructor(user):
 def get_landing_page(user):
     # For now, landing pages of both instructor and coordinator are same
     if is_instructor(user):
-        return reverse('workshop_app:workshop_status_instructor')
-    return reverse('workshop_app:workshop_status_coordinator')
+        return reverse('workshop:workshop_status_instructor')
+    return reverse('workshop:workshop_status_coordinator')
 
 
 # View functions
@@ -63,7 +63,7 @@ def index(request):
     if user.is_authenticated and is_email_checked(user):
         return redirect(get_landing_page(user))
 
-    return redirect(reverse('workshop_app:login'))
+    return redirect(reverse('workshop:login'))
 
 
 # User views
@@ -118,14 +118,14 @@ def activate_user(request, key=None):
             return render(request, 'workshop_app/activation.html',
                           {'status': status})
         else:
-            return redirect(reverse("workshop_app:register"))
+            return redirect(reverse("workshop:register"))
 
     user = Profile.objects.filter(activation_key=key)
     if user.exists():
         user = user.first()
     else:
         logout(request)
-        return redirect(reverse("workshop_app:register"))
+        return redirect(reverse("workshop:register"))
 
     user.is_email_verified = True
     user.save()
@@ -266,7 +266,7 @@ def accept_workshop(request, workshop_id):
                other_email=workshop.coordinator.email,
                phone_number=request.user.profile.phone_number
                )
-    return redirect(reverse('workshop_app:workshop_status_instructor'))
+    return redirect(reverse('workshop:workshop_status_instructor'))
 
 
 @login_required
@@ -298,7 +298,7 @@ def change_workshop_date(request, workshop_id):
                        workshop_date=str(workshop_date),
                        other_email=workshop.first().coordinator.email
                        )
-    return redirect(reverse('workshop_app:workshop_status_instructor'))
+    return redirect(reverse('workshop:workshop_status_instructor'))
 
 
 @login_required
@@ -357,7 +357,7 @@ def workshop_type_details(request, workshop_type_id):
     if workshop_type.exists():
         workshop_type = workshop_type.first()
     else:
-        return redirect(reverse('workshop_app:workshop_type_list'))
+        return redirect(reverse('workshop:workshop_type_list'))
 
     qs = AttachmentFile.objects.filter(workshop_type=workshop_type)
     AttachmentFileFormSet = inlineformset_factory(
@@ -386,7 +386,7 @@ def workshop_type_details(request, workshop_type_id):
                             request, messages.INFO, "Attachment saved"
                         )
                 return redirect(
-                    reverse('workshop_app:workshop_type_details',
+                    reverse('workshop:workshop_type_details',
                             args=[form_data.id])
                     )
         else:
@@ -417,11 +417,11 @@ def delete_attachment_file(request, file_id):
         file.delete()
         messages.add_message(request, messages.INFO, "Attachment deleted")
         return redirect(
-            reverse('workshop_app:workshop_type_details',
+            reverse('workshop:workshop_type_details',
                     args=[file.workshop_type.id])
         )
     messages.add_message(request, messages.ERROR, "File does not exist")
-    return redirect(reverse('workshop_app:workshop_type_list'))
+    return redirect(reverse('workshop:workshop_type_list'))
 
 
 @login_required
@@ -487,7 +487,7 @@ def add_workshop_type(request):
             form_data = form.save()
             messages.add_message(request, messages.SUCCESS, "Workshop Type added")
             return redirect(
-                reverse('workshop_app:workshop_type_details',
+                reverse('workshop:workshop_type_details',
                         args=[form_data.id])
             )
     else:
@@ -527,7 +527,7 @@ def view_own_profile(request):
             form_data.user.save()
             form_data.save()
             messages.add_message(request, messages.SUCCESS, "Profile updated.")
-            return redirect(reverse("workshop_app:view_own_profile"))
+            return redirect(reverse("workshop:view_own_profile"))
         else:
             messages.add_message(
                 request, messages.ERROR, "Profile update failed!"

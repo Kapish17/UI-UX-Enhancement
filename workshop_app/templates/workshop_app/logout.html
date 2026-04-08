@@ -65,7 +65,7 @@ You have logged out successfully
 Thank you for using the FOSSEE Workshop Management System.
 </p>
 
-<a href="{% url 'workshop_app:login' %}" class="btn btn-primary">
+<a href="{% url 'workshop:login' %}" class="btn btn-primary">
 <i class="fa fa-sign-in"></i> Login Again
 </a>
 
@@ -76,7 +76,7 @@ Thank you for using the FOSSEE Workshop Management System.
 <script>
 
 setTimeout(function(){
-window.location.href="{% url 'workshop_app:login' %}";
+window.location.href="{% url 'workshop:login' %}";
 },5000);
 
 </script>

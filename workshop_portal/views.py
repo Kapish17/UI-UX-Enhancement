@@ -12,5 +12,5 @@ def index(request):
     if page.exists():
         redirect_url = reverse("cms:home", args=[page.first().permalink])
     else:
-        redirect_url = reverse("workshop_app:index")
+        redirect_url = reverse("workshop:index")
     return redirect(redirect_url)

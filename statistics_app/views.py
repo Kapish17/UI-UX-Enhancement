@@ -163,7 +163,7 @@ def team_stats(request, team_id=None):
     # Check if user belongs to the team
     if not team.members.filter(user_id=user.id).exists():
         messages.info(request, "You are not added to the team")
-        return redirect(reverse("workshop_app:index"))
+        return redirect(reverse("workshop:index"))
 
     member_workshop_data = {}
 

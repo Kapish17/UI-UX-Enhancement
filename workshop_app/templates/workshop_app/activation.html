@@ -14,10 +14,10 @@
             </div>
             <ul class="nav navbar-nav navbar-right">
                 {% if request.user.profile.is_email_verified %}
-                    <li><a href="{% url 'workshop_app:view_profile' %}"><span class="glyphicon glyphicon-user"></span>
+                    <li><a href="{% url 'workshop:view_profile' %}"><span class="glyphicon glyphicon-user"></span>
                         Profile</a></li>
 
-                    <li><a href="{% url 'workshop_app:logout' %}"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
+                    <li><a href="{% url 'workshop:logout' %}"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
                     </li>
                 {% endif %}
             </ul>
@@ -37,7 +37,7 @@
         <h2>Email Already Verified</h2>
         <p>Your email is already verified.</p>
 
-        <a href="{% url 'workshop_app:index' %}" class="btn btn-primary">
+        <a href="{% url 'workshop:index' %}" class="btn btn-primary">
             Go to Dashboard
         </a>
     </div>
@@ -50,7 +50,7 @@
         <h2>Activation Expired</h2>
         <p>Your activation link has expired. Please register again.</p>
 
-        <a href="{% url 'workshop_app:register' %}" class="btn btn-danger">
+        <a href="{% url 'workshop:register' %}" class="btn btn-danger">
             Register Again
         </a>
     </div>
@@ -63,7 +63,7 @@
         <h2>Account Activated Successfully 🎉</h2>
         <p>Your account has been activated.</p>
 
-        <a href="{% url 'workshop_app:login' %}" class="btn btn-success">
+        <a href="{% url 'workshop:login' %}" class="btn btn-success">
             Login Now
         </a>
     </div>
@@ -83,7 +83,7 @@
 
         <p>Please check your email inbox.</p>
 
-        <a href="{% url 'workshop_app:login' %}" class="btn btn-primary mt-3">
+        <a href="{% url 'workshop:login' %}" class="btn btn-primary mt-3">
             Go to Login
         </a>
 
