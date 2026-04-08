@@ -50,7 +50,7 @@ letter-spacing:0.5px;
 
 .base-content{
 padding-top:90px;
-padding-bottom:80px;
+padding-bottom:120px;
 min-height:80vh;
 }
 
@@ -197,14 +197,13 @@ color:white;
 /* ---------------- FOOTER ---------------- */
 
 .footer{
-position:fixed;
-bottom:0;
 width:100%;
 background:#1d3557;
 color:white;
 text-align:center;
 padding:10px;
 font-size:14px;
+margin-top:40px;
 box-shadow:0 -3px 10px rgba(0,0,0,0.2);
 }
 
