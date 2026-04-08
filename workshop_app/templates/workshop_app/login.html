@@ -8,28 +8,36 @@ Login
 
 <style>
 
-/* Page Background */
+/* -------- PAGE WRAPPER -------- */
 
 .login-container{
-min-height:75vh;
+min-height:80vh;
 display:flex;
 align-items:center;
 justify-content:center;
-background:linear-gradient(135deg,#eef4ff,#f9fbff);
 }
 
-/* Login Card */
+/* -------- LOGIN CARD -------- */
 
 .login-card{
 width:420px;
 padding:35px;
 border-radius:14px;
-background:white;
-box-shadow:0 15px 35px rgba(0,0,0,0.15);
-animation:fadeIn 0.6s ease;
+background:#ffffff;
+box-shadow:0 20px 40px rgba(0,0,0,0.15);
+animation:fadeIn 0.5s ease;
 }
 
-/* Animation */
+/* -------- DARK MODE CARD -------- */
+
+.dark-mode .login-card{
+background:#161b22;
+border:1px solid #30363d;
+color:#c9d1d9;
+box-shadow:0 20px 50px rgba(0,0,0,0.6);
+}
+
+/* -------- ANIMATION -------- */
 
 @keyframes fadeIn{
 from{
@@ -42,7 +50,7 @@ transform:translateY(0);
 }
 }
 
-/* Title */
+/* -------- TITLE -------- */
 
 .login-title{
 text-align:center;
@@ -50,7 +58,7 @@ font-weight:600;
 margin-bottom:25px;
 }
 
-/* Input group */
+/* -------- INPUT GROUP -------- */
 
 .input-group{
 position:relative;
@@ -61,7 +69,7 @@ padding-left:40px;
 padding-right:40px;
 }
 
-/* Left icon */
+/* -------- ICON LEFT -------- */
 
 .input-icon{
 position:absolute;
@@ -71,7 +79,7 @@ transform:translateY(-50%);
 color:#777;
 }
 
-/* Password toggle */
+/* -------- PASSWORD TOGGLE -------- */
 
 .password-toggle{
 position:absolute;
@@ -82,72 +90,86 @@ cursor:pointer;
 color:#777;
 }
 
-/* Button hover */
+/* -------- DARK MODE INPUT -------- */
+
+.dark-mode input{
+background:#0d1117;
+color:#c9d1d9;
+border:1px solid #30363d;
+}
+
+/* -------- BUTTON -------- */
 
 .btn-primary{
+background:linear-gradient(90deg,#3a86ff,#00b4d8);
+border:none;
 transition:0.3s;
 }
 
 .btn-primary:hover{
 transform:translateY(-2px);
-box-shadow:0 8px 20px rgba(0,0,0,0.2);
+box-shadow:0 8px 20px rgba(0,0,0,0.25);
 }
 
-/* Dark mode */
+/* -------- DARK MODE BUTTON -------- */
 
-.dark-mode{
-background:#121212;
-color:white;
+.dark-mode .btn-primary{
+background:#238636;
 }
 
-.dark-mode .login-card{
-background:#1e1e1e;
-color:white;
+.dark-mode .btn-primary:hover{
+background:#2ea043;
 }
 
-.dark-mode input{
-background:#2b2b2b;
-color:white;
-border-color:#444;
+/* -------- DARK MODE LINK -------- */
+
+.dark-mode a{
+color:#58a6ff;
 }
 
-</style><div class="login-container"><div class="login-card"><!-- Dark Mode Toggle --><button id="themeToggle" class="btn btn-sm btn-light float-right">
-<i class="fa fa-moon"></i>
-</button><h4 class="login-title">
-<i class="fa fa-graduation-cap"></i> Sign in to FOSSEE Workshops
-</h4><form method="post">{% csrf_token %}
+.dark-mode a:hover{
+color:#79c0ff;
+}
 
-{% if form.errors %}
+</style><div class="login-container"><div class="login-card"><h4 class="login-title">
+<i class="fa fa-graduation-cap"></i>
+Sign in to FOSSEE Workshops
+</h4><form method="post">
+{% csrf_token %}{% if form.errors %}
 
 <div class="alert alert-danger">
 Invalid username or password
-</div>{% endif %}
-
-<!-- Username --><div class="form-group"><label>Username</label>
-
-<div class="input-group"><i class="fa fa-user input-icon"></i>
+</div>
+{% endif %}<!-- Username --><div class="form-group">
+<label>Username</label><div class="input-group"><i class="fa fa-user input-icon"></i>
 
 {{ form.username }}
 
-</div></div><!-- Password --><div class="form-group"><label>Password</label>
-
-<div class="input-group"><i class="fa fa-lock input-icon"></i>
+</div></div><!-- Password --><div class="form-group">
+<label>Password</label><div class="input-group"><i class="fa fa-lock input-icon"></i>
 
 {{ form.password }}
 
-<span class="password-toggle" onclick="togglePassword()"><i class="fa fa-eye"></i>
-
+<span class="password-toggle" onclick="togglePassword()">
+<i class="fa fa-eye"></i>
 </span></div><small id="capsWarning" style="color:red;display:none;">
 Caps Lock is ON
-</small></div><!-- Remember Me --><div class="form-check mb-2"><input type="checkbox" class="form-check-input"><label class="form-check-label">
+</small></div><!-- Remember --><div class="form-check mb-2">
+<input type="checkbox" class="form-check-input">
+<label class="form-check-label">
 Remember Me
-</label></div><button id="loginBtn" type="submit" class="btn btn-primary btn-block mt-3">Sign in
-
-</button></form><hr><div class="text-center"><a href="{% url 'workshop:register' %}">New around here? Sign up
-
-</a><br><a href="{% url 'password_reset' %}">Forgot password?
-
-</a></div></div></div><script>
+</label>
+</div><button id="loginBtn" type="submit" class="btn btn-primary btn-block mt-3">
+Sign in
+</button></form><hr><div class="text-center">
+<a href="{% url 'workshop:register' %}">
+New around here? Sign up
+</a>
+<br>
+<a href="{% url 'password_reset' %}">
+Forgot password?
+</a>
+</div></div></div><script>
 
 /* Password toggle */
 
@@ -163,7 +185,6 @@ input.type="password";
 
 }
 
-
 /* Login loading animation */
 
 document.querySelector("form").addEventListener("submit",function(){
@@ -171,7 +192,6 @@ document.querySelector("form").addEventListener("submit",function(){
 document.getElementById("loginBtn").innerHTML="Signing in...";
 
 });
-
 
 /* Caps lock detection */
 
@@ -184,31 +204,5 @@ document.getElementById("capsWarning").style.display="none";
 }
 
 });
-
-
-/* Dark mode toggle */
-
-const toggle = document.getElementById("themeToggle");
-
-toggle.addEventListener("click", function () {
-
-document.body.classList.toggle("dark-mode");
-
-if(document.body.classList.contains("dark-mode")){
-localStorage.setItem("theme","dark");
-}else{
-localStorage.setItem("theme","light");
-}
-
-});
-
-
-window.onload = function(){
-
-if(localStorage.getItem("theme") === "dark"){
-document.body.classList.add("dark-mode");
-}
-
-};
 
 </script>{% endblock %}

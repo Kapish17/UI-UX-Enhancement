@@ -270,13 +270,7 @@ No workshops found for selected filters.
 
 <script>
 
-var state_labels = {{ws_states|safe}};
-var state_data = {{ws_count|safe}};
-var type_labels = {{ws_type|safe}};
-var type_data = {{ws_type_count|safe}};
-
-
-/* TABLE SEARCH */
+/* ================= TABLE SEARCH ================= */
 
 $("#tableSearch").on("keyup", function(){
 
@@ -289,20 +283,112 @@ $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
 });
 
 
-/* INDIA MAP */
+/* ================= INDIA MAP ================= */
+/* ================= INDIA MAP ================= */
 
 var map = L.map('indiaMap').setView([22.9734,78.6569],5);
 
+/* Map tiles */
+
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
-maxZoom:18
+maxZoom:18,
+attribution:'© OpenStreetMap'
 }).addTo(map);
 
-L.marker([28.6139,77.2090]).addTo(map).bindPopup("Delhi Workshop");
-L.marker([19.0760,72.8777]).addTo(map).bindPopup("Mumbai Workshop");
-L.marker([13.0827,80.2707]).addTo(map).bindPopup("Chennai Workshop");
+
+/* ================= HEATMAP ================= */
+
+var map = L.map('indiaMap').setView([22.9734,78.6569],5);
+
+/* Map Tiles */
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+    maxZoom:18,
+    attribution:'© OpenStreetMap'
+}).addTo(map);
 
 
-/* STATE CHART */
+/* HEATMAP DATA */
+
+var heatData = [
+    [28.6139,77.2090,1.0],  // Delhi
+    [19.0760,72.8777,1.0],  // Mumbai
+    [13.0827,80.2707,1.0],  // Chennai
+    [22.5726,88.3639,1.0],  // Kolkata
+    [12.9716,77.5946,1.0],  // Bangalore
+    [17.3850,78.4867,1.0],  // Hyderabad
+    [23.2599,77.4126,1.0]   // Bhopal
+];
+
+
+//* ================= HEATMAP MAP ================= */
+
+/* ================= SAFE LEAFLET MAP ================= */
+
+if (!window.indiaMapInstance) {
+
+    window.indiaMapInstance = L.map('indiaMap').setView([22.9734,78.6569],5);
+
+    var map = window.indiaMapInstance;
+
+    /* Map tiles */
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+        maxZoom:18,
+        attribution:'© OpenStreetMap'
+    }).addTo(map);
+
+    /* Heatmap data */
+
+    var heatData = [
+        [28.6139,77.2090,1],   // Delhi
+        [19.0760,72.8777,1],   // Mumbai
+        [12.9716,77.5946,1],   // Bangalore
+        [13.0827,80.2707,1],   // Chennai
+        [22.5726,88.3639,1],   // Kolkata
+        [17.3850,78.4867,1],   // Hyderabad
+        [23.2599,77.4126,1]    // Bhopal
+    ];
+
+    /* Heatmap */
+
+    L.heatLayer(heatData,{
+        radius:45,
+        blur:30,
+        maxZoom:10,
+        gradient:{
+            0.2:'blue',
+            0.4:'lime',
+            0.6:'yellow',
+            0.8:'orange',
+            1.0:'red'
+        }
+    }).addTo(map);
+
+}
+
+
+/* ================= WORKSHOP MARKERS ================= */
+
+L.marker([28.6139,77.2090]).addTo(map)
+.bindPopup("<b>Delhi</b><br>Workshop Conducted");
+
+L.marker([19.0760,72.8777]).addTo(map)
+.bindPopup("<b>Mumbai</b><br>Workshop Conducted");
+
+L.marker([13.0827,80.2707]).addTo(map)
+.bindPopup("<b>Chennai</b><br>Workshop Conducted");
+
+
+/* ================= CHART DATA ================= */
+
+var state_labels = {{ws_states|safe}};
+var state_data = {{ws_count|safe}};
+var type_labels = {{ws_type|safe}};
+var type_data = {{ws_type_count|safe}};
+
+
+/* ================= STATE CHART ================= */
 
 new Chart(document.getElementById("stateChart"),{
 
@@ -320,7 +406,7 @@ backgroundColor:"#3a86ff"
 });
 
 
-/* TYPE CHART */
+/* ================= TYPE CHART ================= */
 
 new Chart(document.getElementById("typeChart"),{
 
@@ -343,7 +429,7 @@ backgroundColor:[
 });
 
 
-/* TREND CHART */
+/* ================= TREND CHART ================= */
 
 new Chart(document.getElementById("trendChart"),{
 
@@ -356,7 +442,8 @@ label:"Workshops",
 data:[2,5,3,7,4,6],
 borderColor:"#3a86ff",
 backgroundColor:"rgba(58,134,255,0.2)",
-fill:true
+fill:true,
+tension:0.4
 }]
 }
 

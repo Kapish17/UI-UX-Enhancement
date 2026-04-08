@@ -26,13 +26,13 @@ HomePage
 
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
-
-<!-- Leaflet Map -->
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
 
-<!-- JS -->
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/leaflet.heat/dist/leaflet-heat.js"></script>
+
+
 
 <script src="{% static 'workshop_app/js/jquery-3.4.1.min.js' %}"></script>
 <script src="{% static 'workshop_app/js/popper.min.js' %}"></script>
@@ -203,38 +203,27 @@ function toggleDarkMode(){
 
 document.body.classList.toggle("dark-mode");
 
-let btn = document.getElementById("themeBtn");
-
 if(document.body.classList.contains("dark-mode")){
-
-btn.innerHTML="☀️";
 localStorage.setItem("theme","dark");
-
-}else{
-
-btn.innerHTML="🌙";
+document.getElementById("themeBtn").innerHTML="☀️";
+}
+else{
 localStorage.setItem("theme","light");
-
+document.getElementById("themeBtn").innerHTML="🌙";
 }
 
 }
 
 window.onload=function(){
 
-let btn=document.getElementById("themeBtn");
+let theme = localStorage.getItem("theme");
 
-if(localStorage.getItem("theme")==="dark"){
-
+if(theme === "dark"){
 document.body.classList.add("dark-mode");
-
-if(btn){
-btn.innerHTML="☀️";
+document.getElementById("themeBtn").innerHTML="☀️";
 }
 
 }
-
-}
-
 </script>
 
 <!-- ================= FOOTER ================= -->
