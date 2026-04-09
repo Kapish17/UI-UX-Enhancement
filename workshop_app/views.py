@@ -316,6 +316,22 @@ def workshop_type_list(request):
         {'workshop_type': workshop_type}
     )
 
+# --------------------------------------------------
+# WORKSHOP TYPE DETAILS
+# --------------------------------------------------
+
+def workshop_type_details(request, pk):
+
+    workshop_type = WorkshopType.objects.get(id=pk)
+
+    return render(
+        request,
+        'workshop_app/workshop_type_details.html',
+        {
+            "workshop_type": workshop_type
+        }
+    )
+
 
 # --------------------------------------------------
 # VIEW OWN PROFILE
