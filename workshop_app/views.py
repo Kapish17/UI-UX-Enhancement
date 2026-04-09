@@ -171,17 +171,23 @@ def workshop_status_coordinator(request):
 
     user = request.user
 
-    if is_instructor(user):
-        return redirect(get_landing_page(user))
-
     workshops = Workshop.objects.filter(
         coordinator=user.id
     ).order_by('-date')
 
+    total_workshops = workshops.count()
+    pending_workshops = workshops.filter(status=0).count()
+    accepted_workshops = workshops.filter(status=1).count()
+
     return render(
         request,
         'workshop_app/workshop_status_coordinator.html',
-        {"workshops": workshops}
+        {
+            "workshops": workshops,
+            "total_workshops": total_workshops,
+            "pending_workshops": pending_workshops,
+            "accepted_workshops": accepted_workshops
+        }
     )
 
 

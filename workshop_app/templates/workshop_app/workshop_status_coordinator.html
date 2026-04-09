@@ -5,26 +5,38 @@
 {% endblock %}
 
 {% block extra-custom-scripts %}
-
 <style>
 
 .table-heading{
-    color:#04a9cf;
+color:#04a9cf;
 }
 
 /* Dashboard cards */
 
 .dashboard-card{
-border-radius:10px;
-padding:20px;
+border-radius:12px;
+padding:25px;
 text-align:center;
-box-shadow:0 4px 10px rgba(0,0,0,0.08);
+box-shadow:0 6px 15px rgba(0,0,0,0.08);
 background:white;
+min-height:120px;
+transition:0.3s;
+}
+
+.dashboard-card:hover{
+transform:translateY(-3px);
+box-shadow:0 10px 25px rgba(0,0,0,0.15);
 }
 
 .dashboard-card h2{
 font-weight:700;
+font-size:36px;
 margin-top:10px;
+}
+
+.dashboard-card h6{
+color:#777;
+font-weight:500;
 }
 
 .quick-actions{
@@ -37,9 +49,7 @@ margin:10px;
 }
 
 </style>
-
 {% endblock %}
-
 
 {% block content %}
 
@@ -62,58 +72,31 @@ You can also propose a workshop from the
 
 <!-- ================= WORKSHOP SUMMARY ================= -->
 
-<div class="row text-center">
+<div class="row text-center mt-4">
 
 <div class="col-md-4">
 
 <div class="dashboard-card">
-
 <h6>Total Workshops</h6>
-
-<h2>{{ workshops|length }}</h2>
-
+<h2>{{ total_workshops }}</h2>
 </div>
 
 </div>
-
 
 <div class="col-md-4">
 
 <div class="dashboard-card">
-
 <h6>Pending Workshops</h6>
-
-<h2>
-
-{% for workshop in workshops %}
-{% if workshop.status == 0 %}
-{{ forloop.counter }}
-{% endif %}
-{% endfor %}
-
-</h2>
-
+<h2>{{ pending_workshops }}</h2>
 </div>
 
 </div>
-
 
 <div class="col-md-4">
 
 <div class="dashboard-card">
-
 <h6>Accepted Workshops</h6>
-
-<h2>
-
-{% for workshop in workshops %}
-{% if workshop.status == 1 %}
-{{ forloop.counter }}
-{% endif %}
-{% endfor %}
-
-</h2>
-
+<h2>{{ accepted_workshops }}</h2>
 </div>
 
 </div>
@@ -279,4 +262,4 @@ You can also propose a workshop from the
 
 </div>
 
-{% endblock %}
+{% endblock content %}
