@@ -8,7 +8,7 @@
     <div class="container">
     <h2 class="text-center">Workshop Types</h2>
     <br>
-    {% if request.user|has_group:"instructor" %}
+  {% if request.user.is_authenticated %}
         <a href="{% url 'workshop:add_workshop_type' %}">
         <button class="btn btn-md btn-primary float-right mb-3 mx-4">Add Workshop Type</button>
         </a>
@@ -32,9 +32,15 @@
 		      <td>{{ w.name }}</td>
 		      <td>{{ w.duration }}</td>
 		      <td>
+
                 <a href="{% url 'workshop:workshop_type_details' w.id %}" class="btn btn-sm btn-info">
-                    View Workshop Details
+                    View
                 </a>
+
+               <a href="{% url 'workshop:edit_workshop_type' w.id %}" class="btn btn-sm btn-warning">
+                    Edit
+               </a>
+
               </td>
 		    </tr>
 		  {% endfor %}

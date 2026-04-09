@@ -332,6 +332,69 @@ def workshop_type_details(request, pk):
         }
     )
 
+# --------------------------------------------------
+# ADD WORKSHOP TYPE
+# --------------------------------------------------
+
+@login_required
+def add_workshop_type(request):
+
+    if not is_instructor(request.user):
+        return redirect(get_landing_page(request.user))
+
+    form = WorkshopTypeForm()
+
+    if request.method == "POST":
+
+        form = WorkshopTypeForm(request.POST)
+
+        if form.is_valid():
+
+            form.save()
+
+            messages.success(request, "Workshop type added successfully")
+
+            return redirect(reverse('workshop:workshop_type_list'))
+
+    return render(
+        request,
+        'workshop_app/add_workshop_type.html',
+        {'form': form}
+    )
+
+
+# --------------------------------------------------
+# EDIT WORKSHOP TYPE
+# --------------------------------------------------
+
+@login_required
+def edit_workshop_type(request, pk):
+
+    if not is_instructor(request.user):
+        return redirect(get_landing_page(request.user))
+
+    workshop_type = WorkshopType.objects.get(id=pk)
+
+    form = WorkshopTypeForm(instance=workshop_type)
+
+    if request.method == "POST":
+
+        form = WorkshopTypeForm(request.POST, instance=workshop_type)
+
+        if form.is_valid():
+
+            form.save()
+
+            messages.success(request, "Workshop type updated successfully")
+
+            return redirect(reverse('workshop:workshop_type_list'))
+
+    return render(
+        request,
+        'workshop_app/edit_workshop_type.html',
+        {'form': form}
+    )
+
 
 # --------------------------------------------------
 # VIEW OWN PROFILE
