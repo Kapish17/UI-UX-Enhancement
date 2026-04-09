@@ -47,12 +47,18 @@ urlpatterns = [
         name='propose_workshop'
     ),
 
-    # Workshop types
-    re_path(
-        r'^types/$',
-        views.workshop_type_list,
-        name='workshop_type_list'
-    ),
+   # Workshop types
+re_path(
+    r'^types/$',
+    views.workshop_type_list,
+    name='workshop_type_list'
+),
+
+re_path(
+    r'^types/(?P<pk>\d+)/$',
+    views.workshop_type_details,
+    name='workshop_type_details'
+),
 
     # Profile
     re_path(

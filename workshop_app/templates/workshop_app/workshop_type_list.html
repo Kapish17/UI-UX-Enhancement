@@ -32,7 +32,7 @@
 		      <td>{{ w.name }}</td>
 		      <td>{{ w.duration }}</td>
 		      <td>
-                <a href="#" class="btn btn-sm btn-info">
+                <a href="{% url 'workshop:workshop_type_details' w.id %}" class="btn btn-sm btn-info">
                     View Workshop Details
                 </a>
               </td>
