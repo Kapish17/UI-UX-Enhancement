@@ -314,29 +314,62 @@ def workshop_type_list(request):
 # --------------------------------------------------
 # VIEW OWN PROFILE
 # --------------------------------------------------
-
 @login_required
 def view_own_profile(request):
 
     user = request.user
     profile = user.profile
 
+    # ---------------------------
+    # PROFILE COMPLETION LOGIC
+    # ---------------------------
+
+    fields = [
+        user.first_name,
+        user.last_name,
+        user.email,
+        profile.phone_number,
+        profile.institute,
+        profile.department,
+        profile.location,
+        profile.state,
+        profile.profile_image
+    ]
+
+    completed = 0
+
+    for f in fields:
+        if f:
+            completed += 1
+
+    profile_completion = int((completed / len(fields)) * 100)
+
+    # ---------------------------
+    # UPDATE PROFILE
+    # ---------------------------
+
     if request.method == 'POST':
 
-        form = ProfileForm(request.POST, user=user, instance=profile)
+        form = ProfileForm(
+            request.POST,
+            request.FILES,   # Important for image upload
+            user=user,
+            instance=profile
+        )
 
         if form.is_valid():
 
             form_data = form.save(commit=False)
 
             form_data.user = user
-            form_data.user.first_name = request.POST['first_name']
-            form_data.user.last_name = request.POST['last_name']
 
-            form_data.user.save()
+            user.first_name = request.POST.get('first_name')
+            user.last_name = request.POST.get('last_name')
+
+            user.save()
             form_data.save()
 
-            messages.success(request, "Profile updated.")
+            messages.success(request, "Profile updated successfully")
 
             return redirect(reverse("workshop:view_own_profile"))
 
@@ -347,5 +380,10 @@ def view_own_profile(request):
     return render(
         request,
         "workshop_app/view_profile.html",
-        {"profile": profile, "Workshops": None, "form": form}
+        {
+            "profile": profile,
+            "Workshops": None,
+            "form": form,
+            "profile_completion": profile_completion
+        }
     )

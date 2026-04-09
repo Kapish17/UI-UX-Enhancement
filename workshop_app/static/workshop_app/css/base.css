@@ -346,3 +346,19 @@ color:#58a6ff;
 .login-card a:hover{
 color:#79c0ff;
 }
+
+.navbar-nav .nav-link{
+display:flex;
+align-items:center;
+gap:6px;
+font-weight:500;
+}
+
+.navbar-brand{
+font-weight:600;
+}
+
+.navbar{
+padding-top:10px;
+padding-bottom:10px;
+}
