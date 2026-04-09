@@ -112,7 +112,7 @@
                     <tr>
                         {% if not workshop.status and workshop.tnc_accepted %}
                             <td>
-                                <a href="{% url 'workshop:view_profile' workshop.coordinator.id %}">
+                                <a href="{% url 'workshop:view_own_profile' %}">
                                     {{ workshop.coordinator.get_full_name }}</a>
                             </td>
                             <td>{{ workshop.coordinator.profile.institute }}</td>
