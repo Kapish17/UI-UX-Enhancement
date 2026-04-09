@@ -25,16 +25,21 @@
 		    </tr>
 		  </thead>
 
-		{% for w in workshop_type %}
 		  <tbody>
-		    <tr  >
+		  {% for w in workshop_type %}
+		    <tr>
 		      <td scope="row" id="{{ forloop.counter }}">{{ forloop.counter }}</td>
 		      <td>{{ w.name }}</td>
 		      <td>{{ w.duration }}</td>
-		      <td><a href="{% url 'workshop:workshop_type_details' w.id %}" class="btn btn-outline-info" class="accordion-toggle" >View Workshop Details</a></td>
+		      <td>
+                <a href="#" class="btn btn-sm btn-info">
+                    View Workshop Details
+                </a>
+              </td>
 		    </tr>
+		  {% endfor %}
 		  </tbody>
-		 {% endfor %}
+
 		</table>
 	</div>
 
@@ -61,7 +66,7 @@
 		<nav aria-label="Page navigation">
 		 	<ul class="pagination pagination-sm">
 			  	<li class="page-item">
-			      {% if workshoptype.has_previous %}
+			      {% if workshop_type.has_previous %}
 					<a class="page-link" tabindex="-1" 
 							href="?page={{ workshop_type.previous_page_number }}">Previous</a>
 				{% endif %}
