@@ -227,6 +227,17 @@ style="width: {{ profile_completion }}%">
 <label>Phone</label>
 {{ form.phone_number }}
 
+<div class="form-group">
+<label>Email</label>
+<input 
+type="email" 
+name="email" 
+class="form-control"
+value="{{ request.user.email }}"
+required
+>
+</div>
+
 </div>
 
 <div class="col-md-6">

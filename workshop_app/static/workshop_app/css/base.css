@@ -390,3 +390,11 @@ body {
 .base-content {
     flex: 1;
 }
+
+.card{
+border-radius:10px;
+}
+
+.card-header{
+font-weight:600;
+}

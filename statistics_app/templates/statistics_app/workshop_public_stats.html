@@ -4,330 +4,86 @@
 
 {% block content %}
 
-<div class="container-fluid">
-
-<div class="row">
-
-<!-- ================= FILTER PANEL ================= -->
-
-<div class="col-md-3">
-
-<form method="GET">
-
-<div class="card shadow-sm">
-
-<div class="card-header bg-primary text-white">
+<div class="container-fluid"><div class="row"><!-- ================= FILTER PANEL ================= --><div class="col-md-3"><div class="sticky-top" style="top:90px; max-height:calc(100vh - 140px); overflow-y:auto;"><form method="GET"><div class="card shadow-sm"><div class="card-header bg-primary text-white">
 <h4 class="mb-0">Filters</h4>
-</div>
-
-<div class="card-body">
-
-<div class="form-group">
+</div><div class="card-body"><div class="form-group">
 <label>From Date</label>
 {{form.from_date}}
-</div>
-
-<div class="form-group">
+</div><div class="form-group">
 <label>To Date</label>
 {{form.to_date}}
-</div>
-
-<div class="form-group">
+</div><div class="form-group">
 <label>Workshop</label>
 {{form.workshop_type}}
-</div>
-
-<div class="form-group">
+</div><div class="form-group">
 <label>State</label>
 {{form.state}}
-</div>
-
-<div class="form-group">
+</div><div class="form-group">
 <label>{{form.sort.help_text}}</label>
 {{form.sort}}
-</div>
-
-{% if request.user.is_authenticated %}
+</div>{% if request.user.is_authenticated %}
 
 <div class="form-group">
 <label>{{form.show_workshops.help_text}}</label>
 {{form.show_workshops}}
-</div>
+</div>{% endif %}
 
-{% endif %}
-
-<hr>
-
-<div class="text-center">
-
-<button type="submit" class="btn btn-success mr-2">
+<hr><div class="text-center"><button type="submit" class="btn btn-success mr-2">
 <i class="fa fa-eye"></i> View
-</button>
-
-<button type="submit" class="btn btn-info" name="download" value="download">
+</button><button type="submit" class="btn btn-info" name="download" value="download">
 <i class="fa fa-download"></i> Download
-</button>
-
-<a href="{% url 'statistics_app:public' %}" class="btn btn-outline-secondary mt-2">
+</button><a href="{% url 'statistics_app:public' %}" class="btn btn-outline-secondary mt-2">
 Clear
-</a>
-
-</div>
-
-</div>
-
-</div>
-
-</form>
-
-</div>
-
-<!-- ================= MAIN CONTENT ================= -->
-
-<div class="col-md-9">
-
-<!-- ================= SEARCH ================= -->
-
-<div class="card shadow-sm mb-4">
-
-<div class="card-body d-flex justify-content-between align-items-center">
-
-<h5 class="mb-0 text-muted">Search Workshops</h5>
-
-<input
+</a></div></div></div></form></div></div><!-- ================= MAIN CONTENT ================= --><div class="col-md-9"><!-- ================= SEARCH ================= --><div class="card shadow-sm mb-4"><div class="card-body d-flex justify-content-between align-items-center"><h5 class="mb-0 text-muted">Search Workshops</h5><input
 class="form-control w-50"
 id="tableSearch"
 type="text"
 placeholder="🔍 Search workshops..."
->
 
-</div>
+«»
 
-</div>
+</div></div><!-- ================= DASHBOARD SUMMARY ================= --><div class="row mb-4"><div class="col-md-4"><div class="card shadow-sm text-center h-100"><div class="card-body"><h4>{{ total_workshops }}</h4>
+<p class="text-muted mb-0">Total Workshops</p></div></div></div><div class="col-md-4"><div class="card shadow-sm text-center h-100"><div class="card-body"><h4>{{ total_states }}</h4>
+<p class="text-muted mb-0">States Covered</p></div></div></div><div class="col-md-4"><div class="card shadow-sm text-center h-100"><div class="card-body"><h4>{{ total_types }}</h4>
+<p class="text-muted mb-0">Workshop Types</p></div></div></div></div><!-- ================= TABLE ================= --><div class="card shadow-sm mb-5"><div class="card-header bg-light d-flex justify-content-between align-items-center"><h5 class="mb-0">Workshop Records</h5>{% include "statistics_app/paginator.html" %}
 
+</div><div class="card-body"><div class="table-responsive">{% if objects %}
 
-<!-- ================= DASHBOARD SUMMARY ================= -->
-
-<div class="row mb-4">
-
-<div class="col-md-4">
-
-<div class="card shadow-sm text-center h-100">
-
-<div class="card-body">
-
-<h4>{{ total_workshops }}</h4>
-
-<p class="text-muted mb-0">Total Workshops</p>
-
-</div>
-
-</div>
-
-</div>
-
-
-<div class="col-md-4">
-
-<div class="card shadow-sm text-center h-100">
-
-<div class="card-body">
-
-<h4>{{ total_states }}</h4>
-
-<p class="text-muted mb-0">States Covered</p>
-
-</div>
-
-</div>
-
-</div>
-
-
-<div class="col-md-4">
-
-<div class="card shadow-sm text-center h-100">
-
-<div class="card-body">
-
-<h4>{{ total_types }}</h4>
-
-<p class="text-muted mb-0">Workshop Types</p>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-
-<!-- ================= WORKSHOP TREND ================= -->
-
-<div class="row mb-4 justify-content-center">
-
-<div class="col-md-10">
-
-<div class="card shadow-sm">
-
-<div class="card-header">
-
-<h5 class="mb-0">Workshop Trends</h5>
-
-</div>
-
-<div class="card-body">
-
-<canvas id="trendChart"></canvas>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-
-<!-- ================= CHARTS ================= -->
-
-<div class="row mb-4">
-
-<div class="col-md-6">
-
-<div class="card shadow-sm">
-
-<div class="card-header">
-
-<h5 class="mb-0">State Wise Workshops</h5>
-
-</div>
-
-<div class="card-body">
-
-<canvas id="stateChart"></canvas>
-
-</div>
-
-</div>
-
-</div>
-
-
-<div class="col-md-6">
-
-<div class="card shadow-sm">
-
-<div class="card-header">
-
-<h5 class="mb-0">Workshop Type Statistics</h5>
-
-</div>
-
-<div class="card-body">
-
-<canvas id="typeChart"></canvas>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-
-<!-- ================= TABLE ================= -->
-
-<div class="card shadow-sm">
-
-<div class="card-header bg-light">
-
-{% include "statistics_app/paginator.html" %}
-
-</div>
-
-<div class="card-body">
-
-<div class="table-responsive">
-
-{% if objects %}
-
-<table class="table table-hover table-bordered align-middle">
-
-<thead class="thead-dark">
-
-<tr>
-
+<table class="table table-hover table-bordered align-middle"><thead class="thead-dark"><tr>
 <th>Sr No.</th>
-
 <th>Coordinator</th>
-
 <th>Institute</th>
-
 <th>Instructor</th>
-
 <th>Workshop</th>
-
 <th>Date</th>
+</tr></thead><tbody>{% for workshop in objects %}
 
-</tr>
-
-</thead>
-
-<tbody>
-
-{% for workshop in objects %}
-
-<tr>
-
-<td>{{ forloop.counter0|add:objects.start_index }}</td>
-
+<tr><td>{{ forloop.counter0|add:objects.start_index }}</td>
 <td>{{ workshop.coordinator.get_full_name|capfirst }}</td>
-
 <td>{{ workshop.coordinator.profile.institute|capfirst }}</td>
-
 <td>{{ workshop.instructor.get_full_name|capfirst }}</td>
-
 <td>{{ workshop.workshop_type.name }}</td>
+<td>{{ workshop.date|date }}</td></tr>{% endfor %}
 
-<td>{{ workshop.date|date }}</td>
-
-</tr>
-
-{% endfor %}
-
-</tbody>
-
-</table>
-
-{% else %}
+</tbody></table>{% else %}
 
 <div class="alert alert-info text-center">
-
 No workshops found for selected filters.
+</div>{% endif %}
 
-</div>
+</div></div></div><!-- ================= WORKSHOP TREND ================= --><div class="row mb-4"><div class="col-md-12"><div class="card shadow-sm"><div class="card-header">
+<h5 class="mb-0">Workshop Trends</h5>
+</div><div class="card-body"><canvas id="trendChart" height="100"></canvas>
 
-{% endif %}
-
-</div>
-
-</div>
-
-</div>
-
-{% include "statistics_app/paginator.html" %}
-
-</div>
-
-</div>
-
-</div>
-
-
-<script>
+</div></div></div></div><!-- ================= CHARTS ================= --><div class="row mb-5"><div class="col-md-6"><div class="card shadow-sm h-100"><div class="card-header">
+<h5 class="mb-0">State Wise Workshops</h5>
+</div><div class="card-body">
+<canvas id="stateChart"></canvas>
+</div></div></div><div class="col-md-6"><div class="card shadow-sm h-100"><div class="card-header">
+<h5 class="mb-0">Workshop Type Statistics</h5>
+</div><div class="card-body">
+<canvas id="typeChart"></canvas>
+</div></div></div></div></div></div></div><script>
 
 /* ================= TABLE SEARCH ================= */
 
@@ -336,13 +92,10 @@ $("#tableSearch").on("keyup", function(){
 var value = $(this).val().toLowerCase();
 
 $("table tbody tr").filter(function(){
-
 $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-
 });
 
 });
-
 
 /* ================= CHART DATA ================= */
 
@@ -355,97 +108,54 @@ var type_data = JSON.parse('{{ ws_type_count|escapejs }}');
 var trend_labels = JSON.parse('{{ trend_labels|escapejs }}');
 var trend_data = JSON.parse('{{ trend_data|escapejs }}');
 
-
 /* ================= STATE CHART ================= */
 
 new Chart(document.getElementById("stateChart"),{
-
 type:'bar',
-
 data:{
-
 labels:state_labels,
-
 datasets:[{
-
 label:"State Wise Workshops",
-
 data:state_data,
-
 backgroundColor:"#3a86ff"
-
 }]
-
 }
-
 });
-
 
 /* ================= TYPE CHART ================= */
 
 new Chart(document.getElementById("typeChart"),{
-
 type:'pie',
-
 data:{
-
 labels:type_labels,
-
 datasets:[{
-
 data:type_data,
-
 backgroundColor:[
-
 '#3a86ff',
-
 '#00b4d8',
-
 '#ffbe0b',
-
 '#fb5607',
-
 '#8338ec'
-
 ]
-
 }]
-
 }
-
 });
-
 
 /* ================= TREND CHART ================= */
 
 new Chart(document.getElementById("trendChart"),{
-
 type:'line',
-
 data:{
-
 labels:trend_labels,
-
 datasets:[{
-
 label:"Workshops",
-
 data:trend_data,
-
 borderColor:"#3a86ff",
-
 backgroundColor:"rgba(58,134,255,0.2)",
-
 fill:true,
-
 tension:0.4
-
 }]
-
 }
-
 });
 
-</script>
-
-{% endblock %}
+</script>{% endblock %}
