@@ -29,10 +29,7 @@ HomePage
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
 
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-
 <script src="https://cdn.jsdelivr.net/npm/leaflet.heat/dist/leaflet-heat.js"></script>
-
-
 
 <script src="{% static 'workshop_app/js/jquery-3.4.1.min.js' %}"></script>
 <script src="{% static 'workshop_app/js/popper.min.js' %}"></script>
@@ -50,6 +47,7 @@ HomePage
 
 </head>
 
+
 <body class="d-flex flex-column min-vh-100">
 
 <!-- ================= NAVBAR ================= -->
@@ -66,10 +64,7 @@ href="{% if user.is_authenticated %}{% url 'workshop:index' %}{% else %}/{% endi
 <button class="navbar-toggler"
 type="button"
 data-toggle="collapse"
-data-target="#navbarSupportedContent"
-aria-controls="navbarSupportedContent"
-aria-expanded="false"
-aria-label="Toggle navigation">
+data-target="#navbarSupportedContent">
 
 <span class="navbar-toggler-icon"></span>
 
@@ -77,9 +72,11 @@ aria-label="Toggle navigation">
 
 <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
-<!-- LEFT MENU -->
+<!-- ================= LEFT MENU ================= -->
 
 <ul class="navbar-nav">
+
+{% if user.is_authenticated %}
 
 <li class="nav-item">
 <a class="nav-link text-white" href="{% url 'workshop:index' %}">
@@ -88,7 +85,7 @@ aria-label="Toggle navigation">
 </li>
 
 <li class="nav-item">
-<a class="nav-link" href="{% url 'statistics_app:public' %}">
+<a class="nav-link text-white" href="{% url 'statistics_app:public' %}">
 <i class="fa fa-bar-chart"></i> Statistics
 </a>
 </li>
@@ -99,9 +96,12 @@ aria-label="Toggle navigation">
 </a>
 </li>
 
+{% endif %}
+
 </ul>
 
-<!-- RIGHT MENU -->
+
+<!-- ================= RIGHT MENU ================= -->
 
 <ul class="navbar-nav ml-auto">
 
@@ -161,6 +161,15 @@ href="{% url 'workshop:logout' %}">
 
 </li>
 
+{% else %}
+
+<li class="nav-item">
+<a class="btn btn-light btn-sm"
+href="{% url 'workshop:login' %}">
+Login
+</a>
+</li>
+
 {% endif %}
 
 </ul>
@@ -171,7 +180,6 @@ href="{% url 'workshop:logout' %}">
 
 </nav>
 
-<!-- ================= PAGE CONTENT ================= -->
 
 <!-- ================= PAGE CONTENT ================= -->
 
@@ -206,6 +214,7 @@ toastr[
 {% endfor %}
 {% endif %}
 
+
 /* DARK MODE */
 
 function toggleDarkMode(){
@@ -233,7 +242,9 @@ document.getElementById("themeBtn").innerHTML="☀️";
 }
 
 }
+
 </script>
+
 
 <!-- ================= FOOTER ================= -->
 

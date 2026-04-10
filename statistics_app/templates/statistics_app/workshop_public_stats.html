@@ -8,13 +8,13 @@
 
 <div class="row">
 
-<!-- ===== FILTER PANEL ===== -->
+<!-- ================= FILTER PANEL ================= -->
 
 <div class="col-md-3">
 
 <form method="GET">
 
-<div class="card shadow">
+<div class="card shadow-sm">
 
 <div class="card-header bg-primary text-white">
 <h4 class="mb-0">Filters</h4>
@@ -82,152 +82,196 @@ Clear
 
 </div>
 
+<!-- ================= MAIN CONTENT ================= -->
+
 <div class="col-md-9">
 
-<!-- ===== DASHBOARD SUMMARY ===== -->
+<!-- ================= SEARCH ================= -->
+
+<div class="card shadow-sm mb-4">
+
+<div class="card-body d-flex justify-content-between align-items-center">
+
+<h5 class="mb-0 text-muted">Search Workshops</h5>
+
+<input
+class="form-control w-50"
+id="tableSearch"
+type="text"
+placeholder="🔍 Search workshops..."
+>
+
+</div>
+
+</div>
+
+
+<!-- ================= DASHBOARD SUMMARY ================= -->
 
 <div class="row mb-4">
 
 <div class="col-md-4">
-<div class="card text-center shadow">
+
+<div class="card shadow-sm text-center h-100">
+
 <div class="card-body">
+
 <h4>{{ total_workshops }}</h4>
-<p>Total Workshops</p>
-</div>
-</div>
+
+<p class="text-muted mb-0">Total Workshops</p>
+
 </div>
 
+</div>
+
+</div>
+
+
 <div class="col-md-4">
-<div class="card text-center shadow">
+
+<div class="card shadow-sm text-center h-100">
+
 <div class="card-body">
+
 <h4>{{ total_states }}</h4>
-<p>States Covered</p>
+
+<p class="text-muted mb-0">States Covered</p>
+
 </div>
+
 </div>
+
 </div>
+
 
 <div class="col-md-4">
-<div class="card text-center shadow">
+
+<div class="card shadow-sm text-center h-100">
+
 <div class="card-body">
+
 <h4>{{ total_types }}</h4>
-<p>Workshop Types</p>
-</div>
-</div>
-</div>
+
+<p class="text-muted mb-0">Workshop Types</p>
 
 </div>
 
+</div>
 
-<!-- ===== ANALYTICS SECTION ===== -->
+</div>
 
-<div class="row mb-4">
+</div>
 
-<!-- INDIA MAP -->
 
-<div class="col-md-6">
-<div class="card shadow">
+<!-- ================= WORKSHOP TREND ================= -->
+
+<div class="row mb-4 justify-content-center">
+
+<div class="col-md-10">
+
+<div class="card shadow-sm">
+
 <div class="card-header">
-<h5>Workshops Across India</h5>
+
+<h5 class="mb-0">Workshop Trends</h5>
+
 </div>
+
 <div class="card-body">
-<div id="indiaMap" style="height:350px;"></div>
-</div>
-</div>
-</div>
 
-
-<!-- WORKSHOP TREND -->
-
-<div class="col-md-6">
-<div class="card shadow">
-<div class="card-header">
-<h5>Workshop Trends</h5>
-</div>
-<div class="card-body">
 <canvas id="trendChart"></canvas>
+
 </div>
-</div>
+
 </div>
 
 </div>
 
+</div>
 
-<!-- ===== NEW CHART SECTION ===== -->
+
+<!-- ================= CHARTS ================= -->
 
 <div class="row mb-4">
 
 <div class="col-md-6">
-<div class="card shadow">
+
+<div class="card shadow-sm">
+
 <div class="card-header">
-<h5>State Wise Workshops</h5>
+
+<h5 class="mb-0">State Wise Workshops</h5>
+
 </div>
+
 <div class="card-body">
+
 <canvas id="stateChart"></canvas>
+
 </div>
+
 </div>
+
 </div>
+
 
 <div class="col-md-6">
-<div class="card shadow">
+
+<div class="card shadow-sm">
+
 <div class="card-header">
-<h5>Workshop Type Statistics</h5>
+
+<h5 class="mb-0">Workshop Type Statistics</h5>
+
 </div>
+
 <div class="card-body">
+
 <canvas id="typeChart"></canvas>
-</div>
-</div>
-</div>
 
 </div>
 
+</div>
+
+</div>
+
+</div>
 
 
+<!-- ================= TABLE ================= -->
 
-
-
-<div class="row">
-
-<!-- ===== MAIN TABLE ===== -->
-
-<div class="col-md-9">
-
-<div class="card shadow">
+<div class="card shadow-sm">
 
 <div class="card-header bg-light">
 
-<div class="row align-items-center">
-
-<div class="col-md-12">
 {% include "statistics_app/paginator.html" %}
-</div>
 
 </div>
-
-</div>
-
 
 <div class="card-body">
-
-<input class="form-control mb-3"
-id="tableSearch"
-type="text"
-placeholder="Search workshops...">
 
 <div class="table-responsive">
 
 {% if objects %}
 
-<table class="table table-hover table-striped">
+<table class="table table-hover table-bordered align-middle">
 
 <thead class="thead-dark">
 
 <tr>
+
 <th>Sr No.</th>
+
 <th>Coordinator</th>
+
 <th>Institute</th>
+
 <th>Instructor</th>
+
 <th>Workshop</th>
+
 <th>Date</th>
+
 </tr>
 
 </thead>
@@ -237,12 +281,19 @@ placeholder="Search workshops...">
 {% for workshop in objects %}
 
 <tr>
+
 <td>{{ forloop.counter0|add:objects.start_index }}</td>
-<td>{{ workshop.coordinator.get_full_name | capfirst }}</td>
-<td>{{ workshop.coordinator.profile.institute | capfirst }}</td>
-<td>{{ workshop.instructor.get_full_name | capfirst }}</td>
+
+<td>{{ workshop.coordinator.get_full_name|capfirst }}</td>
+
+<td>{{ workshop.coordinator.profile.institute|capfirst }}</td>
+
+<td>{{ workshop.instructor.get_full_name|capfirst }}</td>
+
 <td>{{ workshop.workshop_type.name }}</td>
-<td>{{ workshop.date | date }}</td>
+
+<td>{{ workshop.date|date }}</td>
+
 </tr>
 
 {% endfor %}
@@ -254,7 +305,9 @@ placeholder="Search workshops...">
 {% else %}
 
 <div class="alert alert-info text-center">
+
 No workshops found for selected filters.
+
 </div>
 
 {% endif %}
@@ -267,12 +320,11 @@ No workshops found for selected filters.
 
 {% include "statistics_app/paginator.html" %}
 
-</div> <!-- table column -->
+</div>
 
-</div> <!-- row -->
+</div>
 
-</div> <!-- container -->
-
+</div>
 
 
 <script>
@@ -284,71 +336,24 @@ $("#tableSearch").on("keyup", function(){
 var value = $(this).val().toLowerCase();
 
 $("table tbody tr").filter(function(){
+
 $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-});
 
 });
 
+});
 
-/* ================= SAFE LEAFLET MAP ================= */
-
-if (!window.indiaMapInstance) {
-
-    window.indiaMapInstance = L.map('indiaMap').setView([22.9734,78.6569],5);
-
-    var map = window.indiaMapInstance;
-
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
-        maxZoom:18,
-        attribution:'© OpenStreetMap'
-    }).addTo(map);
-
-    var heatData = [
-        [28.6139,77.2090,1],
-        [19.0760,72.8777,1],
-        [12.9716,77.5946,1],
-        [13.0827,80.2707,1],
-        [22.5726,88.3639,1],
-        [17.3850,78.4867,1],
-        [23.2599,77.4126,1]
-    ];
-
-    L.heatLayer(heatData,{
-        radius:45,
-        blur:30,
-        maxZoom:10,
-        gradient:{
-            0.2:'blue',
-            0.4:'lime',
-            0.6:'yellow',
-            0.8:'orange',
-            1.0:'red'
-        }
-    }).addTo(map);
-
-}
-
-
-/* ================= WORKSHOP MARKERS ================= */
-
-L.marker([28.6139,77.2090]).addTo(map)
-.bindPopup("<b>Delhi</b><br>Workshop Conducted");
-
-L.marker([19.0760,72.8777]).addTo(map)
-.bindPopup("<b>Mumbai</b><br>Workshop Conducted");
-
-L.marker([13.0827,80.2707]).addTo(map)
-.bindPopup("<b>Chennai</b><br>Workshop Conducted");
-
-
-/* ================= CHART DATA ================= */
 
 /* ================= CHART DATA ================= */
 
 var state_labels = JSON.parse('{{ ws_states|escapejs }}');
 var state_data = JSON.parse('{{ ws_count|escapejs }}');
+
 var type_labels = JSON.parse('{{ ws_type|escapejs }}');
 var type_data = JSON.parse('{{ ws_type_count|escapejs }}');
+
+var trend_labels = JSON.parse('{{ trend_labels|escapejs }}');
+var trend_data = JSON.parse('{{ trend_data|escapejs }}');
 
 
 /* ================= STATE CHART ================= */
@@ -358,12 +363,19 @@ new Chart(document.getElementById("stateChart"),{
 type:'bar',
 
 data:{
+
 labels:state_labels,
+
 datasets:[{
+
 label:"State Wise Workshops",
+
 data:state_data,
+
 backgroundColor:"#3a86ff"
+
 }]
+
 }
 
 });
@@ -376,17 +388,29 @@ new Chart(document.getElementById("typeChart"),{
 type:'pie',
 
 data:{
+
 labels:type_labels,
+
 datasets:[{
+
 data:type_data,
+
 backgroundColor:[
+
 '#3a86ff',
+
 '#00b4d8',
+
 '#ffbe0b',
+
 '#fb5607',
+
 '#8338ec'
+
 ]
+
 }]
+
 }
 
 });
@@ -394,23 +418,30 @@ backgroundColor:[
 
 /* ================= TREND CHART ================= */
 
-var trend_labels = JSON.parse('{{ trend_labels|escapejs }}');
-var trend_data = JSON.parse('{{ trend_data|escapejs }}');
-
 new Chart(document.getElementById("trendChart"),{
 
 type:'line',
 
 data:{
+
 labels:trend_labels,
+
 datasets:[{
+
 label:"Workshops",
+
 data:trend_data,
+
 borderColor:"#3a86ff",
+
 backgroundColor:"rgba(58,134,255,0.2)",
+
 fill:true,
+
 tension:0.4
+
 }]
+
 }
 
 });

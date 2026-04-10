@@ -4,8 +4,6 @@ import pandas as pd
 import json
 
 
-
-
 # Django Imports
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -26,6 +24,7 @@ def is_instructor(user):
     return user.groups.filter(name="instructor").exists()
 
 
+@login_required(login_url='workshop:login')
 def workshop_public_stats(request):
     """
     Public statistics view for workshops
@@ -117,9 +116,7 @@ def workshop_public_stats(request):
             )
 
             response = HttpResponse(content_type="text/csv")
-            response[
-                "Content-Disposition"
-            ] = "attachment; filename=statistics.csv"
+            response["Content-Disposition"] = "attachment; filename=statistics.csv"
 
             df.to_csv(response, index=False)
 
@@ -128,7 +125,7 @@ def workshop_public_stats(request):
         else:
             messages.warning(request, "No data found")
 
- # Chart data
+    # Chart data
     from django.db.models import Count
 
     # State statistics
@@ -151,7 +148,7 @@ def workshop_public_stats(request):
     total_states = len(ws_states)
     total_types = len(ws_type)
 
-    # Trend data (REAL DATA)
+    # Trend data
     trend_labels = ["Jan", "Feb", "Mar", "Apr", "May", "Jun"]
 
     trend_data = [
@@ -172,16 +169,13 @@ def workshop_public_stats(request):
     context = {
         "form": form,
         "objects": workshops,
-
         "total_workshops": total_workshops,
         "total_states": total_states,
         "total_types": total_types,
-
         "ws_states": json.dumps(ws_states),
         "ws_count": json.dumps(ws_count),
         "ws_type": json.dumps(ws_type),
         "ws_type_count": json.dumps(ws_type_count),
-
         "trend_labels": json.dumps(trend_labels),
         "trend_data": json.dumps(trend_data),
     }
@@ -192,7 +186,8 @@ def workshop_public_stats(request):
         context,
     )
 
-@login_required
+
+@login_required(login_url='workshop:login')
 def team_stats(request, team_id=None):
     """
     Displays statistics of workshops taken by team members
