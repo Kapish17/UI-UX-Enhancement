@@ -1,7 +1,7 @@
 {% extends "workshop_app/base.html" %}
 
 {% block title %}
-    My Workshops
+My Workshops
 {% endblock %}
 
 {% block extra-custom-scripts %}
@@ -40,16 +40,17 @@ font-weight:500;
 }
 
 .quick-actions{
-margin-top:30px;
+margin-top:25px;
 text-align:center;
 }
 
 .quick-actions a{
-margin:10px;
+margin:8px;
 }
 
 </style>
 {% endblock %}
+
 
 {% block content %}
 
@@ -62,10 +63,34 @@ margin:10px;
 <h1>Welcome {{ user.first_name }}</h1>
 
 <p>
-Information related to your workshops will be shown here.  
-You can also propose a workshop from the  
-<strong>Propose Workshop</strong> tab.
+Information related to your workshops will be shown here.
+You can also propose a workshop using the button below.
 </p>
+
+</div>
+
+
+<!-- ================= QUICK ACTIONS ================= -->
+
+<div class="quick-actions">
+
+<a href="{% url 'workshop:propose_workshop' %}" class="btn btn-primary btn-lg">
+
+<i class="fa fa-plus"></i> Propose Workshop
+
+</a>
+
+<a href="{% url 'workshop:view_own_profile' %}" class="btn btn-info btn-lg">
+
+<i class="fa fa-user"></i> Update Profile
+
+</a>
+
+<a href="{% url 'statistics_app:public' %}" class="btn btn-dark btn-lg">
+
+<i class="fa fa-bar-chart"></i> View Statistics
+
+</a>
 
 </div>
 
@@ -104,31 +129,6 @@ You can also propose a workshop from the
 </div>
 
 
-<!-- ================= QUICK ACTIONS ================= -->
-
-<div class="quick-actions">
-
-<a href="{% url 'workshop:propose_workshop' %}" class="btn btn-primary btn-lg">
-
-<i class="fa fa-plus"></i> Propose Workshop
-
-</a>
-
-<a href="{% url 'workshop:view_own_profile' %}" class="btn btn-info btn-lg">
-
-<i class="fa fa-user"></i> Update Profile
-
-</a>
-
-<a href="{% url 'statistics_app:public' %}" class="btn btn-dark btn-lg">
-
-<i class="fa fa-bar-chart"></i> View Statistics
-
-</a>
-
-</div>
-
-
 <!-- ================= WORKSHOP TABLES ================= -->
 
 {% if workshops %}
@@ -153,12 +153,10 @@ You can also propose a workshop from the
 <thead>
 
 <tr>
-
 <th>Workshop Name</th>
 <th>Instructor Name</th>
 <th>Workshop Day</th>
 <th>Status</th>
-
 </tr>
 
 </thead>
@@ -167,17 +165,21 @@ You can also propose a workshop from the
 
 {% for workshop in workshops %}
 
-{% if workshop.status %}
+{% if workshop.status == 1 %}
 
 <tr>
 
 <td>
-<a href="{% url 'workshop:workshop_details' workshop.id %}">
 {{ workshop.workshop_type|capfirst }}
-</a>
 </td>
 
-<td>{{ workshop.instructor.get_full_name }}</td>
+<td>
+{% if workshop.instructor %}
+{{ workshop.instructor.get_full_name }}
+{% else %}
+Not Assigned
+{% endif %}
+</td>
 
 <td>{{ workshop.date|date }}</td>
 
@@ -215,11 +217,9 @@ You can also propose a workshop from the
 <thead>
 
 <tr>
-
 <th>Workshop Name</th>
 <th>Workshop Day</th>
 <th>Status</th>
-
 </tr>
 
 </thead>
@@ -228,7 +228,7 @@ You can also propose a workshop from the
 
 {% for workshop in workshops %}
 
-{% if not workshop.status and workshop.tnc_accepted %}
+{% if workshop.status == 0 %}
 
 <tr>
 
