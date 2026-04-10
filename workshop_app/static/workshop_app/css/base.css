@@ -398,3 +398,22 @@ border-radius:10px;
 .card-header{
 font-weight:600;
 }
+
+/* Fix filter overlap with navbar */
+
+.filters-sidebar{
+    position: sticky;
+    top: 80px; /* height of navbar */
+    max-height: calc(100vh - 100px);
+    overflow-y: auto;
+}
+
+/* Prevent sticky on mobile */
+
+@media (max-width: 768px){
+    .filters-sidebar{
+        position: relative;
+        top: 0;
+        max-height: none;
+    }
+}
