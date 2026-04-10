@@ -6,6 +6,84 @@
 
 <div class="container-fluid">
 
+<div class="row">
+
+<!-- ===== FILTER PANEL ===== -->
+
+<div class="col-md-3">
+
+<form method="GET">
+
+<div class="card shadow">
+
+<div class="card-header bg-primary text-white">
+<h4 class="mb-0">Filters</h4>
+</div>
+
+<div class="card-body">
+
+<div class="form-group">
+<label>From Date</label>
+{{form.from_date}}
+</div>
+
+<div class="form-group">
+<label>To Date</label>
+{{form.to_date}}
+</div>
+
+<div class="form-group">
+<label>Workshop</label>
+{{form.workshop_type}}
+</div>
+
+<div class="form-group">
+<label>State</label>
+{{form.state}}
+</div>
+
+<div class="form-group">
+<label>{{form.sort.help_text}}</label>
+{{form.sort}}
+</div>
+
+{% if request.user.is_authenticated %}
+
+<div class="form-group">
+<label>{{form.show_workshops.help_text}}</label>
+{{form.show_workshops}}
+</div>
+
+{% endif %}
+
+<hr>
+
+<div class="text-center">
+
+<button type="submit" class="btn btn-success mr-2">
+<i class="fa fa-eye"></i> View
+</button>
+
+<button type="submit" class="btn btn-info" name="download" value="download">
+<i class="fa fa-download"></i> Download
+</button>
+
+<a href="{% url 'statistics_app:public' %}" class="btn btn-outline-secondary mt-2">
+Clear
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</form>
+
+</div>
+
+<div class="col-md-9">
+
 <!-- ===== DASHBOARD SUMMARY ===== -->
 
 <div class="row mb-4">
@@ -103,82 +181,11 @@
 </div>
 
 
+
+
+
+
 <div class="row">
-
-<!-- ===== FILTER PANEL ===== -->
-
-<div class="col-md-3">
-
-<form method="GET">
-
-<div class="card shadow">
-
-<div class="card-header bg-primary text-white">
-<h4 class="mb-0">Filters</h4>
-</div>
-
-<div class="card-body">
-
-<div class="form-group">
-<label>From Date</label>
-{{form.from_date}}
-</div>
-
-<div class="form-group">
-<label>To Date</label>
-{{form.to_date}}
-</div>
-
-<div class="form-group">
-<label>Workshop</label>
-{{form.workshop_type}}
-</div>
-
-<div class="form-group">
-<label>State</label>
-{{form.state}}
-</div>
-
-<div class="form-group">
-<label>{{form.sort.help_text}}</label>
-{{form.sort}}
-</div>
-
-{% if request.user.is_authenticated %}
-
-<div class="form-group">
-<label>{{form.show_workshops.help_text}}</label>
-{{form.show_workshops}}
-</div>
-
-{% endif %}
-
-<hr>
-
-<div class="text-center">
-
-<button type="submit" class="btn btn-success mr-2">
-<i class="fa fa-eye"></i> View
-</button>
-
-<button type="submit" class="btn btn-info" name="download" value="download">
-<i class="fa fa-download"></i> Download
-</button>
-
-<a href="{% url 'statistics_app:public' %}" class="btn btn-outline-secondary mt-2">
-Clear
-</a>
-
-</div>
-
-</div>
-
-</div>
-
-</form>
-
-</div>
-
 
 <!-- ===== MAIN TABLE ===== -->
 
@@ -260,11 +267,11 @@ No workshops found for selected filters.
 
 {% include "statistics_app/paginator.html" %}
 
-</div>
+</div> <!-- table column -->
 
-</div>
+</div> <!-- row -->
 
-</div>
+</div> <!-- container -->
 
 
 
