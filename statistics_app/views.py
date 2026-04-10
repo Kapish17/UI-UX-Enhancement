@@ -125,9 +125,145 @@ def workshop_public_stats(request):
         else:
             messages.warning(request, "No data found")
 
-  # Chart data
+
+
+# Django Imports
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
+from django.shortcuts import render, redirect
+from django.urls import reverse
+from django.utils import timezone
+from django.http import HttpResponse
+
+# Local Imports
+from workshop_app.models import Workshop, states
+from teams.models import Team
+from .forms import FilterForm
+
+
+def is_instructor(user):
+    """Check if user belongs to instructor group"""
+    return user.groups.filter(name="instructor").exists()
+
+
+def workshop_public_stats(request):
+    """
+    Public statistics view for workshops
+    Handles filtering, pagination and CSV download
+    """
+
+    user = request.user
+    form = FilterForm()
+
+    # Get filter parameters
+    from_date = request.GET.get("from_date")
+    to_date = request.GET.get("to_date")
+    state = request.GET.get("state")
+    workshoptype = request.GET.get("workshop_type")
+    show_workshops = request.GET.get("show_workshops")
+    sort = request.GET.get("sort")
+    download = request.GET.get("download")
+
+    # Apply filters
+    if from_date and to_date:
+
+        form = FilterForm(
+            start=from_date,
+            end=to_date,
+            state=state,
+            type=workshoptype,
+            show_workshops=show_workshops,
+            sort=sort,
+        )
+
+        workshops = Workshop.objects.filter(
+            date__range=(from_date, to_date), status=1
+        ).order_by(sort)
+
+        if state:
+            workshops = workshops.filter(
+                coordinator__profile__state=state
+            )
+
+        if workshoptype:
+            workshops = workshops.filter(
+                workshop_type_id=workshoptype
+            )
+
+    else:
+        today = timezone.now()
+        upto = today + dt.timedelta(days=15)
+
+        workshops = Workshop.objects.filter(
+            date__range=(today, upto),
+            status=1
+        ).order_by("date")
+
+    # Show workshops belonging to logged-in user
+    if show_workshops:
+        if is_instructor(user):
+            workshops = workshops.filter(instructor_id=user.id)
+        else:
+            workshops = workshops.filter(coordinator_id=user.id)
+
+    # CSV download
+    if download:
+
+        data = workshops.values(
+            "workshop_type__name",
+            "coordinator__first_name",
+            "coordinator__last_name",
+            "instructor__first_name",
+            "instructor__last_name",
+            "coordinator__profile__state",
+            "date",
+            "status",
+        )
+
+        df = pd.DataFrame(list(data))
+
+        if not df.empty:
+
+            df.status.replace(
+                [0, 1, 2],
+                ["Pending", "Success", "Reject"],
+                inplace=True,
+            )
+
+            codes, states_map = list(zip(*states))
+
+            df.coordinator__profile__state.replace(
+                codes, states_map, inplace=True
+            )
+
+            response = HttpResponse(content_type="text/csv")
+            response[
+                "Content-Disposition"
+            ] = "attachment; filename=statistics.csv"
+
+            df.to_csv(response, index=False)
+
+            return response
+
+        else:
+            messages.warning(request, "No data found")
+
+ # Chart data
     ws_states, ws_count = Workshop.objects.get_workshops_by_state(workshops)
     ws_type, ws_type_count = Workshop.objects.get_workshops_by_type(workshops)
+
+    # Trend data (REAL DATA)
+    trend_labels = ["Jan","Feb","Mar","Apr","May","Jun"]
+
+    trend_data = [
+        Workshop.objects.filter(date__month=1).count(),
+        Workshop.objects.filter(date__month=2).count(),
+        Workshop.objects.filter(date__month=3).count(),
+        Workshop.objects.filter(date__month=4).count(),
+        Workshop.objects.filter(date__month=5).count(),
+        Workshop.objects.filter(date__month=6).count(),
+    ]
 
     # Pagination
     paginator = Paginator(workshops, 30)
@@ -141,6 +277,8 @@ def workshop_public_stats(request):
         "ws_count": json.dumps(ws_count),
         "ws_type": json.dumps(ws_type),
         "ws_type_count": json.dumps(ws_type_count),
+        "trend_labels": json.dumps(trend_labels),
+        "trend_data": json.dumps(trend_data),
     }
 
     return render(
@@ -189,3 +327,5 @@ def team_stats(request, team_id=None):
             "team_id": team.id,
         },
     )
+    
+

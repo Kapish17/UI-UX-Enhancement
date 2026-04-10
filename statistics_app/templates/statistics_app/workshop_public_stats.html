@@ -387,15 +387,18 @@ backgroundColor:[
 
 /* ================= TREND CHART ================= */
 
+var trend_labels = JSON.parse('{{ trend_labels|escapejs }}');
+var trend_data = JSON.parse('{{ trend_data|escapejs }}');
+
 new Chart(document.getElementById("trendChart"),{
 
 type:'line',
 
 data:{
-labels:["Jan","Feb","Mar","Apr","May","Jun"],
+labels:trend_labels,
 datasets:[{
 label:"Workshops",
-data:[2,5,3,7,4,6],
+data:trend_data,
 borderColor:"#3a86ff",
 backgroundColor:"rgba(58,134,255,0.2)",
 fill:true,
