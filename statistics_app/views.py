@@ -253,6 +253,10 @@ def workshop_public_stats(request):
     ws_states, ws_count = Workshop.objects.get_workshops_by_state(workshops)
     ws_type, ws_type_count = Workshop.objects.get_workshops_by_type(workshops)
 
+    total_workshops = Workshop.objects.count()
+    total_states = len(ws_states)
+    total_types = len(ws_type)
+
     # Trend data (REAL DATA)
     trend_labels = ["Jan","Feb","Mar","Apr","May","Jun"]
 
@@ -271,15 +275,21 @@ def workshop_public_stats(request):
     workshops = paginator.get_page(page)
 
     context = {
-        "form": form,
-        "objects": workshops,
-        "ws_states": json.dumps(ws_states),
-        "ws_count": json.dumps(ws_count),
-        "ws_type": json.dumps(ws_type),
-        "ws_type_count": json.dumps(ws_type_count),
-        "trend_labels": json.dumps(trend_labels),
-        "trend_data": json.dumps(trend_data),
-    }
+    "form": form,
+    "objects": workshops,
+
+    "total_workshops": total_workshops,
+    "total_states": total_states,
+    "total_types": total_types,
+
+    "ws_states": json.dumps(ws_states),
+    "ws_count": json.dumps(ws_count),
+    "ws_type": json.dumps(ws_type),
+    "ws_type_count": json.dumps(ws_type_count),
+
+    "trend_labels": json.dumps(trend_labels),
+    "trend_data": json.dumps(trend_data),
+}
 
     return render(
         request,
