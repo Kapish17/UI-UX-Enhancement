@@ -50,7 +50,7 @@ HomePage
 
 </head>
 
-<body style="min-height:100vh; display:flex; flex-direction:column;"></body>
+<body class="d-flex flex-column min-vh-100">
 
 <!-- ================= NAVBAR ================= -->
 
@@ -173,7 +173,9 @@ href="{% url 'workshop:logout' %}">
 
 <!-- ================= PAGE CONTENT ================= -->
 
-<div class="base-content" style="margin-top:80px; flex:1;"></div>
+<!-- ================= PAGE CONTENT ================= -->
+
+<main class="flex-fill" style="margin-top:80px;">
 
 <div class="container">
 
@@ -183,7 +185,8 @@ href="{% url 'workshop:logout' %}">
 
 </div>
 
-</div>
+</main>
+
 
 <!-- ================= TOAST MESSAGES ================= -->
 
@@ -234,7 +237,7 @@ document.getElementById("themeBtn").innerHTML="☀️";
 
 <!-- ================= FOOTER ================= -->
 
-<footer class="footer text-white bg-dark mt-5">
+<footer class="footer text-white bg-dark mt-auto">
 
 <div class="container text-center py-3">
 

@@ -1,6 +1,7 @@
 # Python Imports
 import datetime as dt
 import pandas as pd
+import json
 
 # Django Imports
 from django.contrib import messages
@@ -124,7 +125,7 @@ def workshop_public_stats(request):
         else:
             messages.warning(request, "No data found")
 
-    # Chart data
+  # Chart data
     ws_states, ws_count = Workshop.objects.get_workshops_by_state(workshops)
     ws_type, ws_type_count = Workshop.objects.get_workshops_by_type(workshops)
 
@@ -136,10 +137,10 @@ def workshop_public_stats(request):
     context = {
         "form": form,
         "objects": workshops,
-        "ws_states": ws_states,
-        "ws_count": ws_count,
-        "ws_type": ws_type,
-        "ws_type_count": ws_type_count,
+        "ws_states": json.dumps(ws_states),
+        "ws_count": json.dumps(ws_count),
+        "ws_type": json.dumps(ws_type),
+        "ws_type_count": json.dumps(ws_type_count),
     }
 
     return render(
@@ -147,7 +148,6 @@ def workshop_public_stats(request):
         "statistics_app/workshop_public_stats.html",
         context,
     )
-
 
 @login_required
 def team_stats(request, team_id=None):
