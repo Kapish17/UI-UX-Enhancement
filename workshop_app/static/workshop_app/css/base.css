@@ -375,3 +375,18 @@ padding:10px;
 .btn {
 border-radius:8px;
 }
+
+/* Sticky Footer Fix */
+
+html, body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+.base-content {
+    flex: 1;
+}
