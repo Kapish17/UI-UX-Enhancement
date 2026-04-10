@@ -81,4 +81,10 @@ urlpatterns = [
         views.view_own_profile,
         name='view_own_profile'
     ),
+
+    re_path(
+    r'^add_workshop/$',
+    views.add_workshop,
+    name='add_workshop'
+),
 ]

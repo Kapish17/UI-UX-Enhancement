@@ -1,0 +1,40 @@
+{% extends "workshop_app/base.html" %}
+
+{% block title %}
+Add Workshop
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+<h2 class="text-center mt-4">Add Workshop</h2>
+
+<form method="post">
+{% csrf_token %}
+
+<div class="form-group">
+<label>Workshop Type</label>
+{{ form.workshop_type }}
+</div>
+
+<div class="form-group">
+<label>Workshop Date</label>
+{{ form.date }}
+</div>
+
+<div class="form-group">
+<label>
+{{ form.tnc_accepted }} Accept Terms & Conditions
+</label>
+</div>
+
+<button type="submit" class="btn btn-success mt-3">
+Add Workshop
+</button>
+
+</form>
+
+</div>
+
+{% endblock %}

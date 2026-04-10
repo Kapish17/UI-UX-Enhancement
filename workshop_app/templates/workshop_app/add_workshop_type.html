@@ -1,50 +1,105 @@
-{% extends 'workshop_app/base.html' %}
+{% extends "workshop_app/base.html" %}
 
 {% block title %}
-    Add new Workshop type
+Add New Workshop Type
 {% endblock %}
 
 {% block content %}
-    <div class="container">
-        <h2 class="text-center m-2">New Workshop Type</h2>
-        <br>
-        <form method="post">
-            <div class="row my-3">
-                <div class="col-3 font-weight-bold">Workshop Name :</div>
-                <div class="col text-left">
-                    <div class="row"><div class="col">{{ form.name }}</div></div>
-                    <div class="row m-1 text-danger"><div class="col">{{ form.name.errors }}</div></div>
+
+<div class="container mt-4">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Add New Workshop Type</h4>
+        </div>
+
+        <div class="card-body">
+
+            <form method="post">
+                {% csrf_token %}
+
+                <!-- Workshop Name -->
+                <div class="form-group row">
+                    <label class="col-md-3 col-form-label font-weight-bold">
+                        Workshop Name
+                    </label>
+
+                    <div class="col-md-9">
+                        {{ form.name }}
+
+                        <div class="text-danger small">
+                            {{ form.name.errors }}
+                        </div>
+                    </div>
                 </div>
 
-            </div>
-            <div class="row my-3">
-                <div class="col-3 font-weight-bold">Duration :</div>
-                <div class="col text-left">
-                    <div class="row"><div class="col">{{ form.duration }}</div></div>
-                    <div class="row m-1 text-muted"><div class="col">{{ form.duration.help_text }}</div></div>
-                    <div class="row m-1 text-danger"><div class="col">{{ form.duration.errors }}</div></div>
-                </div>
-            </div>
-            <div class="row my-3">
-                <div class="col-3 font-weight-bold">Description :</div>
-                <div class="col text-left">
-                    <div class="row"><div class="col">{{ form.description }}</div></div>
-                    <div class="row m-1 text-danger"><div class="col">{{ form.description.errors }}</div></div>
-                </div>
-            </div>
-            <div class="row my-3">
-                <div class="col-3 font-weight-bold">Terms and Conditions :</div>
-                <div class="col text-left">
-                    <div class="row"><div class="col">{{ form.terms_and_conditions }}</div></div>
-                    <div class="row m-1 text-danger"><div class="col">{{ form.terms_and_conditions.errors }}</div></div>
-                </div>
-            </div>
 
-            <div class="row my-3">
-                <div class="col-12">
-                    <button type="submit" class="btn btn-md btn-primary float-right m-3">Create</button>
+                <!-- Duration -->
+                <div class="form-group row">
+                    <label class="col-md-3 col-form-label font-weight-bold">
+                        Duration
+                    </label>
+
+                    <div class="col-md-9">
+                        {{ form.duration }}
+
+                        <div class="text-muted small">
+                            {{ form.duration.help_text }}
+                        </div>
+
+                        <div class="text-danger small">
+                            {{ form.duration.errors }}
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </form>
+
+
+                <!-- Description -->
+                <div class="form-group row">
+                    <label class="col-md-3 col-form-label font-weight-bold">
+                        Description
+                    </label>
+
+                    <div class="col-md-9">
+                        {{ form.description }}
+
+                        <div class="text-danger small">
+                            {{ form.description.errors }}
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Terms and Conditions -->
+                <div class="form-group row">
+                    <label class="col-md-3 col-form-label font-weight-bold">
+                        Terms and Conditions
+                    </label>
+
+                    <div class="col-md-9">
+                        {{ form.terms_and_conditions }}
+
+                        <div class="text-danger small">
+                            {{ form.terms_and_conditions.errors }}
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Submit Button -->
+                <div class="text-right">
+                    <button type="submit" class="btn btn-primary">
+                        Create Workshop Type
+                    </button>
+                </div>
+
+            </form>
+
+        </div>
+
     </div>
+
+</div>
+
 {% endblock %}

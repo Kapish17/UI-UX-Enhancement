@@ -353,3 +353,30 @@ class ProfileForm(forms.ModelForm):
         self.fields['location'].widget.attrs.update(
             {'class': "form-control", 'placeholder': 'Location'}
         )
+
+    
+
+class AddWorkshopForm(forms.ModelForm):
+
+    class Meta:
+        model = Workshop
+        fields = [
+            "workshop_type",
+            "date",
+            "tnc_accepted"
+        ]
+
+        widgets = {
+            "date": forms.DateInput(
+                attrs={
+                    "class": "datepicker form-control",
+                    "placeholder": "Workshop Date"
+                }
+            ),
+            "workshop_type": forms.Select(
+                attrs={"class": "form-control"}
+            ),
+            "tnc_accepted": forms.CheckboxInput(
+                attrs={"class": "form-check-input"}
+            )
+        }

@@ -472,3 +472,34 @@ def view_own_profile(request):
             "profile_completion": profile_completion
         }
     )
+
+from .forms import AddWorkshopForm
+from django.contrib.auth.decorators import login_required
+
+
+@login_required
+def add_workshop(request):
+
+    if request.method == "POST":
+
+        form = AddWorkshopForm(request.POST)
+
+        if form.is_valid():
+
+            workshop = form.save(commit=False)
+
+            workshop.instructor = request.user
+            workshop.status = 1  # directly accepted
+
+            workshop.save()
+
+            return redirect("workshop:workshop_status_instructor")
+
+    else:
+        form = AddWorkshopForm()
+
+    return render(
+        request,
+        "workshop_app/add_workshop.html",
+        {"form": form}
+    )
