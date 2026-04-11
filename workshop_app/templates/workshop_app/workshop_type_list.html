@@ -52,10 +52,13 @@ View List of available Workshops
                            View
                         </a>
 
-                        <a href="{% url 'workshop:edit_workshop_type' w.id %}" 
-                           class="btn btn-sm btn-warning mb-1">
-                           Edit
-                        </a>
+  
+
+{% if request.user.is_superuser or request.user.groups.all.0.name == "instructor" %}
+<a href="{% url 'workshop:workshop_type_edit' obj.id %}" class="btn btn-warning btn-sm">
+    Edit
+</a>
+{% endif %}
 
                     </td>
 
