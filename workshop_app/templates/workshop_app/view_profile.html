@@ -4,162 +4,61 @@
 
 {% block content %}
 
-<div class="container mt-5">
-
-<!-- PROFILE HEADER -->
-
-<div class="card shadow-lg p-4 mb-4">
-
-<div class="row align-items-center">
-
-<div class="col-md-3 text-center">
-
-{% if profile.profile_image %}
-<img src="{{ profile.profile_image.url }}" class="rounded-circle shadow" width="150" height="150">
+<div class="container-fluid mt-4 px-3"><!-- PROFILE HEADER --><div class="card shadow-lg p-4 mb-4"><div class="row align-items-center text-center text-md-left"><div class="col-12 col-md-3 mb-3 mb-md-0">{% if profile.profile_image %}
+<img src="{{ profile.profile_image.url }}" class="rounded-circle shadow img-fluid" width="150">
 {% else %}
 <img src="https://ui-avatars.com/api/?name={{ user.first_name }}+{{ user.last_name }}&size=150"
-class="rounded-circle shadow">
+class="rounded-circle shadow img-fluid">
 {% endif %}
 
-</div>
-
-<div class="col-md-6">
-
-<h3>{{ user.first_name }} {{ user.last_name }}</h3>
-
-<p class="text-muted">
+</div><div class="col-12 col-md-6"><h3>{{ user.first_name }} {{ user.last_name }}</h3><p class="text-muted">
 {{ profile.position|title }} • {{ profile.institute }}
-</p>
-
-<p>
+</p><p>
 📍 {{ profile.location }}
-</p>
-
-</div>
-
-<div class="col-md-3 text-right">
-
-<button class="btn btn-primary"
+</p></div><div class="col-12 col-md-3 text-center text-md-right mt-3 mt-md-0"><button class="btn btn-primary"
 data-toggle="modal"
 data-target="#editProfileModal">
 
 Edit Profile
 
-</button>
-
-</div>
-
-</div>
-
-</div>
-
-
-<!-- PROFILE COMPLETION -->
-
-<div class="card shadow p-4 mb-4">
-
-<h5>Profile Completion</h5>
-
-<div class="progress">
-
-<div class="progress-bar bg-success"
+</button></div></div></div><!-- PROFILE COMPLETION --><div class="card shadow p-4 mb-4"><h5>Profile Completion</h5><div class="progress"><div class="progress-bar bg-success"
 role="progressbar"
-style="width: {{ profile_completion }}%">
+style="width: {{ profile_completion }}%">{{ profile_completion }}%
 
-{{ profile_completion }}%
-
-</div>
-
-</div>
-
-</div>
-
-
-<!-- PROFILE DETAILS -->
-
-<div class="card shadow p-4 mb-4">
-
-<h4 class="mb-3">Profile Information</h4>
-
-<table class="table table-bordered">
-
-<tr>
+</div></div></div><!-- PROFILE DETAILS --><div class="card shadow p-4 mb-4"><h4 class="mb-3">Profile Information</h4><div class="table-responsive"><table class="table table-bordered"><tr>
 <th>Email</th>
 <td>{{ user.email }}</td>
-</tr>
-
-<tr>
+</tr><tr>
 <th>Phone</th>
 <td>{{ profile.phone_number }}</td>
-</tr>
-
-<tr>
+</tr><tr>
 <th>Department</th>
 <td>{{ profile.department }}</td>
-</tr>
-
-<tr>
+</tr><tr>
 <th>State</th>
 <td>{{ profile.state }}</td>
-</tr>
-
-<tr>
+</tr><tr>
 <th>Location</th>
 <td>{{ profile.location }}</td>
-</tr>
-
-<tr>
+</tr><tr>
 <th>Institute</th>
 <td>{{ profile.institute }}</td>
-</tr>
+</tr></table></div></div><!-- WORKSHOPS -->{% if Workshops %}
 
-</table>
-
-</div>
-
-
-<!-- WORKSHOPS -->
-
-{% if Workshops %}
-
-<div class="card shadow p-4">
-
-<h4 class="mb-3">Workshops</h4>
-
-<table class="table table-hover">
-
-<thead class="thead-dark">
-
-<tr>
+<div class="card shadow p-4"><h4 class="mb-3">Workshops</h4><div class="table-responsive"><table class="table table-hover"><thead class="thead-dark"><tr>
 <th>Instructor</th>
 <th>Date</th>
 <th>Workshop</th>
 <th>Status</th>
-</tr>
+</tr></thead><tbody>{% for workshop in Workshops %}
 
-</thead>
-
-<tbody>
-
-{% for workshop in Workshops %}
-
-<tr>
-
-<td>
+<tr><td>
 {% if workshop.instructor %}
 {{ workshop.instructor }}
 {% else %}
 <span class="badge badge-warning">Pending</span>
 {% endif %}
-</td>
-
-<td>{{ workshop.date }}</td>
-
-<td>{{ workshop.workshop_type }}</td>
-
-<td>
-
-{% if workshop.status == 1 %}
+</td><td>{{ workshop.date }}</td><td>{{ workshop.workshop_type }}</td><td>{% if workshop.status == 1 %}
 <span class="badge badge-success">Accepted</span>
 
 {% elif workshop.status == 0 %}
@@ -170,52 +69,15 @@ style="width: {{ profile_completion }}%">
 
 {% endif %}
 
-</td>
+</td></tr>{% endfor %}
 
-</tr>
+</tbody></table></div></div>{% endif %}
 
-{% endfor %}
-
-</tbody>
-
-</table>
-
-</div>
-
-{% endif %}
-
-</div>
-
-
-<!-- EDIT PROFILE MODAL -->
-
-<div class="modal fade" id="editProfileModal">
-
-<div class="modal-dialog modal-lg">
-
-<div class="modal-content">
-
-<div class="modal-header">
-
-<h5 class="modal-title">Edit Profile</h5>
-
-<button type="button" class="close" data-dismiss="modal">
+</div><!-- EDIT PROFILE MODAL --><div class="modal fade" id="editProfileModal"><div class="modal-dialog modal-lg"><div class="modal-content"><div class="modal-header"><h5 class="modal-title">Edit Profile</h5><button type="button" class="close" data-dismiss="modal">
 &times;
-</button>
+</button></div><form method="post" enctype="multipart/form-data">{% csrf_token %}
 
-</div>
-
-<form method="post" enctype="multipart/form-data">
-
-{% csrf_token %}
-
-<div class="modal-body">
-
-<div class="row">
-
-<div class="col-md-6">
-
-<label>Title</label>
+<div class="modal-body"><div class="row"><div class="col-12 col-md-6"><label>Title</label>
 {{ form.title }}
 
 <label>First Name</label>
@@ -236,13 +98,7 @@ class="form-control"
 value="{{ request.user.email }}"
 required
 >
-</div>
-
-</div>
-
-<div class="col-md-6">
-
-<label>Institute</label>
+</div></div><div class="col-12 col-md-6"><label>Institute</label>
 {{ form.institute }}
 
 <label>Department</label>
@@ -257,36 +113,10 @@ required
 <label>State</label>
 {{ form.state }}
 
-</div>
+</div></div><br><label>Profile Image</label>
 
-</div>
-
-<br>
-
-<label>Profile Image</label>
-
-<input type="file" name="profile_image" class="form-control">
-
-</div>
-
-<div class="modal-footer">
-
-<button type="submit" class="btn btn-success">
+<input type="file" name="profile_image" class="form-control"></div><div class="modal-footer"><button type="submit" class="btn btn-success">
 Save Changes
-</button>
-
-<button type="button" class="btn btn-secondary" data-dismiss="modal">
+</button><button type="button" class="btn btn-secondary" data-dismiss="modal">
 Close
-</button>
-
-</div>
-
-</form>
-
-</div>
-
-</div>
-
-</div>
-
-{% endblock %}
+</button></div></form></div></div></div>{% endblock %}

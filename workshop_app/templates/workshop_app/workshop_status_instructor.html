@@ -3,41 +3,52 @@
 
 {% block content %}
 
-<div class="container">
+<div class="container-fluid mt-4">
 
-<h3 class="text-center">The status of your workshops</h3>
-<br>
+<h3 class="text-center mb-4">The status of your workshops</h3>
 
-<div class="text-center mb-4">
+<!-- Responsive Buttons -->
+<div class="d-flex flex-column flex-md-row justify-content-center align-items-center mb-4 gap-2">
 
-<a href="{% url 'workshop:add_workshop_type' %}" class="btn btn-primary mr-2">
+<a href="{% url 'workshop:add_workshop_type' %}" class="btn btn-primary mb-2">
 + Add Workshop Type
 </a>
 
-<a href="{% url 'workshop:view_own_profile' %}" class="btn btn-info mr-2">
+<a href="{% url 'workshop:view_own_profile' %}" class="btn btn-info mb-2">
 Update Profile
 </a>
 
-<a href="/statistics/" class="btn btn-dark">
+<a href="/statistics/" class="btn btn-dark mb-2">
 View Statistics
 </a>
 
 </div>
 
+
 {% if not workshops %}
-<div class="jumbotron">
+
+<div class="jumbotron text-center">
+
 <h1>Welcome {{ user.first_name }}</h1>
 <p>Your workshop related information will be shown here.</p>
+
 </div>
+
 {% endif %}
 
-<!-- Accepted View -->
-<div class="container">
-<h3 align="center" class="table-heading"><strong>Workshops Accepted</strong></h3>
 
-<table class="table table-striped table-responsive-sm">
+<!-- Workshops Accepted -->
 
-<thead>
+<h3 class="text-center table-heading mb-3">
+<strong>Workshops Accepted</strong>
+</h3>
+
+<div class="table-responsive">
+
+<table class="table table-striped table-hover">
+
+<thead class="thead-dark">
+
 <tr>
 <th>Coordinator Name</th>
 <th>Institute</th>
@@ -45,10 +56,14 @@ View Statistics
 <th>Workshop Day</th>
 <th>Status</th>
 </tr>
+
 </thead>
+
+<tbody>
 
 {% for workshop in workshops %}
 {% if workshop.status %}
+
 <tr>
 
 <td>
@@ -58,17 +73,22 @@ View Statistics
 </td>
 
 <td>{{ workshop.coordinator.profile.institute }}</td>
+
 <td>{{ workshop.workshop_type|capfirst }}</td>
 
 <td>
+
 {{ workshop.date|date }}
 
 {% if workshop.date > today %}
+
 <span class="material-icons datepicker btn"
 onclick="changeDate('R,{{ workshop.date|safe }}, {{ forloop.counter }}')">
 event
 </span>
+
 {% endif %}
+
 </td>
 
 <td>
@@ -78,23 +98,32 @@ event
 </td>
 
 </tr>
+
 {% endif %}
 {% endfor %}
 
+</tbody>
+
 </table>
+
 </div>
 
 
-<!-- Proposed Workshops -->
-<div class="container">
 
-<h3 class="text-center table-heading">
+<!-- Proposed Workshops -->
+
+<h3 class="text-center table-heading mt-5 mb-3">
+
 <strong>Workshops Proposed By Coordinators</strong>
+
 </h3>
 
-<table class="table table-striped table-responsive-sm">
+<div class="table-responsive">
 
-<thead>
+<table class="table table-striped table-hover">
+
+<thead class="thead-dark">
+
 <tr>
 <th>Coordinator Name</th>
 <th>Institute</th>
@@ -103,7 +132,10 @@ event
 <th>Status</th>
 <th>Action</th>
 </tr>
+
 </thead>
+
+<tbody>
 
 {% for workshop in workshops %}
 {% if not workshop.status and workshop.tnc_accepted %}
@@ -111,27 +143,37 @@ event
 <tr>
 
 <td>
+
 <a href="{% url 'workshop:view_own_profile' %}">
 {{ workshop.coordinator.get_full_name }}
 </a>
+
 </td>
 
 <td>{{ workshop.coordinator.profile.institute }}</td>
+
 <td>{{ workshop.workshop_type }}</td>
+
 <td>{{ workshop.date|date }}</td>
 
 <td>
+
 <span class="badge badge-warning">
 {{ workshop.get_status }}
 </span>
+
 </td>
 
 <td>
+
 <a href="{% url 'workshop:accept_workshop' workshop.id %}"
 class="btn btn-primary btn-sm"
 onclick="return confirm('Are you sure you want to accept the workshop?')">
+
 Accept
+
 </a>
+
 </td>
 
 </tr>
@@ -139,7 +181,10 @@ Accept
 {% endif %}
 {% endfor %}
 
+</tbody>
+
 </table>
+
 </div>
 
 </div>

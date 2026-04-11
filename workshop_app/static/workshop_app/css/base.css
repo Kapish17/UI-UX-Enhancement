@@ -442,3 +442,233 @@ text-align:center;
 }
 
 }
+/* DASHBOARD MOBILE FIX */
+
+@media (max-width:768px){
+
+h3{
+font-size:22px;
+}
+
+.table{
+font-size:14px;
+}
+
+.table td,
+.table th{
+white-space:nowrap;
+}
+
+.btn{
+width:100%;
+margin-bottom:8px;
+}
+
+}
+
+/* ===================================== */
+/* GLOBAL MOBILE RESPONSIVE FIX */
+/* ===================================== */
+
+html, body{
+width:100%;
+overflow-x:hidden;
+}
+
+/* Containers full width */
+
+.container,
+.container-fluid{
+max-width:100%;
+padding-left:15px;
+padding-right:15px;
+}
+
+/* Cards responsive */
+
+.card{
+width:100%;
+margin-bottom:20px;
+}
+
+/* Tables scroll on mobile */
+
+.table-responsive{
+overflow-x:auto;
+-webkit-overflow-scrolling:touch;
+}
+
+table{
+width:100%;
+min-width:600px;
+}
+
+/* Buttons responsive */
+
+@media (max-width:768px){
+
+.btn{
+display:block;
+width:100%;
+margin-bottom:8px;
+}
+
+}
+
+/* Forms responsive */
+
+input,
+select,
+textarea{
+width:100%;
+max-width:100%;
+}
+
+/* Profile page fix */
+
+.profile-card{
+width:100%;
+}
+
+/* Dashboard table fix */
+
+.table td,
+.table th{
+white-space:nowrap;
+}
+
+/* Navbar fix */
+
+.navbar{
+width:100%;
+}
+
+/* Footer fix */
+
+.footer{
+width:100%;
+}
+
+/* Prevent weird narrow layouts */
+
+.row{
+margin-left:0;
+margin-right:0;
+}
+
+/* Fix mobile headings */
+
+@media (max-width:768px){
+
+h1{font-size:24px;}
+h2{font-size:22px;}
+h3{font-size:20px;}
+
+}
+
+/* ================= MOBILE TABLE SIZE FIX ================= */
+
+@media (max-width:768px){
+
+.table{
+font-size:12px;          /* smaller text */
+}
+
+.table th,
+.table td{
+padding:6px 8px;        /* smaller spacing */
+}
+
+.table thead th{
+font-size:13px;
+}
+
+.table .btn{
+font-size:11px;
+padding:4px 8px;
+}
+
+/* allow horizontal scroll if needed */
+
+.table-responsive{
+overflow-x:auto;
+-webkit-overflow-scrolling:touch;
+}
+
+}
+
+/* ================================= */
+/* GLOBAL MOBILE WIDTH FIX */
+/* ================================= */
+
+html, body{
+width:100%;
+max-width:100%;
+overflow-x:hidden;
+}
+
+/* Make containers full width on mobile */
+
+@media (max-width:768px){
+
+.container,
+.container-fluid{
+width:100%;
+max-width:100%;
+padding-left:12px;
+padding-right:12px;
+margin:0 auto;
+}
+
+/* Cards take full width */
+
+.card,
+.login-card{
+width:100%;
+max-width:100%;
+margin-left:auto;
+margin-right:auto;
+}
+
+/* Forms full width */
+
+input,
+select,
+textarea{
+width:100%;
+max-width:100%;
+}
+
+/* Tables responsive */
+
+.table{
+font-size:13px;
+}
+
+.table td,
+.table th{
+padding:6px;
+white-space:nowrap;
+}
+
+/* Buttons responsive */
+
+.btn{
+width:100%;
+margin-bottom:8px;
+}
+
+/* Fix profile info table */
+
+.profile-card table{
+width:100%;
+}
+
+/* Prevent content shrinking */
+
+.row{
+margin-left:0;
+margin-right:0;
+}
+
+}
