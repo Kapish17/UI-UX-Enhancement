@@ -55,8 +55,8 @@ View List of available Workshops
   
 
 {% if request.user.is_superuser or request.user.groups.all.0.name == "instructor" %}
-<a href="{% url 'workshop:workshop_type_edit' obj.id %}" class="btn btn-warning btn-sm">
-    Edit
+<a href="{% url 'workshop:edit_workshop_type' w.id %}" class="btn btn-warning btn-sm">
+Edit
 </a>
 {% endif %}
 
