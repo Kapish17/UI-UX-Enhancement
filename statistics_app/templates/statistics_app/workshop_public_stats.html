@@ -324,6 +324,10 @@ var trend_data = JSON.parse('{{ trend_data|escapejs }}');
 
 /* STATE CHART */
 
+/* STATE CHART */
+
+/* STATE CHART */
+
 new Chart(document.getElementById("stateChart"),{
 type:'bar',
 data:{
@@ -333,6 +337,17 @@ label:"State Wise Workshops",
 data:state_data,
 backgroundColor:"#3a86ff"
 }]
+},
+options:{
+scales:{
+yAxes:[{
+ticks:{
+beginAtZero:true,
+min:0,
+stepSize:1
+}
+}]
+}
 }
 });
 
