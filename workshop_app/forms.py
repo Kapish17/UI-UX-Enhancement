@@ -1,5 +1,4 @@
 from string import punctuation, digits
-
 from django import forms
 from django.utils import timezone
 
@@ -29,45 +28,84 @@ class UserRegistrationForm(forms.Form):
 
     username = forms.CharField(
         max_length=32,
-        help_text="Letters, digits, period and underscore only."
+        help_text="Letters, digits, period and underscore only.",
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Username'
+        })
     )
 
-    email = forms.EmailField()
+    email = forms.EmailField(
+        widget=forms.EmailInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Email'
+        })
+    )
 
     password = forms.CharField(
         max_length=32,
-        widget=forms.PasswordInput()
+        widget=forms.PasswordInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Password'
+        })
     )
 
     confirm_password = forms.CharField(
         max_length=32,
-        widget=forms.PasswordInput()
+        widget=forms.PasswordInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Confirm Password'
+        })
     )
 
-    title = forms.ChoiceField(choices=title)
-    first_name = forms.CharField(max_length=32)
-    last_name = forms.CharField(max_length=32)
+    title = forms.ChoiceField(
+        choices=title,
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
+
+    first_name = forms.CharField(
+        max_length=32,
+        widget=forms.TextInput(attrs={'class': 'form-control'})
+    )
+
+    last_name = forms.CharField(
+        max_length=32,
+        widget=forms.TextInput(attrs={'class': 'form-control'})
+    )
 
     phone_number = forms.RegexField(
         regex=r'^\d{10}$',
-        error_messages={
-            'invalid': "Phone number must be 10 digits."
-        }
+        error_messages={'invalid': "Phone number must be 10 digits."},
+        widget=forms.TextInput(attrs={'class': 'form-control'})
     )
 
     institute = forms.CharField(
         max_length=128,
-        help_text="Please write full name of your Institute/Organization"
+        help_text="Please write full name of your Institute/Organization",
+        widget=forms.TextInput(attrs={'class': 'form-control'})
     )
 
     department = forms.ChoiceField(
         help_text="Department you work/study",
-        choices=department_choices
+        choices=department_choices,
+        widget=forms.Select(attrs={'class': 'form-control'})
     )
 
-    location = forms.CharField(max_length=255, help_text="Place/City")
-    state = forms.ChoiceField(choices=states)
-    how_did_you_hear_about_us = forms.ChoiceField(choices=source)
+    location = forms.CharField(
+        max_length=255,
+        help_text="Place/City",
+        widget=forms.TextInput(attrs={'class': 'form-control'})
+    )
+
+    state = forms.ChoiceField(
+        choices=[('', 'Select State')] + list(states),
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
+
+    how_did_you_hear_about_us = forms.ChoiceField(
+        choices=source,
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
 
     # ---------- VALIDATIONS ----------
 
@@ -123,7 +161,6 @@ class UserRegistrationForm(forms.Form):
         password = self.cleaned_data["password"]
         email = self.cleaned_data["email"]
 
-        # Final safety check
         if User.objects.filter(username__iexact=username).exists():
             raise forms.ValidationError("Username already exists.")
 
@@ -225,11 +262,9 @@ class WorkshopForm(forms.ModelForm):
                     'placeholder': 'Workshop Date'
                 }
             ),
-
             'workshop_type': forms.Select(
                 attrs={'class': 'form-control'}
             ),
-
             'tnc_accepted': forms.CheckboxInput(
                 attrs={'class': 'form-check-input'}
             )
@@ -255,7 +290,6 @@ class CommentsForm(forms.ModelForm):
             'comment': forms.Textarea(
                 attrs={'class': 'form-control'}
             ),
-
             'public': forms.CheckboxInput(
                 attrs={'class': 'form-check-input'}
             )
@@ -293,7 +327,6 @@ class ProfileForm(forms.ModelForm):
 
     class Meta:
         model = Profile
-
         exclude = [
             "user",
             "is_email_verified",
@@ -319,7 +352,6 @@ class ProfileForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
 
         user = kwargs.pop('user', None)
-
         super().__init__(*args, **kwargs)
 
         if user:
@@ -354,17 +386,12 @@ class ProfileForm(forms.ModelForm):
             {'class': "form-control", 'placeholder': 'Location'}
         )
 
-    
 
 class AddWorkshopForm(forms.ModelForm):
 
     class Meta:
         model = Workshop
-        fields = [
-            "workshop_type",
-            "date",
-            "tnc_accepted"
-        ]
+        fields = ["workshop_type", "date", "tnc_accepted"]
 
         widgets = {
             "date": forms.DateInput(
