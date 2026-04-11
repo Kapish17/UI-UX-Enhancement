@@ -1,47 +1,125 @@
 {% extends "workshop_app/base.html" %}
 {% load static %}
 
+{% block extra-custom-scripts %}
+
+<style>
+
+.table-heading{
+color:#04a9cf;
+}
+
+/* Dashboard cards */
+
+.dashboard-card{
+border-radius:12px;
+padding:25px;
+text-align:center;
+box-shadow:0 6px 15px rgba(0,0,0,0.08);
+background:white;
+min-height:120px;
+transition:0.3s;
+}
+
+.dashboard-card:hover{
+transform:translateY(-3px);
+box-shadow:0 10px 25px rgba(0,0,0,0.15);
+}
+
+.dashboard-card h2{
+font-weight:700;
+font-size:36px;
+margin-top:10px;
+}
+
+.dashboard-card h6{
+color:#777;
+font-weight:500;
+}
+
+.quick-actions{
+margin-top:25px;
+text-align:center;
+}
+
+.quick-actions a{
+margin:8px;
+}
+
+</style>
+
+{% endblock %}
+
+
+
 {% block content %}
 
-<div class="container-fluid mt-4">
+<div class="container mt-2">
 
-<h3 class="text-center mb-4">The status of your workshops</h3>
+<!-- ================= DASHBOARD HEADER ================= -->
 
-<!-- Responsive Buttons -->
-<div class="d-flex flex-column flex-md-row justify-content-center align-items-center mb-4 gap-2">
-
-<a href="{% url 'workshop:add_workshop_type' %}" class="btn btn-primary mb-2">
-+ Add Workshop Type
-</a>
-
-<a href="{% url 'workshop:view_own_profile' %}" class="btn btn-info mb-2">
-Update Profile
-</a>
-
-<a href="/statistics/" class="btn btn-dark mb-2">
-View Statistics
-</a>
-
-</div>
-
-
-{% if not workshops %}
-
-<div class="jumbotron text-center">
+<div class="jumbotron py-4 mb-3"></div>
 
 <h1>Welcome {{ user.first_name }}</h1>
-<p>Your workshop related information will be shown here.</p>
+
+<p>
+Information related to your workshops will be shown here.
+You can manage workshop types using the button below.
+</p>
 
 </div>
 
-{% endif %}
 
 
-<!-- Workshops Accepted -->
+<!-- ================= QUICK ACTION BUTTONS ================= -->
 
-<h3 class="text-center table-heading mb-3">
+<div class="quick-actions">
+
+<a href="{% url 'workshop:add_workshop_type' %}" class="btn btn-primary btn-lg">
+
+<i class="fa fa-plus"></i> Add Workshop Type
+
+</a>
+
+
+<a href="{% url 'workshop:view_own_profile' %}" class="btn btn-info btn-lg">
+
+<i class="fa fa-user"></i> Update Profile
+
+</a>
+
+
+<a href="{% url 'statistics_app:public' %}" class="btn btn-dark btn-lg">
+
+<i class="fa fa-bar-chart"></i> View Statistics
+
+</a>
+
+</div>
+
+
+
+<!-- ================= WORKSHOP STATUS ================= -->
+
+{% if workshops %}
+
+<br><br>
+
+<h3 class="text-center">The status of your workshops</h3>
+
+<br>
+
+
+<!-- ================= ACCEPTED WORKSHOPS ================= -->
+
+<div class="container">
+
+<h3 class="text-center table-heading">
+
 <strong>Workshops Accepted</strong>
+
 </h3>
+
 
 <div class="table-responsive">
 
@@ -62,19 +140,30 @@ View Statistics
 <tbody>
 
 {% for workshop in workshops %}
+
 {% if workshop.status %}
 
 <tr>
 
 <td>
+
 <a href="{% url 'workshop:view_own_profile' %}">
 {{ workshop.coordinator.get_full_name }}
 </a>
+
 </td>
 
-<td>{{ workshop.coordinator.profile.institute }}</td>
+<td>
 
-<td>{{ workshop.workshop_type|capfirst }}</td>
+{{ workshop.coordinator.profile.institute }}
+
+</td>
+
+<td>
+
+{{ workshop.workshop_type|capfirst }}
+
+</td>
 
 <td>
 
@@ -84,7 +173,9 @@ View Statistics
 
 <span class="material-icons datepicker btn"
 onclick="changeDate('R,{{ workshop.date|safe }}, {{ forloop.counter }}')">
+
 event
+
 </span>
 
 {% endif %}
@@ -92,14 +183,19 @@ event
 </td>
 
 <td>
+
 <span class="badge badge-success">
+
 {{ workshop.get_status }}
+
 </span>
+
 </td>
 
 </tr>
 
 {% endif %}
+
 {% endfor %}
 
 </tbody>
@@ -108,15 +204,22 @@ event
 
 </div>
 
+</div>
 
 
-<!-- Proposed Workshops -->
 
-<h3 class="text-center table-heading mt-5 mb-3">
+<!-- ================= PROPOSED WORKSHOPS ================= -->
+
+<br>
+
+<div class="container">
+
+<h3 class="text-center table-heading">
 
 <strong>Workshops Proposed By Coordinators</strong>
 
 </h3>
+
 
 <div class="table-responsive">
 
@@ -138,6 +241,7 @@ event
 <tbody>
 
 {% for workshop in workshops %}
+
 {% if not workshop.status and workshop.tnc_accepted %}
 
 <tr>
@@ -145,21 +249,37 @@ event
 <td>
 
 <a href="{% url 'workshop:view_own_profile' %}">
+
 {{ workshop.coordinator.get_full_name }}
+
 </a>
 
 </td>
 
-<td>{{ workshop.coordinator.profile.institute }}</td>
+<td>
 
-<td>{{ workshop.workshop_type }}</td>
+{{ workshop.coordinator.profile.institute }}
 
-<td>{{ workshop.date|date }}</td>
+</td>
+
+<td>
+
+{{ workshop.workshop_type }}
+
+</td>
+
+<td>
+
+{{ workshop.date|date }}
+
+</td>
 
 <td>
 
 <span class="badge badge-warning">
+
 {{ workshop.get_status }}
+
 </span>
 
 </td>
@@ -179,6 +299,7 @@ Accept
 </tr>
 
 {% endif %}
+
 {% endfor %}
 
 </tbody>
@@ -188,5 +309,7 @@ Accept
 </div>
 
 </div>
+
+{% endif %}
 
 {% endblock %}
