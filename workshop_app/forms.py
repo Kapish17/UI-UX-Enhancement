@@ -241,6 +241,8 @@ class WorkshopForm(forms.ModelForm):
         kwargs.setdefault('label_suffix', '')
         super().__init__(*args, **kwargs)
 
+        self.fields['workshop_type'].empty_label = "Select Workshop Type"
+
         self.fields['tnc_accepted'].label = ""
         self.fields['tnc_accepted'].required = True
 
@@ -252,19 +254,20 @@ class WorkshopForm(forms.ModelForm):
         exclude = ['status', 'instructor', 'coordinator']
 
         widgets = {
-            'date': forms.DateInput(
-                attrs={
-                    'class': 'datepicker form-control',
-                    'placeholder': 'Workshop Date'
-                }
-            ),
-            'workshop_type': forms.Select(
-                attrs={'class': 'form-control'}
-            ),
-            'tnc_accepted': forms.CheckboxInput(
-                attrs={'class': 'form-check-input'}
-            )
+    'date': forms.DateInput(
+        attrs={
+            'class': 'form-control datepicker',
+            'placeholder': 'Select Workshop Date (DD-MM-YYYY)',
+            'autocomplete': 'off'
         }
+    ),
+    'workshop_type': forms.Select(
+        attrs={'class': 'form-control'}
+    ),
+    'tnc_accepted': forms.CheckboxInput(
+        attrs={'class': 'form-check-input'}
+    )
+}
 
 
 # ---------- COMMENTS FORM ----------
@@ -385,17 +388,25 @@ class ProfileForm(forms.ModelForm):
 
 class AddWorkshopForm(forms.ModelForm):
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        # Change default dropdown label
+        self.fields['workshop_type'].empty_label = "Select Workshop Type"
+
     class Meta:
         model = Workshop
         fields = ["workshop_type", "date", "tnc_accepted"]
 
         widgets = {
             "date": forms.DateInput(
-                attrs={
-                    "class": "datepicker form-control",
-                    "placeholder": "Workshop Date"
-                }
-            ),
+    format="%d-%m-%Y",
+    attrs={
+        "class": "form-control datepicker",
+        "placeholder": "Select Workshop Date (DD-MM-YYYY)",
+        "autocomplete": "off"
+    }
+),
             "workshop_type": forms.Select(
                 attrs={"class": "form-control"}
             ),

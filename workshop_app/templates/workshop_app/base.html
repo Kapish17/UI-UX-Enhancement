@@ -20,6 +20,7 @@ HomePage
 
 <!-- CSS -->
 <link rel="stylesheet" href="{% static 'workshop_app/css/bootstrap.min.css' %}">
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="{% static 'workshop_app/css/toastr.min.css' %}">
 <link rel="stylesheet" href="{% static 'workshop_app/css/base.css' %}">
 <link rel="stylesheet" href="{% static 'workshop_app/css/font-awesome.css' %}">
@@ -109,13 +110,7 @@ data-target="#navbarSupportedContent">
 
 <li class="nav-item mr-3">
 
-<button id="themeBtn"
-onclick="toggleDarkMode()"
-class="btn btn-sm btn-outline-light">
 
-🌙
-
-</button>
 
 </li>
 
@@ -160,12 +155,16 @@ href="{% url 'workshop:logout' %}">
 
 {% else %}
 
+{% if request.resolver_match.url_name != 'login' %}
+
 <li class="nav-item">
 <a class="btn btn-light btn-sm"
 href="{% url 'workshop:login' %}">
 Login
 </a>
 </li>
+
+{% endif %}
 
 {% endif %}
 
