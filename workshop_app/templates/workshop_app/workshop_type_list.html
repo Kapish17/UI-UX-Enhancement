@@ -14,11 +14,19 @@ View List of available Workshops
 
         <h2 class="text-center mb-3 mb-md-0">Workshop Types</h2>
 
-        {% if request.user.is_authenticated %}
-        <a href="{% url 'workshop:add_workshop_type' %}" class="btn btn-primary">
-            Add Workshop Type
-        </a>
-        {% endif %}
+        {% if request.user.is_superuser or request.user.groups.all.0.name == "instructor" %}
+
+<a href="{% url 'workshop:add_workshop_type' %}" class="btn btn-primary">
+Add Workshop Type
+</a>
+
+{% else %}
+
+<a href="{% url 'workshop:propose_workshop' %}" class="btn btn-success">
+Propose Workshop
+</a>
+
+{% endif %}
 
     </div>
 
