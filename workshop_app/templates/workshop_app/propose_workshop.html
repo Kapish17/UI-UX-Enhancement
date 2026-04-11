@@ -2,286 +2,168 @@
 {% load static %}
 
 {% block title %}
-Propose a workshop
+Propose Workshop
 {% endblock %}
-
 
 {% block extra-dependencies %}
-<link rel="stylesheet" href="{% static 'workshop_app/css/jquery-ui.css' %}" type="text/css"/>
 
-<script src="{% static 'workshop_app/js/jquery-1.12.4.js' %}"></script>
-<script src="{% static 'workshop_app/js/jquery-ui.min.js' %}"></script>
-{% endblock %}
-
-
-{% block extra-custom-scripts %}
-
-<style>
-
-.errorlist{
-color:red;
-font-weight:500;
-}
-
-.card{
-border-radius:12px;
-box-shadow:0 8px 20px rgba(0,0,0,0.08);
-}
-
-.card-header{
-background:#f8f9fa;
-border-bottom:0;
-text-align:center;
-}
-
-.form-control{
-border-radius:8px;
-padding:10px;
-}
-
-.btn{
-border-radius:8px;
-}
-
-.note-box{
-font-size:15px;
-}
-
-</style>
-
-
-<script>
-
-var dateToday = new Date();
-var upto = new Date();
-
-dateToday.setDate(dateToday.getDate() + 3);
-upto.setFullYear(dateToday.getFullYear() + 1);
-
-$(function () {
-
-$(".datepicker").datepicker({
-changeMonth:true,
-changeYear:true,
-minDate:dateToday,
-maxDate:upto,
-beforeShowDay:$.datepicker.noWeekends
-});
-
-
-/* Terms & Conditions modal */
-
-$('#disp_tnc').click(function (e){
-
-e.preventDefault()
-
-if($('#id_workshop_type').val()===''){
-
-$('.modal-body').html("<p class='text-danger'>Please select a workshop type</p>")
-
-}
-
-else{
-
-$.ajax({
-
-url:'/workshop/type_tnc/' + $('#id_workshop_type').val(),
-
-success:function(data){
-
-$('.modal-body').html(data.tnc)
-
-}
-
-})
-
-}
-
-});
-
-
-/* Improve form styling */
-
-$("#id_workshop_type").addClass("form-control")
-$("#id_date").addClass("form-control datepicker")
-
-});
-
-</script>
-
-{% endblock %}
-
-
+<!-- Flatpickr Modern Calendar --><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>{% endblock %}
 
 {% block content %}
 
-<div class="container mt-5">
+<style>
 
+/* Page background */
 
-<div class="row justify-content-center">
+.page-wrapper{
+display:flex;
+justify-content:center;
+align-items:center;
+min-height:80vh;
+background:#f4f7fb;
+padding:40px 0;
+}
 
+/* Card */
 
-<div class="col-md-6">
+.workshop-card{
+width:520px;
+background:white;
+border-radius:12px;
+padding:40px;
+box-shadow:0 10px 30px rgba(0,0,0,0.08);
+}
 
+/* Title */
 
-<!-- NOTE -->
+.page-title{
+text-align:center;
+margin-bottom:35px;
+font-weight:600;
+color:#2c3e50;
+}
 
-<div class="alert alert-info text-center note-box">
+/* Form styling */
 
-<i class="fa fa-info-circle"></i>
+.form-group{
+margin-bottom:22px;
+}
 
-Before proposing a workshop please check details in the  
+.form-group label{
+font-weight:500;
+margin-bottom:6px;
+display:block;
+}
+
+.form-control{
+height:45px;
+border-radius:8px;
+}
+
+/* Checkbox row */
+
+.tnc-row{
+display:flex;
+align-items:center;
+gap:10px;
+margin-top:15px;
+font-size:14px;
+}
+
+.tnc-row input{
+width:18px;
+height:18px;
+cursor:pointer;
+}
+
+/* Submit button */
+
+.submit-btn{
+width:100%;
+height:45px;
+margin-top:25px;
+font-weight:500;
+border-radius:8px;
+}
+
+/* Info banner */
+
+.info-banner{
+max-width:800px;
+margin:auto;
+margin-bottom:30px;
+}
+
+</style><div class="container"><div class="alert alert-info text-center info-banner"><i class="fa fa-info-circle"></i>
+Before proposing a workshop please check details in the
 <strong>Workshop Types</strong> section.
 
-</div>
+</div><div class="page-wrapper"><div class="workshop-card"><h3 class="page-title">
+<i class="fa fa-calendar-plus"></i> Propose Workshop
+</h3><form method="post">{% csrf_token %}
 
-
-<!-- FORM CARD -->
-
-<div class="card border-primary">
-
-
-<div class="card-header">
-
-<h3>
-<i class="fa fa-plus-circle"></i> Propose Workshop
-</h3>
-
-</div>
-
-
-<div class="card-body">
-
-
-<form method="post">
-
-{% csrf_token %}
-
-
-<!-- Workshop Type -->
-
-<div class="form-group">
-
-<label><strong>Workshop Type</strong></label>
+<div class="form-group"><label>Workshop Type</label>
 
 {{ form.workshop_type }}
 
-</div>
+</div><div class="form-group"><label>Workshop Date</label>
 
+<input
+type="text"
+id="flatpickr-date"
+name="date"
+class="form-control"
+placeholder="Select Workshop Date (DD-MM-YYYY)"
+required
 
-<!-- Workshop Date -->
+«»
 
-<div class="form-group">
+</div><!-- Terms & Conditions --><div class="tnc-row"><input
+type="checkbox"
+name="tnc_accepted"
+id="id_tnc_accepted"
+required
 
-<label><strong>Workshop Date</strong></label>
+«»
 
-{{ form.date }}
-
-</div>
-
-
-<!-- Terms and Conditions -->
-
-<div class="form-check mt-3">
-
-{{ form.tnc_accepted }}
-
-<label class="form-check-label">
-
-I accept the  
-
-<a href="#" id="disp_tnc" data-toggle="modal" data-target="#exampleModalCenter">
-
+<label for="id_tnc_accepted">
+I agree to the
+<a href="#" data-toggle="modal" data-target="#tncModal">
 terms and conditions
-
 </a>
+</label></div>{% if form.errors %}
 
-</label>
-
-</div>
-
-
-
-<!-- Error Section -->
-
-{% if form.errors %}
-
-<div class="alert alert-danger mt-4">
-
-<strong>Form Errors:</strong>
+<div class="alert alert-danger mt-3"><strong>Errors</strong>
 
 {{ form.errors }}
 
-</div>
+</div>{% endif %}
 
-{% endif %}
+<button class="btn btn-success submit-btn" type="submit"><i class="fa fa-paper-plane"></i> Submit Proposal
 
-
-
-<!-- Submit Button -->
-
-<div class="text-center mt-4">
-
-<button class="btn btn-success btn-lg px-4" type="submit">
-
-<i class="fa fa-paper-plane"></i> Submit Proposal
-
-</button>
-
-</div>
-
-
-</form>
-
-
-</div>
-
-</div>
-
-
-</div>
-
-</div>
-
-</div>
-
-
-<!-- TERMS & CONDITIONS MODAL -->
-
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
-aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-
-<div class="modal-dialog modal-dialog-centered" role="document">
-
-<div class="modal-content">
-
-
-<div class="modal-header">
-
-<h5 class="modal-title" id="exampleModalLongTitle">
-
+</button></form></div></div></div><!-- Terms Modal --><div class="modal fade" id="tncModal"><div class="modal-dialog modal-dialog-centered"><div class="modal-content"><div class="modal-header"><h5 class="modal-title">
 Terms and Conditions
-
-</h5>
-
-<button type="button" class="close" data-dismiss="modal">
-
+</h5><button type="button" class="close" data-dismiss="modal">
 <span>&times;</span>
+</button></div><div class="modal-body">Terms and conditions will load here.
 
-</button>
+</div></div></div></div><script>
 
-</div>
+/* Modern Calendar */
 
+flatpickr("#flatpickr-date", {
 
-<div class="modal-body">
+dateFormat: "d-m-Y",
+minDate: new Date().fp_incr(3),
+maxDate: new Date().fp_incr(365),
 
-</div>
+disable: [
+function(date) {
+return (date.getDay() === 0 || date.getDay() === 6);
+}
+]
 
+});
 
-</div>
-
-</div>
-
-</div>
-
-{% endblock %}
+</script>{% endblock %}
