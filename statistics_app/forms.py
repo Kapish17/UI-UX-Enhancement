@@ -9,15 +9,29 @@ class FilterForm(forms.Form):
 
     from_date = forms.DateField(
         required=False,
+        input_formats=["%d-%m-%Y"],
         widget=forms.DateInput(
-            attrs={'type': 'date', 'class': 'form-control'}
+            format="%d-%m-%Y",
+            attrs={
+                'type': 'text',
+                'class': 'form-control flatpickr',
+                'placeholder': 'DD-MM-YYYY',
+                'autocomplete': 'off'
+            }
         )
     )
 
     to_date = forms.DateField(
         required=False,
+        input_formats=["%d-%m-%Y"],
         widget=forms.DateInput(
-            attrs={'type': 'date', 'class': 'form-control'}
+            format="%d-%m-%Y",
+            attrs={
+                'type': 'text',
+                'class': 'form-control flatpickr',
+                'placeholder': 'DD-MM-YYYY',
+                'autocomplete': 'off'
+            }
         )
     )
 

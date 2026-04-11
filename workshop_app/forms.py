@@ -241,33 +241,48 @@ class WorkshopForm(forms.ModelForm):
         kwargs.setdefault('label_suffix', '')
         super().__init__(*args, **kwargs)
 
+        # Dropdown default option
         self.fields['workshop_type'].empty_label = "Select Workshop Type"
 
+        # Remove checkbox label text
         self.fields['tnc_accepted'].label = ""
         self.fields['tnc_accepted'].required = True
 
-        self.fields['workshop_type'].label = "Workshop :"
-        self.fields['date'].label = "Workshop Date :"
+        # Custom labels
+        self.fields['workshop_type'].label = "Workshop Type"
+        self.fields['date'].label = "Workshop Date"
+
+        # Accept both formats if user enters manually
+        self.fields['date'].input_formats = ["%Y-%m-%d", "%d-%m-%Y"]
 
     class Meta:
         model = Workshop
         exclude = ['status', 'instructor', 'coordinator']
 
         widgets = {
-    'date': forms.DateInput(
-        attrs={
-            'class': 'form-control datepicker',
-            'placeholder': 'Select Workshop Date (DD-MM-YYYY)',
-            'autocomplete': 'off'
+
+            'date': forms.DateInput(
+    format="%d-%m-%Y",
+    attrs={
+        'type': 'text',
+        'class': 'form-control flatpickr',
+        'placeholder': 'DD-MM-YYYY',
+        'autocomplete': 'off'
+    }
+),
+
+            'workshop_type': forms.Select(
+                attrs={
+                    'class': 'form-control'
+                }
+            ),
+
+            'tnc_accepted': forms.CheckboxInput(
+                attrs={
+                    'class': 'form-check-input'
+                }
+            )
         }
-    ),
-    'workshop_type': forms.Select(
-        attrs={'class': 'form-control'}
-    ),
-    'tnc_accepted': forms.CheckboxInput(
-        attrs={'class': 'form-check-input'}
-    )
-}
 
 
 # ---------- COMMENTS FORM ----------

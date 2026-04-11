@@ -154,7 +154,11 @@ Terms and Conditions
 
 flatpickr("#flatpickr-date", {
 
-dateFormat: "d-m-Y",
+dateFormat: "Y-m-d",   // format sent to Django
+
+altInput: true,        // shows another input to user
+altFormat: "d-m-Y",    // format shown to user
+
 minDate: new Date().fp_incr(3),
 maxDate: new Date().fp_incr(365),
 

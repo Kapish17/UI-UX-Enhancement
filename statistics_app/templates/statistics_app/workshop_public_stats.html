@@ -4,6 +4,9 @@
 
 {% block content %}
 
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
 <style>
 /* Sidebar Fix */
 
@@ -387,6 +390,20 @@ tension:0.4
 }
 });
 
+</script>
+
+<script>
+/* Enable calendar for filter inputs */
+
+flatpickr("#id_from_date", {
+    dateFormat: "d-m-Y",
+    allowInput: true
+});
+
+flatpickr("#id_to_date", {
+    dateFormat: "d-m-Y",
+    allowInput: true
+});
 </script>
 
 {% endblock %}
