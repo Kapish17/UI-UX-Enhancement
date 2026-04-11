@@ -19,7 +19,6 @@ from .send_mails import generate_activation_key
 UNAME_CHARS = letters + "._" + digits
 PWD_CHARS = letters + punctuation + digits
 
-
 class UserRegistrationForm(forms.Form):
     """User Registration Form"""
 
@@ -27,174 +26,168 @@ class UserRegistrationForm(forms.Form):
     errorlist_css_class = 'errorlist'
 
     username = forms.CharField(
-        max_length=32,
-        help_text="Letters, digits, period and underscore only.",
-        widget=forms.TextInput(attrs={
-            'class': 'form-control',
-            'placeholder': 'Username'
-        })
-    )
+    max_length=32,
+    help_text="Letters, digits, period and underscore only.",
+    widget=forms.TextInput(attrs={
+        'class': 'form-control',
+        'placeholder': 'Username'
+    })
+)
 
     email = forms.EmailField(
-        widget=forms.EmailInput(attrs={
-            'class': 'form-control',
-            'placeholder': 'Email'
-        })
-    )
+    widget=forms.EmailInput(attrs={
+        'class': 'form-control',
+        'placeholder': 'Email'
+    })
+)
 
     password = forms.CharField(
-        max_length=32,
-        widget=forms.PasswordInput(attrs={
-            'class': 'form-control',
-            'placeholder': 'Password'
-        })
-    )
+    max_length=32,
+    widget=forms.PasswordInput(attrs={
+        'class': 'form-control',
+        'placeholder': 'Password'
+    })
+)
 
     confirm_password = forms.CharField(
-        max_length=32,
-        widget=forms.PasswordInput(attrs={
-            'class': 'form-control',
-            'placeholder': 'Confirm Password'
-        })
-    )
+    max_length=32,
+    widget=forms.PasswordInput(attrs={
+        'class': 'form-control',
+        'placeholder': 'Confirm Password'
+    })
+)
 
     title = forms.ChoiceField(
-        choices=title,
-        widget=forms.Select(attrs={'class': 'form-control'})
-    )
+    choices=title,
+    widget=forms.Select(attrs={'class': 'form-control'})
+)
 
     first_name = forms.CharField(
-        max_length=32,
-        widget=forms.TextInput(attrs={'class': 'form-control'})
-    )
+    max_length=32,
+    widget=forms.TextInput(attrs={'class': 'form-control'})
+)
 
     last_name = forms.CharField(
-        max_length=32,
-        widget=forms.TextInput(attrs={'class': 'form-control'})
-    )
+    max_length=32,
+    widget=forms.TextInput(attrs={'class': 'form-control'})
+)
 
     phone_number = forms.RegexField(
-        regex=r'^\d{10}$',
-        error_messages={'invalid': "Phone number must be 10 digits."},
-        widget=forms.TextInput(attrs={'class': 'form-control'})
-    )
+    regex=r'^\d{10}$',
+    error_messages={'invalid': "Phone number must be 10 digits."},
+    widget=forms.TextInput(attrs={'class': 'form-control'})
+)
 
     institute = forms.CharField(
-        max_length=128,
-        help_text="Please write full name of your Institute/Organization",
-        widget=forms.TextInput(attrs={'class': 'form-control'})
-    )
+    max_length=128,
+    help_text="Please write full name of your Institute/Organization",
+    widget=forms.TextInput(attrs={'class': 'form-control'})
+)
 
     department = forms.ChoiceField(
-        help_text="Department you work/study",
-        choices=department_choices,
-        widget=forms.Select(attrs={'class': 'form-control'})
-    )
+    help_text="Department you work/study",
+    choices=department_choices,
+    widget=forms.Select(attrs={'class': 'form-control'})
+)
 
     location = forms.CharField(
-        max_length=255,
-        help_text="Place/City",
-        widget=forms.TextInput(attrs={'class': 'form-control'})
-    )
+    max_length=255,
+    help_text="Place/City",
+    widget=forms.TextInput(attrs={'class': 'form-control'})
+)
 
     state = forms.ChoiceField(
-        choices=[('', 'Select State')] + list(states),
-        widget=forms.Select(attrs={'class': 'form-control'})
-    )
+    choices=[('', 'Select State')] + list(states),
+    widget=forms.Select(attrs={'class': 'form-control'})
+)
 
     how_did_you_hear_about_us = forms.ChoiceField(
-        choices=source,
-        widget=forms.Select(attrs={'class': 'form-control'})
-    )
+    choices=source,
+    widget=forms.Select(attrs={'class': 'form-control'})
+)
 
-    # ---------- VALIDATIONS ----------
+# ---------- VALIDATIONS ----------
 
-    def clean_username(self):
-        username = self.cleaned_data["username"].lower()
+def clean_username(self):
+    username = self.cleaned_data["username"].lower()
 
-        if username.strip(UNAME_CHARS):
-            raise forms.ValidationError(
-                "Only letters, digits, period and underscore are allowed."
-            )
-
-        if User.objects.filter(username__iexact=username).exists():
-            raise forms.ValidationError(
-                "Username already exists. Please choose another."
-            )
-
-        return username
-
-    def clean_password(self):
-        pwd = self.cleaned_data["password"]
-
-        if pwd.strip(PWD_CHARS):
-            raise forms.ValidationError(
-                "Only letters, digits and punctuation are allowed in password."
-            )
-
-        return pwd
-
-    def clean_confirm_password(self):
-        confirm_pwd = self.cleaned_data["confirm_password"]
-        pwd = self.cleaned_data.get("password")
-
-        if pwd and confirm_pwd != pwd:
-            raise forms.ValidationError("Passwords do not match")
-
-        return confirm_pwd
-
-    def clean_email(self):
-        email = self.cleaned_data["email"]
-
-        if User.objects.filter(email=email).exists():
-            raise forms.ValidationError(
-                "This email is already registered."
-            )
-
-        return email
-
-    # ---------- SAVE USER ----------
-
-    def save(self):
-
-        username = self.cleaned_data["username"].lower()
-        password = self.cleaned_data["password"]
-        email = self.cleaned_data["email"]
-
-        if User.objects.filter(username__iexact=username).exists():
-            raise forms.ValidationError("Username already exists.")
-
-        new_user = User.objects.create_user(
-            username=username,
-            email=email,
-            password=password
+    if username.strip(UNAME_CHARS):
+        raise forms.ValidationError(
+            "Only letters, digits, period and underscore are allowed."
         )
 
-        new_user.first_name = self.cleaned_data["first_name"]
-        new_user.last_name = self.cleaned_data["last_name"]
-        new_user.save()
+    if User.objects.filter(username__iexact=username).exists():
+        raise forms.ValidationError(
+            "Username already exists. Please choose another."
+        )
 
-        cleaned_data = self.cleaned_data
+    return username
 
-        new_profile = Profile(user=new_user)
-        new_profile.institute = cleaned_data["institute"]
-        new_profile.department = cleaned_data["department"]
-        new_profile.phone_number = cleaned_data["phone_number"]
-        new_profile.location = cleaned_data["location"]
-        new_profile.title = cleaned_data["title"]
-        new_profile.state = cleaned_data["state"]
-        new_profile.how_did_you_hear_about_us = cleaned_data[
-            "how_did_you_hear_about_us"
-        ]
+def clean_password(self):
+    pwd = self.cleaned_data["password"]
 
-        new_profile.activation_key = generate_activation_key(new_user.username)
-        new_profile.key_expiry_time = timezone.now() + timezone.timedelta(days=1)
+    if pwd.strip(PWD_CHARS):
+        raise forms.ValidationError(
+            "Only letters, digits and punctuation are allowed in password."
+        )
 
-        new_profile.save()
+    return pwd
 
-        return username, password, new_profile.activation_key
+def clean_confirm_password(self):
+    confirm_pwd = self.cleaned_data["confirm_password"]
+    pwd = self.cleaned_data.get("password")
 
+    if pwd and confirm_pwd != pwd:
+        raise forms.ValidationError("Passwords do not match")
 
+    return confirm_pwd
+
+def clean_email(self):
+    email = self.cleaned_data["email"]
+
+    if User.objects.filter(email=email).exists():
+        raise forms.ValidationError(
+            "This email is already registered."
+        )
+
+    return email
+
+# ---------- SAVE USER ----------
+
+def save(self):
+
+    username = self.cleaned_data["username"].lower()
+    password = self.cleaned_data["password"]
+    email = self.cleaned_data["email"]
+
+    new_user = User.objects.create_user(
+        username=username,
+        email=email,
+        password=password
+    )
+
+    new_user.first_name = self.cleaned_data["first_name"]
+    new_user.last_name = self.cleaned_data["last_name"]
+    new_user.save()
+
+    cleaned_data = self.cleaned_data
+
+    profile, created = Profile.objects.get_or_create(user=new_user)
+
+    profile.institute = cleaned_data["institute"]
+    profile.department = cleaned_data["department"]
+    profile.phone_number = cleaned_data["phone_number"]
+    profile.location = cleaned_data["location"]
+    profile.title = cleaned_data["title"]
+    profile.state = cleaned_data["state"]
+    profile.how_did_you_hear_about_us = cleaned_data["how_did_you_hear_about_us"]
+
+    profile.activation_key = generate_activation_key(new_user.username)
+    profile.key_expiry_time = timezone.now() + timezone.timedelta(days=1)
+
+    profile.save()
+
+    return username, password, profile.activation_key
 # ---------- LOGIN FORM ----------
 
 class UserLoginForm(forms.Form):
