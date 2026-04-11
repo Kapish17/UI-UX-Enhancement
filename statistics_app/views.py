@@ -43,6 +43,19 @@ def workshop_public_stats(request):
     sort = request.GET.get("sort")
     download = request.GET.get("download")
 
+# Convert DD-MM-YYYY to YYYY-MM-DD for Django filtering
+    if from_date:
+       try:
+        from_date = dt.datetime.strptime(from_date, "%d-%m-%Y").date()
+       except ValueError:
+        from_date = None
+
+    if to_date:
+       try:
+        to_date = dt.datetime.strptime(to_date, "%d-%m-%Y").date()
+       except ValueError:
+        to_date = None
+
     # Apply filters
     if from_date and to_date:
 
