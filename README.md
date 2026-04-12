@@ -197,7 +197,7 @@ All screenshots were captured from locally running instances of both versions of
 🎥 Demo Video
 
 ▶ Watch the demo video:
-"Click here" (./VideoDemo/recording.mp4)
+"Click here to watch the recording" (VideoDemo/recording.mp4)
 
 
 ## 👥 User Roles & Account Setup
