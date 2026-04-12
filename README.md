@@ -1,208 +1,294 @@
-🎓 Workshop Booking System
+# Enhancing UI/UX of Workshop Booking System (FOSSEE Task)
 
-A web platform that allows coordinators to book workshops conducted by instructors.
+> A mobile-first design to improve usability and user experience of the booking portal for students.
 
-Coordinators can:
+## About the Project
 
-- Register for existing instructor workshops
-- Propose workshop dates based on their availability
+Enhancement of the existing UI/UX of the original FOSSEE Workshop Booking System.
 
-The system helps instructors manage workshop requests efficiently while also providing interactive statistics and analytics dashboards.
+Objective:
 
----
+* 📱 Responsive design
+* 🎨 Modern and aesthetic UI
+* ⚡ Performance optimizations
+* ♿ Accessible
+* 🔍 Enhanced user experience and user interface
 
-🚀 Features
+The original booking system was functional but barebones. The aim here was to make the design more visually pleasing and modern as well as enhance its usability and accessibility.
 
-📊 Workshop Statistics
 
-Instructor Access
+## Technology Used
 
-Available only for instructors:
+* React
+* HTML5/CSS3
+* Bootstrap/Custom CSS
+* Django (backend was unchanged)
 
-- Monthly workshop count
-- Instructor / Coordinator profile statistics
-- Upcoming workshops overview
-- Comment system on coordinator profiles
 
-Public Access
+## Enhancements Made
 
-Available to all users:
+### UI Design Enhancements
 
-- Workshops visualized on Map of India
-- Charts and visual analytics of workshop types
-- Public statistics dashboard
-- Interactive data filtering and search
+* Modern design with gradient effects and Glassmorphism
+* Font styles have been improved
+* Color Contrast has been enhanced
 
----
+### Mobile-First Approach
 
-🗺 Map Visualization
+* All pages are fully responsive
+* Forms are optimized for mobile screens
+* Touch friendly interfaces
 
-The platform includes geographical visualization of workshops across India.
+### Dashboard Design Enhancements
 
-Features include:
+* Cards used to give structure to dashboard
+* Data visualization has been improved
 
-- Workshops plotted on an interactive India map
-- Visual understanding of state-wise workshop distribution
-- Improved analytics experience for users
+### UX Enhancements
 
-Map Visualization
+* Navigation has been improved
+* Clear Call-To-Actions provided
+* Form design has been improved
 
-"India Map Visualization" (screenshots/map-visualization.png)
+## 🔄 UI Comparison: Old vs New
 
----
-
-📱 Responsive Mobile View
-
-The UI is fully responsive and optimized for mobile devices and tablets.
-
-Features include:
-
-- Responsive dashboard layout
-- Mobile-friendly navigation
-- Adaptive statistics cards and tables
-
-Mobile Dashboard View
-
-"Mobile View" (screenshots/mobile-view.png)
+Below is a side-by-side comparison of the previous UI and the redesigned UI to highlight improvements in design, usability, and user experience.
 
 ---
 
-🛠 Workshop Management
+### 📸 Visual Comparison
 
-Instructors can manage workshop requests by:
+<table>
+<tr>
+<td align="center"><b>Old UI</b></td>
+<td align="center"><b>New UI</b></td>
+</tr>
 
-- Accepting workshop requests
-- Rejecting workshop requests
-- Deleting workshops
-- Postponing workshops based on coordinator requests
+<tr>
+<td><img src="changes_in_ui/Login.jpeg" width="400"/></td>
+<td><img src="changes_in_ui/LoginN.png" width="400"/></td>
+</tr>
+
+<tr>
+<td><img src="changes_in_ui/dashbord.jpeg" width="400"/></td>
+<td><img src="changes_in_ui/DashbordN.png" width="400"/></td>
+</tr>
+
+<tr>
+<td><img src="changes_in_ui/home.jpeg" width="400"/></td>
+<td><img src="changes_in_ui/typesN.png" width="400"/></td>
+</tr>
+
+<tr>
+<td><img src="changes_in_ui/change_pass.jpeg" width="400"/></td>
+<td><img src="changes_in_ui/chnage_passN.png" width="400"/></td>
+</tr>
+
+<tr>
+<td><img src="changes_in_ui/stats.jpeg" width="400"/></td>
+<td><img src="changes_in_ui/StatsN.png" width="400"/></td>
+</tr>
+</table>
+---
+
+
+### Note
+
+All screenshots were captured from locally running instances of both versions of the project. The redesign focuses on improving usability, visual clarity, and overall user experience.
+
+ Desktop UI Images
+
+| | | 
+<img src="Desktop-SS/Ceditprofile.png" width="220"/>| <img src="Desktop-SS/changepass.png" width="220"/>| <img src="Desktop-SS/Chome1.png" width="220"/>| <img src="Desktop-SS/Chome2.png" width="220"/>
+<img src="Desktop-SS/Cprofile1.png" width="220"/>| <img src="Desktop-SS/Cprofile2.png" width="220"/>| <img src="Desktop-SS/Cproposeworkshop.png" width="220"/>| <img src="Desktop-SS/Ctype.png" width="220"/>
+<img src="Desktop-SS/Cview.png" width="220"/>| <img src="Desktop-SS/Dlogin.png" width="220"/>| <img src="Desktop-SS/forgotpassword.png" width="220"/>| <img src="Desktop-SS/Iaddworktype.png" width="220"/>
+<img src="Desktop-SS/Ieditprofile.png" width="220"/>| <img src="Desktop-SS/Iedittypes1.png" width="220"/>| <img src="Desktop-SS/Iedittypes2.png" width="220"/>| <img src="Desktop-SS/IHome1.png" width="220"/>
+<img src="Desktop-SS/IHome2.png" width="220"/>| <img src="Desktop-SS/Iprofile1.png" width="220"/>| <img src="Desktop-SS/Iprofile2.png" width="220"/>| <img src="Desktop-SS/Ireg.png" width="220"/>
+<img src="Desktop-SS/Ireg2.png" width="220"/>| <img src="Desktop-SS/Itypes.png" width="220"/>| <img src="Desktop-SS/Iviewtypes.png" width="220"/>| <img src="Desktop-SS/logout.png" width="220"/>
+<img src="Desktop-SS/passreset (2).png" width="220"/>| <img src="Desktop-SS/stats1.png" width="220"/>| <img src="Desktop-SS/stats2.png" width="220"/>| <img src="Desktop-SS/stats3.png" width="220"/>
 
 ---
 
-🎨 UI/UX Enhancements
+ Mobile UI Images
 
-This project includes modern UI improvements to enhance usability and appearance.
+| | | 
+<img src="Mobile-SS/Ceditprofile1.png" width="150"/>| <img src="Mobile-SS/Ceditprofile2.png" width="150"/>| <img src="Mobile-SS/changepass.png" width="150"/>| <img src="Mobile-SS/Chome1.png" width="150"/>
+<img src="Mobile-SS/Chome2.png" width="150"/>| <img src="Mobile-SS/Cprofile1.png" width="150"/>| <img src="Mobile-SS/Cprofile2.png" width="150"/>| <img src="Mobile-SS/Cpropose.png" width="150"/>
+<img src="Mobile-SS/creg1.png" width="150"/>| <img src="Mobile-SS/Creg2.png" width="150"/>| <img src="Mobile-SS/Ctypes1.png" width="150"/>| <img src="Mobile-SS/Ctypes2.png" width="150"/>
+<img src="Mobile-SS/Edittype1.png" width="150"/>| <img src="Mobile-SS/Edittype2.png" width="150"/>| <img src="Mobile-SS/forgotpass.png" width="150"/>| <img src="Mobile-SS/Iaddworktype.png" width="150"/>
+<img src="Mobile-SS/Iaddworktype2.png" width="150"/>| <img src="Mobile-SS/lhomepage1.png" width="150"/>| <img src="Mobile-SS/lhomepage2.png" width="150"/>| <img src="Mobile-SS/login1.png" width="150"/>
+<img src="Mobile-SS/login2.png" width="150"/>| <img src="Mobile-SS/logout.png" width="150"/>| <img src="Mobile-SS/passreset.png" width="150"/>| <img src="Mobile-SS/profile1.png" width="150"/>
+<img src="Mobile-SS/profile2.png" width="150"/>| <img src="Mobile-SS/stats1.png" width="150"/>| <img src="Mobile-SS/stats2.png" width="150"/>| <img src="Mobile-SS/stats3.png" width="150"/>
+<img src="Mobile-SS/stats4.png" width="150"/>| <img src="Mobile-SS/types1.png" width="150"/>| <img src="Mobile-SS/Types2.png" width="150"/>| <img src="Mobile-SS/Viewtype.png" width="150"/>
 
-Enhancements include:
 
-- Modern login interface
-- Improved registration form layout
-- Redesigned statistics dashboard
-- Interactive charts and analytics
-- Map-based visualization of workshops
-- Better filter panel UI
-- Responsive and styled data tables
-- Gradient navigation bar and buttons
-- Dark mode support
-- Improved form inputs and interaction
+### 🎥 Demo Video
+[Click here to watch video](changes_in_ui/Vid.mov)
 
----
 
-📸 Screenshots
+## 👥 User Roles & Account Setup
 
-Login Page
+This system supports two types of users:
 
-"Login Page" (screenshots/login.png)
+### 👨‍🏫 Instructor
+- Can **accept workshops**
+- Can **edit workshop types**
+- Can **update workshop details**
+- Has higher privileges in the system
 
----
-
-Registration Page
-
-"Registration Page" (screenshots/register.png)
-
----
-
-Workshop Statistics Dashboard
-
-"Statistics Dashboard" (screenshots/statistics.png)
+### 👨‍💼 Coordinator
+- Can **propose workshops**
+- Can **manage their own workshops**
+- Cannot accept workshops
 
 ---
+## ⚙️ Setup Instructions
 
-India Map Visualization
-
-"Map Visualization" (screenshots/map-visualization.png)
-
----
-
-Mobile View
-
-"Mobile View" (screenshots/mobile-view.png)
-
----
-
-🧰 Technologies Used
-
-Technology| Purpose
-Python| Backend logic
-Django| Web framework
-HTML| Page structure
-CSS| Styling
-Bootstrap| Responsive UI
-JavaScript| Interactivity
-Chart.js| Data visualization
-Leaflet.js| Map visualization
-
----
-
-⚙ Installation
-
-1️⃣ Clone the repository
-
-git clone https://github.com/Kapish17/UI-UX-Enhancement.git
-
-2️⃣ Navigate to the project directory
-
-cd UI-UX-Enhancement
-
-3️⃣ Install dependencies
-
+```bash
+git clone https://github.com/your-username/workshop_booking.git
+cd workshop_booking
+python -m venv venv
+source venv/bin/activate   # Mac/Linux
+venv\Scripts\activate      # Windows
 pip install -r requirements.txt
-
-4️⃣ Apply database migrations
-
 python manage.py migrate
-
-5️⃣ Run the development server
-
 python manage.py runserver
+```
 
-6️⃣ Open the application
+## Quick Account Setup (Without Email Verification)
 
-Visit in browser:
+Since email verification is disabled for testing, users can be created directly using Django shell.
 
-http://127.0.0.1:8000/
+### 🔹 Step 1: Open shell
+
+```bash
+python manage.py shell
+```
+
+### 🔹 Step 2: Create Instructor
+
+```bash
+from django.contrib.auth.models import User, Group
+from workshop_app.models import Profile
+
+user, created = User.objects.get_or_create(
+    username='instructor_user',
+    defaults={'email': 'instructor@gmail.com'}
+)
+
+if created:
+    user.set_password('1234')
+    user.save()
+
+profile, _ = Profile.objects.get_or_create(user=user)
+profile.is_email_verified = True
+profile.save()
+
+group, _ = Group.objects.get_or_create(name='instructor')
+user.groups.add(group)
+
+print("Instructor created successfully ✅")
+```
+
+
+### 🔹 Step 3: Create Coordinator
+
+```bash
+from django.contrib.auth.models import User
+from workshop_app.models import Profile
+
+user, created = User.objects.get_or_create(
+    username='coordinator_user',
+    defaults={'email': 'coordinator@gmail.com'}
+)
+
+if created:
+    user.set_password('1234')
+    user.save()
+
+profile, _ = Profile.objects.get_or_create(user=user)
+profile.is_email_verified = True
+profile.save()
+
+print("Coordinator created successfully ✅")
+```
+
+Go and Login using the user_id and password
+
+
+A new Login Page has been implemented using React in the frontend.
 
 ---
 
-📂 Project Structure
+To run the React frontend:
 
-UI-UX-Enhancement
-│
-├── workshop_app
-├── statistics_app
-├── templates
-├── static
-├── screenshots
-│   ├── login.png
-│   ├── register.png
-│   ├── statistics.png
-│   ├── mobile-view.png
-│   └── map-visualization.png
-│
-├── docs
-├── manage.py
-└── README.md
+```bash
+cd frontend
+npm install
+npm start
+```
 
----
+## Design Decisions & Justification (Reasoning)
 
-📖 Documentation
+### What design principles guided your improvements?
 
-Additional documentation is available in:
+The redesign was guided by core UI/UX principles to enhance usability and clarity:
 
-docs/Getting_Started.md
+- Visual Hierarchy – Key actions such as proposing and accepting workshops were emphasized using size, spacing, and contrast to guide user attention.  
+- Consistency – A uniform design system (colors, buttons, layouts) was maintained across all pages to ensure a predictable and smooth user experience.  
+- Minimalism – Unnecessary elements were removed to reduce clutter and keep the interface clean and focused.  
+- Accessibility – Improved color contrast, readable typography, and proper spacing were used to make the interface usable for a wider range of users.  
+- User Feedback – Clear success/error messages and interactive states were added to improve user interaction and understanding.  
 
 ---
 
-👨‍💻 Developed By
+### How did you ensure responsiveness across devices?
 
-FOSSEE Group
-Indian Institute of Technology (IIT) Bombay
+Responsiveness was achieved using a mobile-first approach:
+
+- Designed layouts starting from small screens and scaled up for larger devices  
+- Used flexbox and responsive grid systems for flexible layouts  
+- Avoided fixed widths so components adapt naturally to different screen sizes  
+- Optimized buttons and forms for better touch interaction on mobile devices  
+- Tested layouts across multiple screen sizes to ensure consistency  
+
+---
+
+### What trade-offs did you make between design and performance?
+
+While improving the UI/UX, performance was carefully considered:
+
+- Avoided heavy animations to maintain fast load times  
+- Used lightweight styling instead of heavy UI frameworks  
+- Limited external dependencies to reduce overhead  
+- Focused on usability and clarity rather than overly complex designs  
+
+This ensured the system remains fast, efficient, and user-friendly.
+
+---
+
+### What was the most challenging part of the task and how did you approach it?
+
+The most challenging part was enhancing the UI without breaking the existing Django backend logic.
+
+- Django templates are tightly coupled with backend data, so even small UI changes could disrupt functionality  
+- Managing static files (CSS, JavaScript, images) consistently across pages was challenging  
+- Ensuring proper responsiveness required multiple iterations  
+
+Approach:
+
+- Made incremental changes and tested each component carefully  
+- Preserved backend structure while improving frontend templates  
+- Debugged issues step-by-step to maintain functionality  
+- Ensured core features like authentication, booking workflows, and validations remained intact  
+
+---
+
+### Outcome
+
+The final system is:
+
+- More intuitive and user-friendly  
+- Fully responsive across devices  
+- Visually modern while maintaining performance  
+- Efficient and easy to navigate for both instructors and coordinators
