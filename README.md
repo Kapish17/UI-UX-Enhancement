@@ -248,32 +248,34 @@ Since email verification is disabled for testing, users can be created directly 
 python manage.py shell
 ```
 
-### 🔹 Step 2: Inside the shell type:
+### 🔹 Step 2: Create Co-ordinator and Instructor
 ```bash
-from django.contrib.auth.models import User
-```
+from django.contrib.auth.models import User, Group
 
+# Create groups if they don't exist
+instructor_group, _ = Group.objects.get_or_create(name="instructor")
+coordinator_group, _ = Group.objects.get_or_create(name="coordinator")
 
-### 🔹 Step 3: Create Coordinator
-
-```bash
-User.objects.create_user(
-    username="coordinator1",
-    email="coordinator@example.com",
-    password="coordinator123"
+# Create Instructor user
+instructor = User.objects.create_user(
+    username="inst_user",
+    email="inst_user@example.com",
+    password="inst1234"
 )
-```
+instructor.groups.add(instructor_group)
 
-
-### 🔹 Step 4: Create Instructor
-
-```bash
-User.objects.create_user(
-    username="instructor1",
-    email="instructor@example.com",
-    password="instructor123"
+# Create Coordinator user
+coordinator = User.objects.create_user(
+    username="coord_user",
+    email="coord_user@example.com",
+    password="coord1234"
 )
+coordinator.groups.add(coordinator_group)
+
+print("Users created successfully")
 ```
+
+
 
 # Now you can login using following above details
 
