@@ -194,8 +194,9 @@ All screenshots were captured from locally running instances of both versions of
 </table>
 
 
-### 🎥 Demo Video
-[Click here to watch video](changes_in_ui/Vid.mov)
+🎥 Demo Video
+
+▶ Watch the demo: "Click here" (VideoDemo/recording.mp4)
 
 
 ## 👥 User Roles & Account Setup
