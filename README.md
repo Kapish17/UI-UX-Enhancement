@@ -96,30 +96,104 @@ Below is a side-by-side comparison of the previous UI and the redesigned UI to h
 
 All screenshots were captured from locally running instances of both versions of the project. The redesign focuses on improving usability, visual clarity, and overall user experience.
 
- Desktop UI Images
+🖥 Desktop UI Preview
 
-| | | 
-<img src="Desktop-SS/Ceditprofile.png" width="220"/>| <img src="Desktop-SS/changepass.png" width="220"/>| <img src="Desktop-SS/Chome1.png" width="220"/>| <img src="Desktop-SS/Chome2.png" width="220"/>
-<img src="Desktop-SS/Cprofile1.png" width="220"/>| <img src="Desktop-SS/Cprofile2.png" width="220"/>| <img src="Desktop-SS/Cproposeworkshop.png" width="220"/>| <img src="Desktop-SS/Ctype.png" width="220"/>
-<img src="Desktop-SS/Cview.png" width="220"/>| <img src="Desktop-SS/Dlogin.png" width="220"/>| <img src="Desktop-SS/forgotpassword.png" width="220"/>| <img src="Desktop-SS/Iaddworktype.png" width="220"/>
-<img src="Desktop-SS/Ieditprofile.png" width="220"/>| <img src="Desktop-SS/Iedittypes1.png" width="220"/>| <img src="Desktop-SS/Iedittypes2.png" width="220"/>| <img src="Desktop-SS/IHome1.png" width="220"/>
-<img src="Desktop-SS/IHome2.png" width="220"/>| <img src="Desktop-SS/Iprofile1.png" width="220"/>| <img src="Desktop-SS/Iprofile2.png" width="220"/>| <img src="Desktop-SS/Ireg.png" width="220"/>
-<img src="Desktop-SS/Ireg2.png" width="220"/>| <img src="Desktop-SS/Itypes.png" width="220"/>| <img src="Desktop-SS/Iviewtypes.png" width="220"/>| <img src="Desktop-SS/logout.png" width="220"/>
-<img src="Desktop-SS/passreset (2).png" width="220"/>| <img src="Desktop-SS/stats1.png" width="220"/>| <img src="Desktop-SS/stats2.png" width="220"/>| <img src="Desktop-SS/stats3.png" width="220"/>
+<table>
+<tr>
+<td><img src="Desktop-SS/Ceditprofile.png" width="100%"></td>
+<td><img src="Desktop-SS/changepass.png" width="100%"></td>
+</tr><tr>
+<td><img src="Desktop-SS/Chome1.png" width="100%"></td>
+<td><img src="Desktop-SS/Chome2.png" width="100%"></td>
+</tr><tr>
+<td><img src="Desktop-SS/Cprofile1.png" width="100%"></td>
+<td><img src="Desktop-SS/Cprofile2.png" width="100%"></td>
+</tr><tr>
+<td><img src="Desktop-SS/Cproposeworkshop.png" width="100%"></td>
+<td><img src="Desktop-SS/Ctype.png" width="100%"></td>
+</tr><tr>
+<td><img src="Desktop-SS/Cview.png" width="100%"></td>
+<td><img src="Desktop-SS/Dlogin.png" width="100%"></td>
+</tr><tr>
+<td><img src="Desktop-SS/Iaddworktype.png" width="100%"></td>
+<td><img src="Desktop-SS/Ieditprofile.png" width="100%"></td>
+</tr><tr>
+<td><img src="Desktop-SS/Iedittypes1.png" width="100%"></td>
+<td><img src="Desktop-SS/Iedittypes2.png" width="100%"></td>
+</tr><tr>
+<td><img src="Desktop-SS/IHome1.png" width="100%"></td>
+<td><img src="Desktop-SS/IHome2.png" width="100%"></td>
+</tr><tr>
+<td><img src="Desktop-SS/Iprofile1.png" width="100%"></td>
+<td><img src="Desktop-SS/Iprofile2.png" width="100%"></td>
+</tr><tr>
+<td><img src="Desktop-SS/Ireg.png" width="100%"></td>
+<td><img src="Desktop-SS/Ireg2.png" width="100%"></td>
+</tr><tr>
+<td><img src="Desktop-SS/Itypes.png" width="100%"></td>
+<td><img src="Desktop-SS/Iviewtypes.png" width="100%"></td>
+</tr><tr>
+<td><img src="Desktop-SS/logout.png" width="100%"></td>
+<td><img src="Desktop-SS/passreset (2).png" width="100%"></td>
+</tr><tr>
+<td><img src="Desktop-SS/stats1.png" width="100%"></td>
+<td><img src="Desktop-SS/stats2.png" width="100%"></td>
+</tr><tr>
+<td><img src="Desktop-SS/stats3.png" width="100%"></td>
+<td></td>
+</tr></table>
 
 ---
 
- Mobile UI Images
+📱 Mobile UI Images
 
-| | | 
-<img src="Mobile-SS/Ceditprofile1.png" width="150"/>| <img src="Mobile-SS/Ceditprofile2.png" width="150"/>| <img src="Mobile-SS/changepass.png" width="150"/>| <img src="Mobile-SS/Chome1.png" width="150"/>
-<img src="Mobile-SS/Chome2.png" width="150"/>| <img src="Mobile-SS/Cprofile1.png" width="150"/>| <img src="Mobile-SS/Cprofile2.png" width="150"/>| <img src="Mobile-SS/Cpropose.png" width="150"/>
-<img src="Mobile-SS/creg1.png" width="150"/>| <img src="Mobile-SS/Creg2.png" width="150"/>| <img src="Mobile-SS/Ctypes1.png" width="150"/>| <img src="Mobile-SS/Ctypes2.png" width="150"/>
-<img src="Mobile-SS/Edittype1.png" width="150"/>| <img src="Mobile-SS/Edittype2.png" width="150"/>| <img src="Mobile-SS/forgotpass.png" width="150"/>| <img src="Mobile-SS/Iaddworktype.png" width="150"/>
-<img src="Mobile-SS/Iaddworktype2.png" width="150"/>| <img src="Mobile-SS/lhomepage1.png" width="150"/>| <img src="Mobile-SS/lhomepage2.png" width="150"/>| <img src="Mobile-SS/login1.png" width="150"/>
-<img src="Mobile-SS/login2.png" width="150"/>| <img src="Mobile-SS/logout.png" width="150"/>| <img src="Mobile-SS/passreset.png" width="150"/>| <img src="Mobile-SS/profile1.png" width="150"/>
-<img src="Mobile-SS/profile2.png" width="150"/>| <img src="Mobile-SS/stats1.png" width="150"/>| <img src="Mobile-SS/stats2.png" width="150"/>| <img src="Mobile-SS/stats3.png" width="150"/>
-<img src="Mobile-SS/stats4.png" width="150"/>| <img src="Mobile-SS/types1.png" width="150"/>| <img src="Mobile-SS/Types2.png" width="150"/>| <img src="Mobile-SS/Viewtype.png" width="150"/>
+<table>
+<tr>
+<td><img src="Mobile-SS/Ceditprofile1.png" width="200"></td>
+<td><img src="Mobile-SS/Ceditprofile2.png" width="200"></td>
+<td><img src="Mobile-SS/changepass.png" width="200"></td>
+</tr><tr>
+<td><img src="Mobile-SS/Chome1.png" width="200"></td>
+<td><img src="Mobile-SS/Chome2.png" width="200"></td>
+<td><img src="Mobile-SS/Cprofile1.png" width="200"></td>
+</tr><tr>
+<td><img src="Mobile-SS/Cprofile2.png" width="200"></td>
+<td><img src="Mobile-SS/Cpropose.png" width="200"></td>
+<td><img src="Mobile-SS/creg1.png" width="200"></td>
+</tr><tr>
+<td><img src="Mobile-SS/Creg2.png" width="200"></td>
+<td><img src="Mobile-SS/Ctypes1.png" width="200"></td>
+<td><img src="Mobile-SS/Ctypes2.png" width="200"></td>
+</tr><tr>
+<td><img src="Mobile-SS/Edittype1.png" width="200"></td>
+<td><img src="Mobile-SS/Edittype2.png" width="200"></td>
+<td><img src="Mobile-SS/forgotpass.png" width="200"></td>
+</tr><tr>
+<td><img src="Mobile-SS/Iaddworktype.png" width="200"></td>
+<td><img src="Mobile-SS/Iaddworktype2.png" width="200"></td>
+<td><img src="Mobile-SS/Ihomepage1.png" width="200"></td>
+</tr><tr>
+<td><img src="Mobile-SS/Ihomepage2.png" width="200"></td>
+<td><img src="Mobile-SS/login1.png" width="200"></td>
+<td><img src="Mobile-SS/login2.png" width="200"></td>
+</tr><tr>
+<td><img src="Mobile-SS/logout.png" width="200"></td>
+<td><img src="Mobile-SS/passreset.png" width="200"></td>
+<td><img src="Mobile-SS/profile1.png" width="200"></td>
+</tr><tr>
+<td><img src="Mobile-SS/profile2.png" width="200"></td>
+<td><img src="Mobile-SS/stats1.png" width="200"></td>
+<td><img src="Mobile-SS/stats2.png" width="200"></td>
+</tr><tr>
+<td><img src="Mobile-SS/stats3.png" width="200"></td>
+<td><img src="Mobile-SS/stats4.png" width="200"></td>
+<td><img src="Mobile-SS/types1.png" width="200"></td>
+</tr><tr>
+<td><img src="Mobile-SS/Types2.png" width="200"></td>
+<td><img src="Mobile-SS/Viewtype.png" width="200"></td>
+<td></td>
+</tr>
+</table>
 
 
 ### 🎥 Demo Video
