@@ -229,12 +229,13 @@ The system includes two main user roles with different levels of access and resp
 git clone https://github.com/Kapish17/UI-UX-Enhancement.git
 cd UI-UX-Enhancement-main
 py -3.9 -m venv venv
-venv\Scripts\activate
+venv\Scripts\activate      # Windows
+source venv/bin/activate   # Mac/Linux
 python -m pip install --upgrade pip setuptools wheel
 pip install -r requirements.txt
 python manage.py migrate --run-syncdb
 python manage.py runserver
-source venv/bin/activate   # Mac/Linux
+
 
 ```
 
