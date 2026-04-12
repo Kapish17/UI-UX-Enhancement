@@ -238,63 +238,38 @@ Since email verification is disabled for testing, users can be created directly 
 python manage.py shell
 ```
 
-### 🔹 Step 2: Create Instructor
-
+### 🔹 Step 2: Inside the shell type:
 ```bash
-from django.contrib.auth.models import User, Group
-from workshop_app.models import Profile
-
-user, created = User.objects.get_or_create(
-    username='instructor_user',
-    defaults={'email': 'instructor@gmail.com'}
-)
-
-if created:
-    user.set_password('1234')
-    user.save()
-
-profile, _ = Profile.objects.get_or_create(user=user)
-profile.is_email_verified = True
-profile.save()
-
-group, _ = Group.objects.get_or_create(name='instructor')
-user.groups.add(group)
-
-print("Instructor created successfully ✅")
+from django.contrib.auth.models import User
 ```
 
 
 ### 🔹 Step 3: Create Coordinator
 
 ```bash
-from django.contrib.auth.models import User
-from workshop_app.models import Profile
-
-user, created = User.objects.get_or_create(
-    username='coordinator_user',
-    defaults={'email': 'coordinator@gmail.com'}
+User.objects.create_user(
+    username="coordinator1",
+    email="coordinator@example.com",
+    password="coordinator123"
 )
-
-if created:
-    user.set_password('1234')
-    user.save()
-
-profile, _ = Profile.objects.get_or_create(user=user)
-profile.is_email_verified = True
-profile.save()
-
-print("Coordinator created successfully ✅")
 ```
 
-Go and Login using the user_id and password
+
+### 🔹 Step 4: Create Instructor
+
+```bash
+User.objects.create_user(
+    username="instructor1",
+    email="instructor@example.com",
+    password="instructor123"
+)
+```
+
+# Now you can login using following above details
 
 
-A new Login Page has been implemented using React in the frontend.
 
----
-
-To run the React frontend:
-
+# How to Run Frontend React
 ```bash
 cd frontend
 npm install
