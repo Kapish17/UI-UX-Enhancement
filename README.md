@@ -50,46 +50,44 @@ The original booking system was functional but barebones. The aim here was to ma
 * Clear Call-To-Actions provided
 * Form design has been improved
 
-## 🔄 UI Comparison: Old vs New
+🔄 UI Comparison: Old vs New
 
 Below is a side-by-side comparison of the previous UI and the redesigned UI to highlight improvements in design, usability, and user experience.
 
 ---
 
-### 📸 Visual Comparison
+📸 Visual Comparison
 
 <table>
 <tr>
 <td align="center"><b>Old UI</b></td>
 <td align="center"><b>New UI</b></td>
-</tr>
+</tr><tr>
+<td><img src="OldUi/1.jpeg" width="400"/></td>
+<td><img src="NewUi/Loginpage.png" width="400"/></td>
+</tr><tr>
+<td><img src="OldUi/2.jpeg" width="400"/></td>
+<td><img src="NewUi/Types.png" width="400"/></td>
+</tr><tr>
+<td><img src="OldUi/3.jpeg" width="400"/></td>
+<td><img src="NewUi/Home.png" width="400"/></td>
+</tr><tr>
+<td><img src="OldUi/4.jpeg" width="400"/></td>
+<td><img src="NewUi/Statistics1.png" width="400"/></td>
+</tr><tr>
+<td><img src="OldUi/4.jpeg" width="400"/></td>
+<td><img src="NewUi/Statistics2.png" width="400"/></td>
+</tr><tr>
+<td><img src="OldUi/4.jpeg" width="400"/></td>
+<td><img src="NewUi/Statistics.png" width="400"/></td>
+</tr><tr>
+<td><img src="OldUi/5.jpeg" width="400"/></td>
+<td><img src="NewUi/changepassword.png" width="400"/></td>
+</tr></table>
 
-<tr>
-<td><img src="changes_in_ui/Login.jpeg" width="400"/></td>
-<td><img src="changes_in_ui/LoginN.png" width="400"/></td>
-</tr>
 
-<tr>
-<td><img src="changes_in_ui/dashbord.jpeg" width="400"/></td>
-<td><img src="changes_in_ui/DashbordN.png" width="400"/></td>
-</tr>
 
-<tr>
-<td><img src="changes_in_ui/home.jpeg" width="400"/></td>
-<td><img src="changes_in_ui/typesN.png" width="400"/></td>
-</tr>
-
-<tr>
-<td><img src="changes_in_ui/change_pass.jpeg" width="400"/></td>
-<td><img src="changes_in_ui/chnage_passN.png" width="400"/></td>
-</tr>
-
-<tr>
-<td><img src="changes_in_ui/stats.jpeg" width="400"/></td>
-<td><img src="changes_in_ui/StatsN.png" width="400"/></td>
-</tr>
-</table>
----
+</tr></table>---
 
 
 ### Note
