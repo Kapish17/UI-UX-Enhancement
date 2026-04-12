@@ -284,67 +284,62 @@ npm install
 npm start
 ```
 
-## Design Decisions & Justification (Reasoning)
+## Design Approach and Reasoning 
 
 ### What design principles guided your improvements?
 
-The redesign was guided by core UI/UX principles to enhance usability and clarity:
+The redesign followed fundamental UI/UX guidelines to improve both usability and visual clarity:
 
-- Visual Hierarchy – Key actions such as proposing and accepting workshops were emphasized using size, spacing, and contrast to guide user attention.  
-- Consistency – A uniform design system (colors, buttons, layouts) was maintained across all pages to ensure a predictable and smooth user experience.  
-- Minimalism – Unnecessary elements were removed to reduce clutter and keep the interface clean and focused.  
-- Accessibility – Improved color contrast, readable typography, and proper spacing were used to make the interface usable for a wider range of users.  
-- User Feedback – Clear success/error messages and interactive states were added to improve user interaction and understanding.  
+- Visual Hierarchy – Important actions like proposing or approving workshops were highlighted through better use of spacing, sizing, and contrast so users can quickly identify key tasks.
+- Consistency – A consistent design language including colors, buttons, and layout patterns was applied across pages to create a smoother and more predictable experience.
+- Minimalism – Extra or unnecessary elements were removed to keep the interface simple and focused on essential functionality.
+- Accessibility – Improvements such as better color contrast, readable fonts, and balanced spacing help make the system easier to use for a wider audience.
+- User Feedback – Informative messages and interactive states were added to clearly communicate actions such as successful operations or errors.
 
 ---
 
 ### How did you ensure responsiveness across devices?
 
-Responsiveness was achieved using a mobile-first approach:
+Device responsiveness was implemented using a mobile-first design strategy:
 
-- Designed layouts starting from small screens and scaled up for larger devices  
-- Used flexbox and responsive grid systems for flexible layouts  
-- Avoided fixed widths so components adapt naturally to different screen sizes  
-- Optimized buttons and forms for better touch interaction on mobile devices  
-- Tested layouts across multiple screen sizes to ensure consistency  
+- Layouts were initially designed for smaller screens and then expanded for larger displays.
+- Flexible layout techniques like Flexbox and responsive grid systems were used to adjust components dynamically.
+- Fixed widths were avoided so elements could scale naturally across different screen sizes.
+- Buttons, forms, and interactive components were optimized for touch interaction on mobile devices.
+- The interface was tested on multiple screen sizes to maintain a consistent experience.
 
 ---
 
 ### What trade-offs did you make between design and performance?
 
-While improving the UI/UX, performance was carefully considered:
+While enhancing the interface, performance considerations were also kept in mind:
 
-- Avoided heavy animations to maintain fast load times  
-- Used lightweight styling instead of heavy UI frameworks  
-- Limited external dependencies to reduce overhead  
-- Focused on usability and clarity rather than overly complex designs  
+- Heavy animations were avoided to prevent slower page loading.
+- Lightweight styling approaches were preferred instead of large UI libraries.
+- External dependencies were minimized to keep the system efficient.
+- The focus remained on clarity and usability rather than complex visual effects.
 
-This ensured the system remains fast, efficient, and user-friendly.
+These decisions helped maintain a balance between modern design and system performance.
 
 ---
 
 ### What was the most challenging part of the task and how did you approach it?
 
-The most challenging part was enhancing the UI without breaking the existing Django backend logic.
+One of the biggest challenges was improving the visual interface without affecting the existing Django backend functionality.
 
-- Django templates are tightly coupled with backend data, so even small UI changes could disrupt functionality  
-- Managing static files (CSS, JavaScript, images) consistently across pages was challenging  
-- Ensuring proper responsiveness required multiple iterations  
+- Django templates are closely connected to backend data, meaning even small interface changes could impact the application’s behavior.
+- Managing static assets such as CSS, JavaScript, and images across different pages required careful organization.
+- Achieving consistent responsiveness across various devices involved multiple testing iterations.
 
-Approach:
+Approach
 
-- Made incremental changes and tested each component carefully  
-- Preserved backend structure while improving frontend templates  
-- Debugged issues step-by-step to maintain functionality  
-- Ensured core features like authentication, booking workflows, and validations remained intact  
+- Implemented changes gradually and verified each modification step-by-step.
+- Maintained the existing backend structure while refining the frontend templates.
+- Debugged issues systematically to ensure functionality remained intact.
+- Verified that essential features like authentication, workshop management, and validations continued to work correctly.
 
 ---
 
-### Outcome
+## RESULTS
 
-The final system is:
-
-- More intuitive and user-friendly  
-- Fully responsive across devices  
-- Visually modern while maintaining performance  
-- Efficient and easy to navigate for both instructors and coordinators
+The redesigned system provides a significantly improved user experience with a cleaner and more modern interface. The updated layout enhances usability by making navigation simpler and more intuitive for users. The platform now adapts smoothly to different screen sizes, ensuring a consistent experience on both desktop and mobile devices. Visual elements such as typography, spacing, and color contrast have been refined to improve readability and accessibility. The workflow for actions like proposing and managing workshops is now clearer and more efficient. At the same time, the existing backend functionality remains stable and unaffected. Overall, the improvements make the system more user-friendly, responsive, and visually appealing for both instructors and coordinators.
