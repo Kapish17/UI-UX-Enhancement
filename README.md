@@ -226,14 +226,16 @@ The system includes two main user roles with different levels of access and resp
 ## ⚙️ Setup Instructions
 
 ```bash
-git clone https://github.com/your-username/workshop_booking.git
-cd workshop_booking
-python -m venv venv
-source venv/bin/activate   # Mac/Linux
-venv\Scripts\activate      # Windows
+git clone https://github.com/Kapish17/UI-UX-Enhancement.git
+cd UI-UX-Enhancement-main
+py -3.9 -m venv venv
+venv\Scripts\activate
+python -m pip install --upgrade pip setuptools wheel
 pip install -r requirements.txt
-python manage.py migrate
+python manage.py migrate --run-syncdb
 python manage.py runserver
+source venv/bin/activate   # Mac/Linux
+
 ```
 
 ## Quick Account Setup (Without Email Verification)
