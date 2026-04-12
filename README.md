@@ -1,60 +1,64 @@
-# Enhancing UI/UX of Workshop Booking System (FOSSEE Task)
+# UI/UX Improvement of Workshop Booking System (FOSSEE Task)
 
-> A mobile-first design to improve usability and user experience of the booking portal for students.
+A mobile-first redesign focused on improving the usability and overall experience of the workshop booking portal for students.
 
-## About the Project
+### Project Overview
 
-Enhancement of the existing UI/UX of the original FOSSEE Workshop Booking System.
+This project enhances the user interface and user experience of the existing FOSSEE Workshop Booking System.
 
-Objective:
+### Goals of the Enhancement
 
-* 📱 Responsive design
-* 🎨 Modern and aesthetic UI
-* ⚡ Performance optimizations
-* ♿ Accessible
-* 🔍 Enhanced user experience and user interface
+- 📱 Build a responsive interface that works smoothly across devices
+- 🎨 Introduce a modern and visually appealing design
+- ⚡ Improve overall performance and interface efficiency
+- ♿ Ensure better accessibility for users
+- 🔍 Deliver a more intuitive and user-friendly experience
 
-The original booking system was functional but barebones. The aim here was to make the design more visually pleasing and modern as well as enhance its usability and accessibility.
-
-
-## Technology Used
-
-* React
-* HTML5/CSS3
-* Bootstrap/Custom CSS
-* Django (backend was unchanged)
-
-
-## Enhancements Made
-
-### UI Design Enhancements
-
-* Modern design with gradient effects and Glassmorphism
-* Font styles have been improved
-* Color Contrast has been enhanced
-
-### Mobile-First Approach
-
-* All pages are fully responsive
-* Forms are optimized for mobile screens
-* Touch friendly interfaces
-
-### Dashboard Design Enhancements
-
-* Cards used to give structure to dashboard
-* Data visualization has been improved
-
-### UX Enhancements
-
-* Navigation has been improved
-* Clear Call-To-Actions provided
-* Form design has been improved
-
-🔄 UI Comparison: Old vs New
-
-Below is a side-by-side comparison of the previous UI and the redesigned UI to highlight improvements in design, usability, and user experience.
+The original workshop booking platform was functional but had a very minimal interface.
+This redesign focuses on improving visual appeal, usability, and accessibility, making the system easier and more pleasant to use.
 
 ---
+
+### Tech Used
+
+- React
+- Django (existing backend remains unchanged)
+- HTML5 / CSS3
+- Bootstrap and Custom CSS
+
+
+---
+
+### Improvements Implemented
+
+User Interface Improvements
+
+- Introduced a modern UI using gradient styling and glassmorphism effects
+- Enhanced typography and font usage
+- Improved color contrast for better readability
+
+Mobile-First Design
+
+- All pages are redesigned to be fully responsive
+- Forms are optimized for smaller screens
+- Touch-friendly UI elements improve mobile usability
+
+Dashboard Enhancements
+
+- Dashboard sections organized using card-based layouts
+- Data presentation and visualization improved for clarity
+
+User Experience Enhancements
+
+- Navigation flow has been simplified and improved
+- Clear call-to-action buttons added for better interaction
+- Forms redesigned to improve usability and readability
+
+---
+
+🔄 UI Comparison: Previous vs Updated Design
+
+Below is a comparison between the earlier interface and the enhanced UI design, highlighting improvements in layout, usability, and overall visual experience.
 
 📸 Visual Comparison
 
@@ -92,9 +96,9 @@ Below is a side-by-side comparison of the previous UI and the redesigned UI to h
 
 ### Note
 
-All screenshots were captured from locally running instances of both versions of the project. The redesign focuses on improving usability, visual clarity, and overall user experience.
+All screenshots were taken from locally running versions of the application. The redesigned interface emphasizes better usability, improved visual clarity, and a more intuitive overall user experience.
 
-🖥 Desktop UI Preview
+## Desktop UI 
 
 <table>
 <tr>
@@ -143,7 +147,7 @@ All screenshots were captured from locally running instances of both versions of
 
 ---
 
-📱 Mobile UI Images
+## Mobile UI 
 
 <table>
 <tr>
@@ -194,27 +198,31 @@ All screenshots were captured from locally running instances of both versions of
 </table>
 
 
-🎥 Demo Video
+## Demo Video
 
 ▶ Watch the demo video: [Click here to watch the recording](VideoDemo/recording.mp4)
 
 
-## 👥 User Roles & Account Setup
+👥 User Roles & Account Configuration
 
-This system supports two types of users:
+The system includes two main user roles with different levels of access and responsibilities.
 
-### 👨‍🏫 Instructor
-- Can **accept workshops**
-- Can **edit workshop types**
-- Can **update workshop details**
-- Has higher privileges in the system
+👨‍💼 Coordinator
 
-### 👨‍💼 Coordinator
-- Can **propose workshops**
-- Can **manage their own workshops**
-- Cannot accept workshops
-
+- Can submit proposals for new workshops
+- Able to manage workshops they have created
+- Does not have permission to approve workshops
 ---
+
+
+👨‍🏫 Instructor
+
+- Responsible for approving workshop requests
+- Can modify existing workshop types
+- Allowed to update workshop information
+- Possesses higher-level permissions within the platform
+
+
 ## ⚙️ Setup Instructions
 
 ```bash
