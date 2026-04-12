@@ -1,6 +1,19 @@
+# Python version
+# Use Python 3.9.x
+
 Django==3.0.7
-coverage
-pyaml
-django-recurrence
 python-decouple==3.3
-pandas
+
+# Core (compatible versions)
+numpy==1.23.5
+pandas==1.5.3
+
+# Django extras
+django-recurrence==1.11.1
+
+# Utilities
+pyaml==23.9.7
+coverage==7.2.7
+
+# Image support
+Pillow==9.5.0
